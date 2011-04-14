@@ -108,7 +108,7 @@ overlap <- function(pow, bw="nrd0"){
 
 ## can now specify the info criterion
 ## plotting function
-plot.pow <- function(pow, main="", legend=FALSE, type="density", test_dist=TRUE, shade_power=FALSE, shade_p=FALSE, show_aic=FALSE, show_data=TRUE, shade=TRUE, shade_aic=FALSE, print_text=TRUE, show_text = c("p", "power", "reverse_p", "aic"), xlim=NULL, ylim=NULL, null_dist=TRUE, bw = "nrd0", info_criterion=c("aic", "bic", "aicc", "threshold"), ...){
+plot.pow <- function(pow, main="", legend=FALSE, type="density", test_dist=TRUE, shade_power=FALSE, shade_p=FALSE, show_aic=FALSE, show_data=TRUE, shade=TRUE, shade_aic=FALSE, print_text=TRUE, show_text = c("p"), xlim=NULL, ylim=NULL, null_dist=TRUE, bw = "nrd0", info_criterion=c("aic", "bic", "aicc", "threshold"), ...){
 
 
 	## DOF calculation ##!! Should be made into a generic!!
