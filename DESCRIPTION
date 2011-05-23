@@ -4,7 +4,7 @@ Version: 0.0-1
 Date: 2011-04-14
 Author: Carl Boettiger <cboettig@gmail.com>
 Maintainer: Carl Boettiger <cboettig@gmail.com>
-Description: Detection of early warning signals. 
+Description: Tools for the detection of early warning signals of critical transitions.  Accompanies Boettiger & Hastings (2011). 
 Depends: snowfall, NORMT3, sde, odesolve, psych, limma 
 URL: http://www.carlboettiger.info
 License: GPL (>= 2)
