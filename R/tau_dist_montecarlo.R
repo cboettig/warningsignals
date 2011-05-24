@@ -29,7 +29,7 @@ plt_tau <- function(test_tau_dist, null_tau_dist, indicator, ylim=NULL, legend=F
 }
 
 
-tau_dist_montecarlo <- function(X, const, timedep, signal=c("Variance", "Autocorrelation", "Skew"), nboot=200, cpu=2, windowsize=round(length(X)/2), method=c("kendall", "pearson", "spearman"))
+tau_dist_montecarlo <- function(X, const, timedep, signal=c("Variance", "Autocorrelation", "Skew", "CV"), nboot=100, cpu=2, windowsize=round(length(X)/2), method=c("kendall", "pearson", "spearman"))
 ## Compute Monte Carlo bootstrap of tau under each model
 {
 
@@ -38,8 +38,8 @@ tau_dist_montecarlo <- function(X, const, timedep, signal=c("Variance", "Autocor
 	## indicate poor convergence
 	print( llik_warning_fit <- 2*(loglik(timedep)-loglik(const)) )
 
-	method = match.arg(method)
-	signal = match.arg(signal)
+	method <- match.arg(method)
+	signal <- match.arg(signal)
 	observed <- compute_tau(X, signal, windowsize, method=method) 
 
 	## prepare parallel environment
