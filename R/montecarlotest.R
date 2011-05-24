@@ -11,32 +11,44 @@ loglik <- function(x, y, ...) UseMethod("loglik")
 getParameters <- function(x, y, ...) UseMethod("getParameters")
 
 
-### Threshold should really be handled by the plotting function...
 montecarlotest <- function(null, test, nboot = 100, cpu = 2, 
-	threshold = .95, GetParNames=TRUE, method= c("Nelder-Mead", 
-	"BFGS", "CG", "L-BFGS-B", "SANN"), ...){
+	threshold = .95, GetParNames=TRUE, times=NA, ...){
+# bootstrap the likelihood ratio   
+# Args
+#   null: a model with methods "simulate", "update", "loglik", "getParameters"
+#   test: another such model
+#   nboot: number of replicates
+#   cpu: number of cpus available on the machine
+#   threshold: used for error and power calculations
+#   GetParNames: optionally attempt to report parameter names in the bootstrap
+#   ... options passed to the optim routine
+
+
+  ### FIXME Threshold should really not be applied until the plotting function...
+
 	## are we in parallel?
 	if(cpu>1 & !sfIsRunning()){ 	
 		sfInit(parallel=TRUE, cpu=cpu) 
 		sfLibrary(warningsignals) ## needs to export the library with all function defs!
 		sfExportAll()
-	} else if(cpu<2 & !sfIsRunning()){  sfInit()
-	} else { }
+	} else if(cpu<2 & !sfIsRunning()){
+    sfInit()
+	} 
 
 	## generate each distribution
 	null_sim <- sfSapply(1:nboot, function(i){
-		data <- simulate(null)
+		data <- simulate(null, times=times)
 		if (is(data,"list")) data <- data$rep.1 # handle data that has replicates
-		null <- update(null, data, method=method, ...)
-		test <- update(test, data, method=method, ...)
+		null <- update(null, data, ...)
+		test <- update(test, data, ...)
 		lr <- -2*(loglik(null) - loglik(test)) 
 		list(lr, getParameters(null), getParameters(test))
 	})
 	test_sim <- sfSapply(1:nboot, function(i){
-		data <- simulate(test)
+		data <- simulate(test, times=times)
 		if (is(data,"list")) data <- data$rep.1 # handle data that has replicates
-		null <- update(null, data, method=method, ...)
-		test <- update(test, data, method=method, ...)
+		null <- update(null, data, ...)
+		test <- update(test, data, ...)
 		lr <- -2*(loglik(null) - loglik(test))
 		list(lr, getParameters(null), getParameters(test))
 	})
@@ -108,19 +120,28 @@ overlap <- function(pow, bw="nrd0"){
 
 ## can now specify the info criterion
 ## plotting function
-plot.pow <- function(pow, main="", legend=FALSE, type="density", test_dist=TRUE, shade_power=FALSE, shade_p=FALSE, show_aic=FALSE, show_data=TRUE, shade=TRUE, shade_aic=FALSE, print_text=TRUE, show_text = c("p"), xlim=NULL, ylim=NULL, null_dist=TRUE, bw = "nrd0", info_criterion=c("aic", "bic", "aicc", "threshold"), ...){
+plot.pow <- function(pow, main="", legend=FALSE, type="density", 
+                     test_dist=TRUE, shade_power=FALSE, shade_p=FALSE,
+                     show_aic=FALSE, show_data=TRUE, shade=TRUE,
+                     shade_aic=FALSE, print_text=TRUE, show_text = c("p"),
+                     xlim=NULL, ylim=NULL, null_dist=TRUE, bw = "nrd0",
+                     info_criterion=c("aic", "bic", "aicc", "threshold"), ...){
 
 
 	## DOF calculation ##!! Should be made into a generic!!
 	dof <- function(object){
-		if(is(object, "fitContinuous")) dof<- object[[1]]$k
-		else if(is(object, "hansentree")){
-			dof <- length(object@sqrt.alpha)+length(object@sigma)+sum(sapply(object@theta,length))
+		if(is(object, "fitContinuous")){
+      dof<- object[[1]]$k
+		} else if(is(object, "hansentree")){
+			dof <- length(object@sqrt.alpha) + length(object@sigma) +
+             sum(sapply(object@theta,length))
 		} else if(is(object, "browntree")) { 
 			dof <- length(object@sigma)+sum(sapply(object@theta,length))
 		} else {
 			dof <- object$k
-			if(is.null(object$k)) print(paste("cannot determine degrees of freedom, please input for model"))
+			if(is.null(object$k)){
+        print(paste("cannot determine degrees of freedom, please input for model"))
+      }
 		}
 		dof
 	}
@@ -210,9 +231,6 @@ plot.pow <- function(pow, main="", legend=FALSE, type="density", test_dist=TRUE,
 	p <- pow$p
 	aic_wrong <- sum(pow$null_dist > aic_line)/pow$nboot
 	aic_power <- sum(pow$test_dist > aic_line)/pow$nboot
-
-
-
 
 
 	## Print statistics to console, can display on plot

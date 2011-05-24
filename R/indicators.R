@@ -59,7 +59,7 @@ window_ar.ols <- function(X, windowsize=length(X)/2, demean=FALSE){
 }
 
 
-compute_indicator <- function(X, indicator=c("Autocorrelation", "Variance", "Skew", "Kurtosis", "CV"), windowsize=round(length(X)/2))
+compute_indicator <- function(X, indicator=c("Autocorrelation", "Variance", "Skew", "CV"), windowsize=round(length(X)/2))
 ## Description Wrapper function to choose warning signal
 ## Assumes X is a ts object
 {
@@ -82,7 +82,7 @@ compute_indicator <- function(X, indicator=c("Autocorrelation", "Variance", "Ske
 
 
 ## Compute and plot the given indicator
-plot_indicator <- function(X, indicator=c("Autocorrelation", "Variance", "Skew", "Kurtosis", "CV"), windowsize=length(X)/2, xpos=0, ypos=90, method=c("kendall", "pearson", "spearman"), ...)
+plot_indicator <- function(X, indicator=c("Autocorrelation", "Variance", "Skew", "CV"), windowsize=length(X)/2, xpos=0, ypos=90, method=c("kendall", "pearson", "spearman"), ...)
 ## Description
 ## Args:
 ##		X -- data, either ts object or matrix w/ time in col 1 and data in col 2
@@ -148,7 +148,7 @@ compute_tau <- function(X, indicator, windowsize=length(X)/2, method=c("kendall"
 
 
 
-all_indicators <- function(X, indicators = c("Variance", "Autocorrelation", "Skew", "Kurtosis", "CV"), method=c("kendall", "pearson", "spearman"), ...)
+all_indicators <- function(X, indicators = c("Variance", "Autocorrelation", "Skew", "CV"), method=c("kendall", "pearson", "spearman"), ...)
 ## Calc and plot all the leading indicators in a single frame plot
 ##		using a simple loop over the plot_indicator fn
 ## Args 

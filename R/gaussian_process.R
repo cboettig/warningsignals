@@ -40,14 +40,16 @@ lik.gauss <- function(X, pars, setmodel, log=TRUE){
 		dt <- deltat(X)
 		# returns the minus loglik
 		to <- time(X)[1:(n-1)]
-		out <- -sum( dc.gauss(setmodel, X[2:n], X[1:(n-1)], to=to, t1=to+dt, pars, log=log) )
+		out <- -sum(dc.gauss(setmodel, X[2:n], X[1:(n-1)], to = to, t1 = to+dt, 
+                          pars, log=log))
 	} else {
-#		if(length(X) != 2) stop("Must specify X as a ts object or matrix with time in col 1 and data in col 2 ")
+#		if(length(X) != 2) 
+#     stop("Must specify X as a ts object or matrix with time in col 1 and data in col 2 ")
 	    n <- length(X[,1])
 		times <- X[,1]
 		Y <- X[,2] ## data values in second column
-		
-		out <- -sum( dc.gauss(setmodel, Y[2:n], Y[1:(n-1)], to=times[1:(n-1)], t1=times[2:n], pars, log=log) )
+		out <- -sum( dc.gauss(setmodel, Y[2:n], Y[1:(n-1)], to=times[1:(n-1)],
+                          t1=times[2:n], pars, log=log) )
 	}
 	out
 }
@@ -62,7 +64,8 @@ simulateGauss <- function(setmodel, pars, N=100, Xo = 1, T = 1, t0 = 0, times=NU
 			X[i+1] <- rc.gauss(setmodel, 1, x0=X[i], to=times[i+1],t1=times[i+2], pars)
 		}
 		out <- ts(X, start=t0, deltat=delta_t)
-	} else {
+
+  } else {
 		N <- length(times)
 		X <- numeric(N-1)
 		X[1] <- Xo
@@ -75,33 +78,45 @@ simulateGauss <- function(setmodel, pars, N=100, Xo = 1, T = 1, t0 = 0, times=NU
 }
 
 ### Time can be specified directly in X as ts object or as the first column of X, and data in the second column.  
-updateGauss <- function(setmodel, pars, X, method = c("Nelder-Mead", 
-					"BFGS", "CG", "L-BFGS-B", "SANN"), ...){
-	method <- match.arg(method)
-	likfn <- function(pars) lik.gauss(X, pars, setmodel) #optim routine needs something that is just a function of the parameters to be searched (not a fn of data X)
-	fit <- optim(pars, likfn, method=method, ...)
+updateGauss <- function(setmodel, pars, X, ...){
+	likfn <- function(pars) lik.gauss(X, pars, setmodel) 
+	fit <- optim(pars, likfn, ...)
 
 	if(is(X, "ts")){
 		out <- list(pars=fit$par, loglik=-fit$value, T=time(X)[length(X)],
-			t0=time(X)[1], Xo <- X[1], X=X, N=length(X), optim_output = fit, setmodel=setmodel, k=length(pars), times=NULL)
+			t0=time(X)[1], Xo <- X[1], X=X, N=length(X), optim_output = fit,
+      setmodel=setmodel, k=length(pars), times=NULL)
 	} else {
 		out <- list(pars=fit$par, loglik=-fit$value, T=X[length(X[,1]), 1],
-			t0=X[1,1], Xo <- X[1,2], X=X, N=length(X), optim_output = fit, setmodel=setmodel, k=length(pars), times=X[,1])
+			t0=X[1,1], Xo <- X[1,2], X=X, N=length(X), optim_output = fit,
+      setmodel=setmodel, k=length(pars), times=X[,1])
 	}
 	class(out) <- "gauss"
 	out
 }
 
 ### For montecarlotest method, need generics: 
-simulate.gauss <- function(m){
-	## X is a ts, use method
-	if(is.null(m$times)) simulateGauss(m$setmodel, pars=m$pars, N=m$N, Xo=m$X[1], T = m$T, t0=m$t0)
-	else simulateGauss(m$setmodel, pars=m$pars, N=m$N, Xo=m$X[1], T = m$T, t0=m$t0, times=m$times)
+simulate.gauss <- function(m, times=NA){
+  ## times -- either a vector of times at which to sample, or a number of sample points
+  ##            if null or is a single number, then returns a timeseries object.  
+  ##
+  ## Working without time-series objects lets the method generalize to unevenly spaced
+  ## points given by times (should be comparably fast)
+
+  if(is.na(times)){ ## assumes data is a time-series.  could check if m$times isn't null to decide
+     out <- simulateGauss(m$setmodel, pars=m$pars, N=m$N, Xo=m$X[1], T = m$T, t0=m$t0)
+### Should check this, not sure if this is fully supported
+#    if(is.null(m$times)) simulateGauss(m$setmodel, pars=m$pars, N=m$N, Xo=m$X[1], T = m$T, t0=m$t0, times=m$times)
+  } else if(length(times) == 1){  ## use number of replicates specified by times
+    out <- simulateGauss(m$setmodel, pars=m$pars, N=times, Xo=m$X[1], T = m$T, t0=m$t0)
+ } else {
+   out <- simulateGauss(m$setmodel, pars=m$pars, N=m$N, Xo=m$X[1], T = m$T, t0=m$t0, times=m$times)
+ }
+ out 
 }
-update.gauss <- function(m, X, method = c("Nelder-Mead", 
-					"BFGS", "CG", "L-BFGS-B", "SANN"), ...){
-	updateGauss(setmodel=m$setmodel, 
-		pars=m$pars, X=X, method=method, ...)
+
+update.gauss <- function(m, X,  ...){
+	updateGauss(setmodel=m$setmodel, pars=m$pars, X=X, ...)
 }
 loglik.gauss <- function(m) m$loglik
 getParameters.gauss <- function(m) c(m$pars, convergence=as.numeric(m$optim_output$convergence))
