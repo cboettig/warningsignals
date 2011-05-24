@@ -37,7 +37,8 @@ montecarlotest <- function(null, test, nboot = 100, cpu = 2,
 #       nboot: number of replicate simulations used,
 #       null_dist, test_dist: The distribution of Likelihood ratios observed
 #                              when simulating under the respective model
-#       null_par_dist: distribution of parameters observed for null model, #                      simulating under the null model,
+#       null_par_dist: distribution of parameters observed for null model, 
+#                      simulating under the null model,
 #       test_par_dist: likewise for test model
 #       null_sim_test_pars: parameters estimated for the test model over 
 #                           simulations for the null model
