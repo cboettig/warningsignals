@@ -1,7 +1,7 @@
 # likelihood_bifur_models.R
 
 ## Dependencies: odesolve
-require(odesolve)
+#require(odesolve)
 
 
 ## The linearized bifurcation models below use the new gaussian_proccess library for rc, dc, pc, lik, sim, update, etc

@@ -441,7 +441,7 @@ update.changePt <- function(pars,X,method = c("Nelder-Mead",
 
 
 bootstrap <- function(model, observed = NULL, reps=4, cpu=2){
-	require(snowfall)
+	#require(snowfall)
 	if(! sfIsRunning() ){
 		if(cpu<2){
 			sfInit()
@@ -503,7 +503,7 @@ bootstrapLR <- function(model_list, reps=4, cpu=2){
 		}
 	}
 	# Initialize parallel processing
-	require(snowfall)
+#	require(snowfall)
 	if(cpu<2){
 		sfInit()
 	} else {

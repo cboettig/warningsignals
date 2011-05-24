@@ -29,5 +29,5 @@ export(dakos_data_processing, plot.dakos)
 
 
 export(saddle_node_ibm)
-
+import(snowfall, sde, odesolve, psych)
 useDynLib(warningsignals)

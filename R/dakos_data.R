@@ -3,14 +3,18 @@
 
 dakos_data_processing <- function(X, detrend=TRUE, interpolate=TRUE, n=NULL, bw=NULL){
 ## Description: mimics the data processing of Dakos et al 2008 PNAS.  
-##				Linearly interpolaes evenly spaced data & subtracts a Gaussian smoothed 
-##              kernel, and turns into a timeseries (ts) object if interpolated to even spacing
+##				Linearly interpolaes evenly spaced data & subtracts a Gaussian
+##        smoothed kernel, and turns into a timeseries (ts) object if
+##        interpolated to even spacing
 ## Args:
-##		X -- a matrix or data.frame with times in first column and observations in second.  
-##           may have replicate observations at a given time, which will be averaged out
+##		X -- a matrix or data.frame with times in first column and observations 
+##          in second.  may have replicate observations at a given time, which 
+##          will be averaged out
 ##		detrend -- logical.  If gaussian kernel smoothing should be done
-##		interpolate -- logical.  If interpolate is false, returns only a matrix (ts requires even spacing)
-##		n --The number of points to be used in interpolation.  If not given, will match length of original data
+##		interpolate -- logical.  If interpolate is false, returns only a matrix 
+##          (ts requires even spacing)
+##		n --The number of points to be used in interpolation.  If not given, will 
+##        match length of original data
 ## Returns:
 ##    X_ts -- a timeseries object that has been detrended
 ##		Z  -- the detrended data as a matrix 
@@ -19,8 +23,13 @@ dakos_data_processing <- function(X, detrend=TRUE, interpolate=TRUE, n=NULL, bw=
 ##		smooth -- the smoothed "trend" that has been removed
 ##		raw_ts -- X data rendered as a timeseries object
 
+
+
+## limma not available, cannot call avereps 
 ## Also annoying that there are replicate values, luckily a quick averaging call will remove them. 
-	X <-avereps(X, ID=X[,1])
+
+#	X <-avereps(X, ID=X[,1])
+
 ## Time is linearly interpolated for even spacing in the Dakos approach
 	if(interpolate){ 
 		if(is.null(n)) n <- length(X[,1]) 

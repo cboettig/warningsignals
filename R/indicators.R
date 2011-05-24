@@ -7,7 +7,7 @@
 ## which resolves ties for more accurate p value, but doesn't matter since we focus on tau 
 ## and becayse cor.test is used by others i.e. Dakos 2008
 
-require(psych)
+#require(psych)
 
 window_var <- function(X, windowsize=length(X)/2){
 	sapply(0:(length(X)-windowsize), function(i){
