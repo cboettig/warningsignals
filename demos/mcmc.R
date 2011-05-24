@@ -1,12 +1,13 @@
 #mcmc.R
 require(mcmcTools)
+require(warningsignals)
 
 p <- c(Ro=5.0, m= -.004999, theta=500, sigma=5)
-X <- simulateGauss(timedep_LSN, pars, N=100, T=100, Xo=500)
+X <- simulateGauss(timedep_LSN, p, N=100, T=100, Xo=500)
 
 
 loglik <- function(pars){
-  -lik.gauss(X, pars, setmodel, log=TRUE)
+  -lik.gauss(X, pars, timedep_LSN, log=TRUE)
 }
 
 prior <- function(pars){
@@ -14,7 +15,8 @@ prior <- function(pars){
 }
 pars <- list(p, p)
 
-chains <- mcmcmc_fn(pars, loglik, prior, MaxTime=1e5, indep=100, stepsizes=c(.1, .001, 10, .1))
+chains <- mcmcmc_fn(pars, loglik, prior, MaxTime=1e5, indep=100, 
+                    stepsizes=c(.1, .001, 10, .1), cpu=2)
 burnin=1e4
 
 
