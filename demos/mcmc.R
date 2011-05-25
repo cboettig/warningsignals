@@ -50,5 +50,7 @@ plt <- function(){
   abline(v=-5, col="red", lwd=2, lty=2)
   dev.off()
 }
+
+require(socialR)
 social_plot(plt(), file="mcmc_out.png", tags="warningsignals stochpop mcmc",
         width=480, height=3*480)
