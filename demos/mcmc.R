@@ -21,6 +21,8 @@ burnin=1e4
 
 
 ## plot results
+png("mcmc_out.png", width=480, height=3*480)
+
 layout(t(matrix(c(1,1,2,3,4,5), nrow=2)))
 par(cex.lab=1.5, cex.axis=1.5)
 plot(chains[[2]][-burnin, 1], type='l', col=rgb(0,0,1,.8),
@@ -35,4 +37,5 @@ plot(density((chains[[1]][-burnin, 2])), lwd=3, main="theta")
 abline(v=500, col="red", lwd=2, lty=2)
 plot(density((chains[[1]][-burnin, 3])), lwd=3, main="sigma")
 abline(v=-5, col="red", lwd=2, lty=2)
-
+dev.off()
+flickr("mcmc_out.png", tags="warningsignals stochpop mcmc")

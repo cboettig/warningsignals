@@ -1,4 +1,4 @@
-
+# Use the C function integrator
 heteroOU <- function(X, pars){
 	if(is(X, "ts")){
 		t <- time(X)
