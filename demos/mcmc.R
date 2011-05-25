@@ -22,7 +22,7 @@ pars <- list(p, p)
 
 
 
-chains <- mcmcmc_fn(pars, f, prior, MaxTime=1e3, indep=100, 
+chains <- mcmcmc_fn(pars, f, prior, MaxTime=1e5, indep=100, 
                     stepsizes=c(0.1, 0.001, 10, 0.1))
 burnin=1e4
 
