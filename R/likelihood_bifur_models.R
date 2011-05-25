@@ -18,8 +18,8 @@ setLSN <- function(Xo, to, t1, pars, R){
 	} else {
 		moments <- function(t,y,p){ 
 			sqrtR <- sqrt(R(t,pars)) 
-			yd1 <- 2*sqrtR*(sqrtR+pars['theta'] - y[1]) 
-			yd2 <- -2*sqrtR*y[2] + p["sigma"]^2*(sqrtR+pars['theta'])
+			yd1 <- 2*sqrtR*(sqrtR+pars[3] - y[1]) 
+			yd2 <- -2*sqrtR*y[2] + p[4]^2*(sqrtR+pars[3])
 			list(c(yd1=yd1, yd2=yd2))
 		}
 		jacfn <- function(t,y,p){
@@ -44,8 +44,8 @@ setLSN <- function(Xo, to, t1, pars, R){
 # that force system into bifurcation on later parameters (for which terms  
 # become undefined)
 
-	if (pars['sigma'] <= 0){
-		warning(paste("sigma=",pars["sigma"]))
+	if (pars[4] <= 0){
+		warning(paste("sigma=",pars[4]))
 		Vx <- rep(Inf, length(Xo))
 	}
 	if (any(Vx < 0, na.rm=TRUE)){
@@ -65,8 +65,8 @@ setLSN <- function(Xo, to, t1, pars, R){
 setLTC <- function(Xo, to, t1, pars, R){
 	moments <- function(t,y,p){
         r <- R(t,pars)
-		yd1 <- r*(r -  y[1]/pars['theta']) 
-		yd2 <- -2*r*y[2] + (1+r)*p["sigma"]^2 
+		yd1 <- r*(r -  y[1]/pars[3]) 
+		yd2 <- -2*r*y[2] + (1+r)*p[4]^2 
 		list(c(yd1=yd1, yd2=yd2))
 	}
 	jacfn <- function(t,y,p){
@@ -82,15 +82,15 @@ setLTC <- function(Xo, to, t1, pars, R){
 	Vx <- sapply(1:length(Xo), function(i) out[[i]][2,3])
 
 ## Handle badly defined parameters by creating very low probability returns
-	if(pars['sigma'] < 0 ) Vx <- rep(Inf, length(Xo)) 
+	if(pars[3] < 0 ) Vx <- rep(Inf, length(Xo)) 
 	return(list(Ex=Ex, Vx=Vx))
 }
 
 ## Just an OU model where alpha depends on time
 setOU_timedep <- function(Xo, to, t1, pars, R){
 	moments <- function(t,y,p){ 
-		yd1 <- R(t,pars)*(pars['theta'] - y[1]) 
-		yd2 <- -2*R(t,pars)*y[2] + p["sigma"]^2 ##check?
+		yd1 <- R(t,pars)*(pars[3] - y[1]) 
+		yd2 <- -2*R(t,pars)*y[2] + p[4]^2 ##check?
 		list(c(yd1=yd1, yd2=yd2))
 	}
 	jacfn <- function(t,y,p){
@@ -106,7 +106,7 @@ setOU_timedep <- function(Xo, to, t1, pars, R){
 	Vx <- sapply(1:length(Xo), function(i) out[[i]][2,3])
 
 ## Handle badly defined parameters by creating very low probability returns
-	if(pars['sigma'] < 0 ) Vx <- rep(Inf, length(Xo)) 
+	if(pars[4] < 0 ) Vx <- rep(Inf, length(Xo)) 
 	return(list(Ex=Ex, Vx=Vx))
 }
 
@@ -126,11 +126,11 @@ constOU <- function(Xo, to, t1, pars){
 
 
 ## the generic bifurcation parameter: here we assume linear model
-R <- function(t, pars){pars['Ro'] + pars['m']*t }
+R <- function(t, pars){pars[1] + pars[2]*t }
 timedep_LTC <- function(Xo, to, t1, pars) setLTC(Xo, to, t1, pars, R)
 timedep_LSN <- function(Xo, to, t1, pars) setLSN(Xo, to, t1, pars, R)
 
-const_R <- function(t, pars) pars['Ro']
+const_R <- function(t, pars) pars[1]
 const_LTC <- function(Xo, to, t1, pars) setLTC(Xo, to, t1, pars, const_R)
 const_LSN <- function(Xo, to, t1, pars) setLSN(Xo, to, t1, pars, const_R)
 
