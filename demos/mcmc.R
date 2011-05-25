@@ -8,7 +8,8 @@ X <- simulateGauss(timedep_LSN, p, N=100, T=100, Xo=500)
 
 loglik <- function(pars){
   out <- -lik.gauss(X, pars, timedep_LSN, log=TRUE)
-  out <- if(!is(out, "numeric")) -Inf
+if(!is(out, "numeric"))
+  out <- -Inf
   out
 }
 
