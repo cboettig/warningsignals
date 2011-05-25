@@ -131,7 +131,7 @@ dof <- function(object){
 
 ## can now specify the info criterion
 ## plotting function
-plot.pow <- function(pow, main="", legend=FALSE, type="density", 
+plot.pow <- function(pow, threshold=.95, main="", legend=FALSE, type="density", 
                      test_dist=TRUE, shade_power=FALSE, shade_p=FALSE,
                      show_aic=FALSE, show_data=TRUE, shade=TRUE,
                      shade_aic=FALSE, print_text=TRUE, show_text = c("p"),
@@ -153,7 +153,7 @@ plot.pow <- function(pow, main="", legend=FALSE, type="density",
 	if(info_criterion=="aic"){
 		aic_line <-  2*(dof(pow$test) - dof(pow$null)) 
 	} else if(info_criterion=="threshold") {
-		threshold_tail <- sort(pow$null_dist)[ round(pow$threshold*pow$nboot) ]
+		threshold_tail <- sort(pow$null_dist)[ round(threshold*pow$nboot) ]
 		aic_line <- threshold_tail #nd$x[tmp]
 		print(paste("threshold", aic_line))
 	}
@@ -186,7 +186,7 @@ plot.pow <- function(pow, main="", legend=FALSE, type="density",
 			if(!null_dist) plot(td, xlim=xlim, main=main, type=plottype,
                           col=rgb(1,0,0,1), ...)  ## just plot test dist 
 			else lines(td, type=plottype, col=rgb(1,0,0,1))
-			threshold_tail <- sort(pow$null_dist)[ round(pow$threshold*pow$nboot) ]
+			threshold_tail <- sort(pow$null_dist)[ round(threshold*pow$nboot) ]
 			if(shade_power){
 				shade_power <- which(td$x > threshold_tail)
 				polygon(c(threshold_tail, td$x[shade_power]), c(0,td$y[shade_power]), col=rgb(1,0,0,.3), border=rgb(1,0,0,.5))
