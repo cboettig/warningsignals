@@ -5,11 +5,13 @@ require(warningsignals)
 p <- c(Ro=5.0, m= -.004999, theta=500, sigma=5)
 X <- simulateGauss(timedep_LSN, p, N=100, T=100, Xo=500)
 
-
-loglik <- function(pars){
-  out <- -lik.gauss(X, pars, timedep_LSN, log=TRUE)
-if(!is(out, "numeric"))
-  out <- -Inf
+# loglik.  note, the name loglik is already defined
+f <- function(pars){
+  minus_log_lik <- try(lik.gauss(X, pars, timedep_LSN, log=TRUE))
+  if(!is(minus_log_lik, "numeric"))
+    out <- -Inf
+  else
+    out <- -minus_log_lik
   out
 }
 
@@ -19,10 +21,9 @@ prior <- function(pars){
 pars <- list(p, p)
 
 
-print(loglik(p))
 
-chains <- mcmcmc_fn(pars, loglik, prior, MaxTime=1e5, indep=100, 
-                    stepsizes=c(.1, .001, 10, .1))
+chains <- mcmcmc_fn(pars, f, prior, MaxTime=1e3, indep=100, 
+                    stepsizes=c(0.1, 0.001, 10, 0.1))
 burnin=1e4
 
 
