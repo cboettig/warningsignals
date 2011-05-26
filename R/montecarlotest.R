@@ -267,3 +267,14 @@ plot.pow <- function(pow, threshold=.95, main="", legend=FALSE, type="density",
     }
 }
 
+
+roc_curve <- function(pow){
+  thresh <- seq(0, 1, by=.05)
+  roc <- sapply(thresh, 
+                function(threshold){
+                  threshold_tail <- sort(pow$null_dist)[
+                                         round(threshold*pow$nboot)]
+	                sum(pow$test_dist > threshold_tail)/pow$nboot})
+  plot(thresh, roc, type="l")
+}
+
