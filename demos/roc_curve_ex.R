@@ -8,4 +8,4 @@ roc_curve(mc3, lwd=2, col="green", add=T)
 roc_curve(mc4, lwd=2, col="red", add=T)
 dev.off()
 social_report(file="roc_curve.png", tag=c("stochpop", "warningsignals"), 
-                description="uses dataset with flickr-id 5756092291")
+                comment="uses dataset with flickr-id 5756092291")
