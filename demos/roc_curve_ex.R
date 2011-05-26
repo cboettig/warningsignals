@@ -1,0 +1,11 @@
+require(socialR)
+require(warningsignals)
+load("5756092291.Rdat")
+png("roc_curve.png")
+roc_curve(mc1, lwd=2)
+roc_curve(mc2, lwd=2, col="blue", add=T)
+roc_curve(mc3, lwd=2, col="green", add=T)
+roc_curve(mc4, lwd=2, col="red", add=T)
+dev.off()
+social_report(file="roc_curve.png", tag=c("stochpop", "warningsignals"), 
+                description="uses dataset with flickr-id 5756092291")
