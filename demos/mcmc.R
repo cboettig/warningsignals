@@ -27,7 +27,7 @@ sfLibrary(warningsignals)
 sfExportAll()
 
 chains <- mcmcmc_fn(pars, f, prior, MaxTime=1e6, indep=1e4, 
-                    stepsizes=c(0.1, 0.00005, 10, 0.1), Delta_T=2)
+                    stepsizes=c(0.1, 0.00001, 10, 0.1), Delta_T=2)
 burnin=1e3
 
 
