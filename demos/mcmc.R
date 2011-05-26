@@ -18,13 +18,17 @@ f <- function(pars){
 prior <- function(pars){
   2*pars[1]/pars[4]^2
 }
-pars <- list(p, p)
+pars <- list(p, p, p, p)
 
 
+sfInit(parallel=TRUE, cpu=4)
+sfLibrary(mcmcTools)
+sfLibrary(warningsignals)
+sfExportAll()
 
-chains <- mcmcmc_fn(pars, f, prior, MaxTime=1e5, indep=100, 
-                    stepsizes=c(0.1, 0.001, 10, 0.1))
-burnin=1e4
+chains <- mcmcmc_fn(pars, f, prior, MaxTime=1e6, indep=1e4, 
+                    stepsizes=c(0.1, 0.00005, 10, 0.1), Delta_T=2)
+burnin=1e3
 
 
 
