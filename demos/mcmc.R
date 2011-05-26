@@ -44,9 +44,9 @@ plt <- function(){
   abline(v=5, col="red", lwd=2, lty=2)
   plot(density((chains[[1]][-burnin, 3])), lwd=3, main="m")
   abline(v=-.005, col="red", lwd=2, lty=2)
-  plot(density((chains[[1]][-burnin, 2])), lwd=3, main="theta")
+  plot(density((chains[[1]][-burnin, 4])), lwd=3, main="theta")
   abline(v=500, col="red", lwd=2, lty=2)
-  plot(density((chains[[1]][-burnin, 3])), lwd=3, main="sigma")
+  plot(density((chains[[1]][-burnin, 5])), lwd=3, main="sigma")
   abline(v=-5, col="red", lwd=2, lty=2)
   dev.off()
 }
