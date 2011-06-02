@@ -1,3 +1,5 @@
+# ROC Curves for real data examples
+
 require(warningsignals)
 load("5562383846.Rdat")  #Glaciation, kendall, 2000
 
