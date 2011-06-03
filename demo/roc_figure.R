@@ -1,3 +1,4 @@
+# Generate a figure to show how ROC curves originate from the distributions
 require(warningsignals)
 pow <- vector("list", length=2)
 class(pow) <- "pow"

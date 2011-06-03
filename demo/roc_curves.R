@@ -1,4 +1,5 @@
 # ROC Curves for real data examples
+# These are now done in plots.R
 
 require(warningsignals)
 load("5562383846.Rdat")  #Glaciation, kendall, 2000
