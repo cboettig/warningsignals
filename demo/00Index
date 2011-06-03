@@ -1,0 +1,6 @@
+CaCO3       load the CaCO3 data 
+deuterium   load the deuterium data
+ibm_sims    Simulate data using the individual-based model of a saddle-node bifurcation
+mcmc        Markov Chain Monte Carlo fit of the models
+results     Load results data
+

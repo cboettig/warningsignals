@@ -9,15 +9,17 @@ export(getParameters.gauss, loglik.gauss, update.gauss, simulate.gauss, updateGa
 export(setLSN, setLTC, R, const_R, timedep_LTC, timedep_LSN, const_LTC, const_LSN, constOU)
 ## doesn't export quadratic saddlenode functions
 
-
 ## indicators.R
 export(window_mean, window_var, window_skew, window_kurtosi, warning_stats, window_autocorr, window_ar.ols, show_stats, compute_indicator, plot_indicator, compute_tau, all_indicators, xshift, yshift)
 
 ## tau_dist_montecarlo.R
 export(tau_dist_montecarlo, plot.tau_dist_montecarlo, plot_kendalls, plot_sample)
 
-## montecarlotest.R
-export(montecarlotest, loglik, getParameters, plot.pow, KL_divergence, roc_curve, remove_unconverged)
+## montecarlotest.R  
+export(montecarlotest, loglik, getParameters, plot.pow, KL_divergence) 
+
+## roc.R
+export(roc_curve, remove_unconverged, reformat_tau_dists)
 
 ## bootstrap_indicators.R
 export(fit_models, bootstrap_tau, plot.bootstrap_tau) 
@@ -26,8 +28,8 @@ export(fit_models, bootstrap_tau, plot.bootstrap_tau)
 ## dakos_data.R
 export(dakos_data_processing, plot.dakos)
 #export(heteroOU)
-
-
 export(saddle_node_ibm)
+
+
 import(snowfall, sde, odesolve, psych)
 useDynLib(warningsignals)
