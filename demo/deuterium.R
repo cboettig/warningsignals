@@ -1,7 +1,4 @@
 # Glaciation data
-
-
-
 # Good practice shouldn't require this in a file in data/ directory
 require(warningsignals)
 
@@ -31,8 +28,7 @@ data <- vector("list", 4)
 for(i in 1:4){
 	X <- glaciation[[i]]
 	X <- data.frame("time"=rev(X[,1] - min(X[,1])), "data"=rev(X[,2]))
-	require(limma)
-	X <-avereps(X, ID=X[,1])
+##	X <-avereps(X, ID=X[,1])  ### NEED A NEW AVEREPS FUNCTION!!
 	data[[i]] <- X
 }
 

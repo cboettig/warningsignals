@@ -27,8 +27,8 @@ roc_curve(deut1_taus[[2]], add=TRUE, col=2) # kendall's tau on cor
 roc_curve(deut1_taus[[3]], add=TRUE, col=3)
 # roc curve for likelihood ratio in deut 1
 roc_curve(mc[[1]], add=TRUE, col=4)
-legend("bottomright", c("variance", "autocor", "skew", "likelihood"),
-       col=c(1,2,3,4), lty=1)
+#legend("bottomright", c("variance", "autocor", "skew", "likelihood"),
+#       col=c(1,2,3,4), lty=1)
 
 
 roc_curve(deut2_taus[[1]], col=1, main="Glaciation II") 
@@ -36,16 +36,16 @@ roc_curve(deut2_taus[[2]], add=TRUE, col=2)
 roc_curve(deut2_taus[[3]], add=TRUE, col=3)
 # roc curve for likelihood ratio in deut 1
 roc_curve(mc[[2]], add=TRUE, col=4)
-legend("bottomright", c("variance", "autocor", "skew", "likelihood"),
-       col=c(1,2,3,4), lty=1)
+#legend("bottomright", c("variance", "autocor", "skew", "likelihood"),
+#       col=c(1,2,3,4), lty=1)
 
 roc_curve(deut3_taus[[1]], col=1, main="Glaciation III") 
 roc_curve(deut3_taus[[2]], add=TRUE, col=2) 
 roc_curve(deut3_taus[[3]], add=TRUE, col=3)
 # roc curve for likelihood ratio in deut 1
 roc_curve(mc[[3]], add=TRUE, col=4)
-legend("bottomright", c("variance", "autocor", "skew", "likelihood"),
-       col=c(1,2,3,4), lty=1)
+#legend("bottomright", c("variance", "autocor", "skew", "likelihood"),
+#       col=c(1,2,3,4), lty=1)
 
 dev.off()
 require(socialR)
