@@ -1,0 +1,7 @@
+ibm_sims              Simulate data using the individual-based model of a saddle-node bifurcation
+mcmc                  Markov Chain Monte Carlo fit of the models
+plots                 Regenerate all plots for the manuscript from saved data files
+roc_figure            Figure to explain how ROC curves are created
+sampling_freq         Increase the sampling frequency to show an increase in power
+sampling_freq_plots   Recrate the associated plots
+simulate_data         Simulate a realization of stable and unstable data from the linear models
