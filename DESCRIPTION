@@ -1,6 +1,6 @@
 Package: warningsignals
 Title: Detection of Early Warning Signals for Catastrophic Bifurcations 
-Version: 0.0-2
+Version: 0.0-3
 Date: 2011-04-14
 Author: Carl Boettiger <cboettig@gmail.com>
 Maintainer: Carl Boettiger <cboettig@gmail.com>
