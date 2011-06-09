@@ -17,13 +17,15 @@ roc_curve <- function(pow, add=FALSE, ...){
                   thresh <- sort(pow$null_dist)[
                                  round((1-fp)*n_null)]
 	                sum(pow$test_dist > thresh)/n_test})
-
+  delta <-false_positive[2]-false_positive[1]
+  area <- sum(roc*delta)
   if(add)
     lines(false_positive, roc,...)
   else
     plot(false_positive, roc, type="l", xlab="False Postive",
          ylab="True Positive", ylim=c(0,1), xlim=c(0,1), ...)
   curve(1*x, add=TRUE, lty=2)
+  legend("bottomleft", paste("AUC = ", area))
 }
 
 
