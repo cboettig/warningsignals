@@ -22,13 +22,13 @@ pars <- list(p, p)
 
 
 sfInit(parallel=F, cpu=1)
-#sfLibrary(mcmcTools)
-#sfLibrary(warningsignals)
-#sfExportAll()
+sfLibrary(mcmcTools)
+sfLibrary(warningsignals)
+sfExportAll()
 
-chains <- mcmcmc_fn(pars, f, prior, MaxTime=1e2, indep=1e1, 
+chains <- mcmcmc_fn(pars, f, prior, MaxTime=1e5, indep=1e3, 
                     stepsizes=c(0.1, 0.00001, 10, 0.1), Delta_T=2)
-burnin=5e1
+burnin=1e3
 
 
 
