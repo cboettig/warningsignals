@@ -1,5 +1,5 @@
 
-sampling_freq <- function(m, sample_effort <- c(.1, .5, 1, 2, 5, 10, 20),
+sampling_freq <- function(m, sample_effort = c(.1, .5, 1, 2, 5, 10, 20),
                           mode=c("percent", "total")){
 # Evaluate the effect of changing the sampling effort
 # Args:
