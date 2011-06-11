@@ -8,7 +8,7 @@ tweet_errors(script, tags=tags)
 on.exit(system("git push")) 
 
 cpu <- 16
-nboot <- 16
+nboot <- 160
 freq <- c(.5, 1.5, 2)
 
 analysis <- function(data){
@@ -24,7 +24,7 @@ caco3 <- analysis(CaCO3)
 save(list="caco3", file="caco3_analysis.rda")
 
 data(deuterium)
-deut <- analysis(deuterium)
+deut <- lapply(deterium, analysis)
 save(list="deut", file="deut_analysis.rda")
 
 data(ibms)
