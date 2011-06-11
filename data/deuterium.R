@@ -3,6 +3,12 @@
 require(warningsignals)
 
 
+avereps <- function(X, ID){
+  unique_id <- ID[!duplicated(ID)]
+  out <- sapply(unique_id, function(id) c(id, mean(X[ID==id,2])))
+  t(out)
+}
+
 # read in the raw data from: 
 deut <- read.table("deutnat.txt")
 
@@ -24,22 +30,26 @@ glaciationIV   <- data.frame("time"=-deut$V2[p4], "data"=deut$V3[p4])
 glaciation <- list(glaciationI, glaciationII, glaciationIII, glaciationIV)
 
 # Data in time since start, with replicates averaged out
-data <- vector("list", 4)
+mydata <- vector("list", 4)
 for(i in 1:4){
 	X <- glaciation[[i]]
 	X <- data.frame("time"=rev(X[,1] - min(X[,1])), "data"=rev(X[,2]))
-##	X <-avereps(X, ID=X[,1])  ### NEED A NEW AVEREPS FUNCTION!!
-	data[[i]] <- X
+	X <-avereps(X, ID=X[,1])  ### NEED A NEW AVEREPS FUNCTION!!
+	mydata[[i]] <- X
 }
 
 for(i in 1:4){
-	data[[i]] <- dakos_data_processing(data[[i]])
+	mydata[[i]] <- dakos_data_processing(mydata[[i]])
   #plot(data[[i]])
 }
 #for(i in 1:4) plot_kendalls(data[[i]]$X_ts)
 
+## Clean up namespace by removing extra objects?
+rm(list=c("g1", "p1", "g2", "p2", "g3", "p3", "g4", "p4", "glaciation", "glaciationI", "glaciationII", "glaciationIII", "glaciationIV", "avereps", "deut", "i", "X"))
 
-# data we'll use for the examples
-deut3 <- data[[3]]$X_ts
+# As timeseries objects
+deuterium <- lapply(mydata, function(x) x$X_ts)
+rm(list="mydata")
 
-
+# data() will load the R file in preference to the .rda file anyway
+save(list="deuterium", file="deuterium.rda")

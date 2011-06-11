@@ -1,5 +1,4 @@
 require(warningsignals)
-tags="warningsignals stochpop CaCO3"
 # CaCO3 record
 caco3 <- read.table("../data/caco3.txt")
 # labels, time is in millions of years Before Present, so make negative
@@ -16,3 +15,7 @@ dat <- dakos_data_processing(X)
 
 # rename focal, processed data (a timeseries object) as CaCO3
 CaCO3 <- dat$X_ts
+
+# cleanup 
+rm(list=c("caco3", "g_ca", "p_ca", "X", "dat"))
+

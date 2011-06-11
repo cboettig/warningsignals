@@ -35,46 +35,48 @@ dev.off()
 ## Replace with corresponding ROC curves
 
 ## Constant Env Sim
-compare_roc_curves <- function(taus, mc, legend=FALSE, ...){
+compare_roc_curves <- function(taus, mc, legend=TRUE, ...){
   taus <-  reformat_tau_dists(taus) 
-  roc_curve(taus[[1]], ...)
-  roc_curve(taus[[2]], add=TRUE, col=2, ...)
-  roc_curve(taus[[3]], add=TRUE, col=3, ...)
-  roc_curve(mc, add=TRUE, col=4, ...)
+  auc1 <- roc_curve(taus[[1]], ...)
+  auc2 <- roc_curve(taus[[2]], add=TRUE, col=2, ...)
+  auc3 <- roc_curve(taus[[3]], add=TRUE, col=3, ...)
+  auc4 <- roc_curve(mc, add=TRUE, col=4, ...)
   if(legend)
-    legend("bottomright", c("variance", "autocor", "skew", "likelihood"),
-           col=c(1,2,3,4), lty=1)
+    legend("bottomright", c(paste("Var: ", round(auc1,3)), 
+                            paste("Acor:", round(auc2, 3)),  
+                            paste("Skew:", round(auc3,3)), 
+                            paste("Lik: ", round(auc4,3))), 
+                            col=c(1,2,3,4), lty=1, cex=3, lwd=3)
 }
 
 
 #cairo_pdf(file="boettigerfig2b.pdf", width=7*4, height=7)
-png(file="boettigerfig2b.pdf", width=480*4, height=480)
+png(file="boettigerfig2b.png", width=480*4, height=480*2)
 par(mfrow=c(2,4))
 ## Constant Env Sim
-compare_roc_curves(constant_taus, constant_mc, main="Constant")
+compare_roc_curves(constant_taus, constant_mc, main="Constant", cex=3, cex.lab=3, cex.axis=3, lwd=3,cex.main=2.5)
 ## Deteriorating Env Sim
-compare_roc_curves(deterior_taus, deterior_mc, main="Deteriorating")
+compare_roc_curves(deterior_taus, deterior_mc, main="Deteriorating", cex=3, cex.lab=3, cex.axis=3, lwd=3,cex.main=2.5)
 ## Glaciation III Data
-compare_roc_curves(taus[[3]], mc[[3]], main="Glaciation")  
+compare_roc_curves(taus[[3]], mc[[3]], main="Glaciation", cex=3, cex.lab=2, cex.axis=3, lwd=3,cex.main=2.5)  
 ## Daphnia, consider non-H6
-compare_roc_curves(drake$taus[["H6"]], drake$mc[["H6"]], main="Daphnia", legend=T)  
+compare_roc_curves(drake$taus[["H6"]], drake$mc[["H6"]], main="Daphnia", legend=T, cex=3, cex.lab=3, cex.axis=3, lwd=3,cex.main=2.5)  
 #dev.off()
 
 
 # ibm data
-load("5615442069.Rdat") # mc data
-load("5613811639.Rdat") # tau data
+load("../data/5615442069.Rdat") # mc data
+load("../data/5613811639.Rdat") # tau data
 
 #par(mfrow=c(1,4))
 ## Constant Env Sim
-compare_roc_curves(constant_taus, constant_mc, main="Constant")
+compare_roc_curves(constant_taus, constant_mc, main="Constant", cex=3, cex.lab=3, cex.axis=3, lwd=3,cex.main=2.5)
 ## Deteriorating Env Sim
-compare_roc_curves(deterior_taus, deterior_mc, main="Deteriorating")
+compare_roc_curves(deterior_taus, deterior_mc, main="Deteriorating", cex=3, cex.lab=3, cex.axis=3, lwd=3,cex.main=2.5)
 ## Glaciation I & II Data
-compare_roc_curves(taus[[1]], mc[[1]], main="Glaciation I")  
-compare_roc_curves(taus[[2]], mc[[2]], main="Glaciation II")  
+compare_roc_curves(taus[[1]], mc[[1]], main="Glaciation I", cex=3, cex.lab=3, cex.axis=3, lwd=3,cex.main=2.5)  
+compare_roc_curves(taus[[2]], mc[[2]], main="Glaciation II", cex=3, cex.lab=3, cex.axis=3, lwd=3,cex.main=2.5)  
 dev.off()
 
-## add area under curve!
 
 
