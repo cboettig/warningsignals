@@ -1,5 +1,6 @@
 # analysis.R
 require(warningsignals)
+require(socialR)
 script <- "analysis.R"
 gitcommit(script)
 tags="warningsignals"
