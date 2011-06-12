@@ -2,12 +2,6 @@
 require(warningsignals)
 require(socialR)
 
-# in case we haven't installed since these were updated
-source("../R/sampling_freq.R")
-source("../R/roc.R")
-
-
-
 script <- "analysis.R"
 gitcommit(script)
 tags="warningsignals"
@@ -23,7 +17,8 @@ analysis <- function(data){
   m <- fit_models(data, "LSN")
   taus <- bootstrap_tau(m$X, m$const, m$timedep, cpu=cpu, nboot=nboot)
   mc <- montecarlotest(m$const, m$timedep, cpu=cpu, nboot=nboot)
-  sampling <- sampling_freq(m$const, m$timedep, cpu=cpu, nboot=nboot, freq)
+  sampling <- sampling_freq(m$const, m$timedep, cpu=cpu, nboot=nboot,
+                            sample_effort=freq, length=length(m$X))
   list(m=m, taus=taus, mc=mc, sampling=sampling, data=data, freq=freq)
 }
 
