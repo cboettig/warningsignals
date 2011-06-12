@@ -8,8 +8,8 @@ tweet_errors(script, tags=tags)
 on.exit(system("git push")) 
 
 cpu <- 16
-nboot <- 160
-freq <- c(.5, 1.5, 2)
+nboot <- 2000
+freq <- c(.1, .5, 1.5, 2, 5, 10)
 
 analysis <- function(data){
   m <- fit_models(data, "LSN")
@@ -24,13 +24,13 @@ caco3 <- analysis(CaCO3)
 save(list="caco3", file="caco3_analysis.rda")
 
 data(deuterium)
-deut <- lapply(deterium, analysis)
+deut <- lapply(deuterium, analysis)
 save(list="deut", file="deut_analysis.rda")
 
 data(ibms)
 ibm_crit <- analysis(ibm_critical)
 ibm_stab <- analysis(ibm_stable)
-save(list="ibm_crit, ibm_stab", file="ibms_analysis.rda")
+save(list=c("ibm_crit", "ibm_stab"), file="ibms_analysis.rda")
 
 
 data(drake)
