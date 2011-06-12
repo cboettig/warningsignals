@@ -1,5 +1,6 @@
 
-sampling_freq <- function(m, sample_effort = c(.1, .5, 1, 2, 5, 10, 20),
+sampling_freq <- function(null, test, cpu=16, nboot=200, 
+                          sample_effort = c(.1, .5, 1, 2, 5, 10, 20),
                           mode=c("percent", "total")){
 # Evaluate the effect of changing the sampling effort
 # Args:
@@ -12,7 +13,7 @@ sampling_freq <- function(m, sample_effort = c(.1, .5, 1, 2, 5, 10, 20),
     sample_effort <- sample_effort * length(m$X)
   lapply(sample_effort, 
          function(effort){
-          montecarlotest(m$const, m$timedep, cpu, nboot, times=effort)
+          montecarlotest(null, test, cpu, nboot, times=effort)
          })
 }
 

@@ -1,6 +1,13 @@
 # analysis.R
 require(warningsignals)
 require(socialR)
+
+# in case we haven't installed since these were updated
+source("../R/sampling_freq.R")
+source("../R/roc.R")
+
+
+
 script <- "analysis.R"
 gitcommit(script)
 tags="warningsignals"
@@ -8,15 +15,15 @@ tweet_errors(script, tags=tags)
 on.exit(system("git push")) 
 
 cpu <- 16
-nboot <- 2000
+nboot <- 160
 freq <- c(.1, .5, 1.5, 2, 5, 10)
 
 analysis <- function(data){
   m <- fit_models(data, "LSN")
   taus <- bootstrap_tau(m$X, m$const, m$timedep, cpu=cpu, nboot=nboot)
   mc <- montecarlotest(m$const, m$timedep, cpu=cpu, nboot=nboot)
-  sampling <- sampling_freq(m, freq)
-  list(m=m, taus=taus, mc=mc, sampling=sampling)
+  sampling <- sampling_freq(m$const, m$timedep, cpu=cpu, nboot=nboot, freq)
+  list(m=m, taus=taus, mc=mc, sampling=sampling, data=data, freq=freq)
 }
 
 data(CaCO3) 

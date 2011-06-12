@@ -6,7 +6,7 @@
 # plotting script for estimate_required_power.R 
 require(socialR)
 require(warningsignals)
-load("../data/5756092291.Rdat")
+load("~/flickr/5756092291.Rdat")
 mc <- list(mc1, mc2, mc3, mc4)
 mc <- lapply(mc, remove_unconverged)
 
