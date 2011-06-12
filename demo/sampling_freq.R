@@ -18,6 +18,9 @@ mc <- sampling_freq(deterior_m, c(20, 50, 100, 200, 400), "total")
 # While original data is fixed, method illustrates how increased sampling
 # frequency increases the power to detect a shift
 mc <- lapply(mc, remove_unconverged)
+
+save(list=ls(), file="sampling_freq.rda")
+
 png("roc_curve.png")
 roc_curve(mc[[1]], lwd=2)
 roc_curve(mc[[2]], lwd=2, col="blue", add=T)
