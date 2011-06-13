@@ -31,24 +31,27 @@ roc_curve <- function(pow, add=FALSE, ...){
 }
 
 
-remove_unconverged <- function(pow){
-  null_unconverged <- which(as.logical(pow$null_par_dist["convergence",]))
-  null_negative <- which(pow$null_dist < 0)
-  new_null_dist <- pow$null_dist[ -c(null_unconverged, null_negative) ]
-  new_null_par_dist <- pow$null_par_dist[-c(null_unconverged, null_negative) ] 
+remove_unconverged <- function(pow, nested=FALSE){
+## Removes results in which montecarlotest fails to converge
+## Indicate failed convergence using both algorithm reporting
+## or if the nested model fits better than the richer one...
+  null_converged <- which(!as.logical(pow$null_par_dist["convergence",]))
+  test_converged <- which(!as.logical(pow$test_par_dist["convergence",]))
 
-  test_unconverged <- which(as.logical(pow$test_par_dist["convergence",]))
-  test_negative <- which(pow$test_dist < 0)
-  new_test_dist <- pow$test_dist[ -c(test_unconverged, test_negative) ]
-  new_test_par_dist <- pow$test_par_dist[-c(test_unconverged, test_negative) ] 
+  # initialize thes
+  null_pos <- 1:length(pow$null_dist)
+  test_pos <- null_pos
 
-  out <- pow
-  out$null_dist <- new_null_dist
-  out$null_par_dist <- new_null_par_dist
-  out$test_dist <- new_test_dist
-  out$test_par_dist <- new_test_par_dist
-  out
- }
+ if(nested){
+    null_pos <- which(pow$null_dist >= 0)
+    test_pos <- which(pow$test_dist >= 0)
+  }
+  pow$null_dist <- pow$null_dist[ c(null_converged, null_pos) ]
+  pow$null_par_dist <- pow$null_par_dist[ c(null_converged, null_pos) ]
+  pow$test_dist <- pow$test_dist[ c(test_converged, test_pos) ]
+  pow$test_par_dist <- pow$test_par_dist[ c(test_converged, test_pos) ]
 
+  pow
+}
 
 
