@@ -22,9 +22,9 @@ analysis <- function(data){
   list(m=m, taus=taus, mc=mc, sampling=sampling, data=data, freq=freq)
 }
 
-data(CaCO3) 
-caco3 <- analysis(CaCO3)
-save(list="caco3", file="caco3_analysis.rda")
+#data(CaCO3) 
+#caco3 <- analysis(CaCO3)
+#save(list="caco3", file="caco3_analysis.rda")
 
 #data(deuterium)
 #deut <- lapply(deuterium, analysis)
