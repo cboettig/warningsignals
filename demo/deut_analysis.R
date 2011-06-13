@@ -15,7 +15,7 @@ source("analysis.R")
 
 
 data(deuterium)
-deut <- lapply(deuterium, analysis)
+deut <- lapply(deuterium, f(x) analysis(x, cpu=cpu, nboot=nboot, freq=freq)
 save(list="deut", file="deut_analysis.rda")
 
 for(i in 1:length(deut)){
