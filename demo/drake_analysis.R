@@ -7,11 +7,11 @@ tags="warningsignals, stochpop"
 tweet_errors(script, tags=tags)
 on.exit(system("git push")) 
 
-freq <- c(2, 4, 8, 16)
+freq <- c(2, 5, 10, 20, 40)
 source("analysis.R")
 
 data(drake)
-drake <- analysis(drake_deterior$H6, cpu=8, nboot=100, freq=freq)
+drake <- analysis(drake_deterior$H6, cpu=8, nboot=1000, freq=freq)
 save(list="drake", file="drake_analysis.rda")
 
 png("drake_roc.png"); compare_roc_curves(drake$taus, drake$mc); dev.off()
