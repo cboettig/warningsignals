@@ -15,7 +15,7 @@ freq <- c(.5, 1.5)
 source("analysis.R")
 
 data(CaCO3) 
-caco3 <- analysis(CaCO3)
+caco3 <- analysis(CaCO3, cpu=cpu, nboot=nboot, freq=freq)
 save(list="caco3", file="caco3_analysis.rda")
 png("caco3_roc.png"); compare_roc_curves(caco3$taus, caco3$mc); dev.off()
 upload("caco3_roc.png", script=script, tags=tags)

@@ -12,7 +12,7 @@ sampling_freq <- function(null, test, cpu=16, nboot=200,
     sample_effort <- sample_effort * length.original
   lapply(sample_effort, 
          function(effort){
-          montecarlotest(null, test, cpu, nboot, times=effort)
+          montecarlotest(null, test, cpu=cpu, nboot=nboot, times=effort)
          })
 }
 

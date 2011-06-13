@@ -2,7 +2,7 @@
 # custom functions for calling all the analysis and plot functions on a dataset
 
 
-analysis <- function(data){
+analysis <- function(data, cpu, nboot, freq){
   m <- fit_models(data, "LSN")
   sampling <- sampling_freq(m$const, m$timedep, cpu=cpu, nboot=nboot,
                             sample_effort=freq, length.original=length(m$X))
