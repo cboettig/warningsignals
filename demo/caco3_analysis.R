@@ -8,8 +8,9 @@ tweet_errors(script, tags=tags)
 on.exit(system("git push")) 
 
 cpu <- 16
-nboot <- 160
-freq <- c(.1, .5, 1.5, 2, 5)
+nboot <- 16
+#freq <- c(.1, .5, 1.5, 2, 5)
+freq <- c(.5, 1.5)
 
 source("analysis.R")
 
