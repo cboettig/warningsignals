@@ -7,7 +7,7 @@ tags="warningsignals, stochpop"
 tweet_errors(script, tags=tags)
 on.exit(system("git push")) 
 
-freq <- c(.1, .5, 1.5, 2, 5)
+freq <- c(2, 4, 8, 16)
 source("analysis.R")
 
 data(drake)
