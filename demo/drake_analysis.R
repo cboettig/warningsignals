@@ -7,7 +7,8 @@ tags="warningsignals, stochpop"
 tweet_errors(script, tags=tags)
 on.exit(system("git push")) 
 
-cpu <- 16
+cpu <- 1
+sfInit()
 nboot <- 160
 freq <- c(.1, .5, 1.5, 2, 5)
 
