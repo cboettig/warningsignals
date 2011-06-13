@@ -16,7 +16,7 @@ freq <- c(.5, 10)
 analysis <- function(data){
   m <- fit_models(data, "LSN")
   sampling <- sampling_freq(m$const, m$timedep, cpu=cpu, nboot=nboot,
-                            sample_effort=freq, length=length.original(m$X))
+                            sample_effort=freq, length.original=length(m$X))
   taus <- bootstrap_tau(m$X, m$const, m$timedep, cpu=cpu, nboot=nboot)
   mc <- montecarlotest(m$const, m$timedep, cpu=cpu, nboot=nboot)
   list(m=m, taus=taus, mc=mc, sampling=sampling, data=data, freq=freq)
