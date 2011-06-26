@@ -18,7 +18,7 @@ freq <- c(.1, .5, 1.5, 2, 5)
 source("analysis.R")
 data(deuterium)
 deut <- vector("list", length=3)
-for(i in 1:length(deut)){
+for(i in 3){
   deut[[i]] <- analysis(deuterium[[i]], cpu=cpu, nboot=nboot, freq=freq)
   png(paste("deut_", i, "_roc.png", sep="")); 
   compare_roc_curves(deut[[i]]$taus, deut[[i]]$mc); dev.off()
