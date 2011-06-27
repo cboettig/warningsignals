@@ -8,7 +8,6 @@ script <- "deut_analysis.R"
 gitaddr <- gitcommit(script)
 tags="warningsignals, stochpop"
 tweet_errors(script, tags=tags)
-on.exit(system("git push")) 
 ###############
 
 cpu <- 16
@@ -18,7 +17,7 @@ freq <- c(.1, .3, .5, .7, .9)
 source("analysis.R")
 data(deuterium)
 deut <- vector("list", length=3)
-for(i in 3){
+for(i in 1){
   deut[[i]] <- analysis(deuterium[[i]], cpu=cpu, nboot=nboot, freq=freq)
   png(paste("deut_", i, "_roc.png", sep="")); 
   compare_roc_curves(deut[[i]]$taus, deut[[i]]$mc); dev.off()
