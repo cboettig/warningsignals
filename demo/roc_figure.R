@@ -23,17 +23,18 @@ roc_fig <- function(null, test, thresh= 5, xlim=NULL, ylim=NULL, bw = "nrd0",
 
   false_warning <- 100*sum(null > thresh)/length(null)
   true_warning <- 100*sum(test > thresh)/length(test)
+  cex.lab <- par()$cex.lab
   if(legend & !numeric_legend)
     legend("topright",
          c("False Positive","True Positive"),
-         pch=c(15,15), col=c(color.null, color.test))
+         pch=c(15,15), col=c(color.null, color.test), cex=cex.lab)
   if(numeric_legend)
    legend("topright",
          c(paste("False Positive (", 
          prettyNum(false_warning,digits=3), "%)", sep=""), 
          paste("True Positive (", 
          prettyNum(true_warning,digits=3), "%)", sep="")),
-         pch=c(15,15), col=c(color.null, color.test))
+         pch=c(15,15), col=c(color.null, color.test), cex=cex.lab)
 
   c(false_pos = false_warning/100, true_pos = true_warning/100)
 }
@@ -48,40 +49,70 @@ dev.off()
 
 
 png("roc_for_dummies.png", width=3*480, height=2*480)
-par(mfrow=c(2,3), mar=c(5,5,4,2))
+par(mfrow=c(2,3), mar=c(7,7,4,2))
 t <- seq(3,8,length=5)
-roc_pts <- sapply(1:5, function(i) roc_fig(null, test, thresh=t[i], xlab="Difference in Log Likelihood", main="", legend=F, cex=2, cex.axis=2, cex.lab=2, color.line=i, lwd=5))
+roc_pts <- sapply(1:5, function(i) roc_fig(null, test, thresh=t[i], xlab="Difference in Log Likelihood", main="", legend=F, cex=2, cex.axis=3, cex.lab=3, color.line=i, lwd=5, numeric_legend=T))
 
+init.pow <- function(null, test){
+  pow <- vector("list", length=2)
+  class(pow) <- "pow"
+  dummy <- list(loglik=0, k=0)
+  class(dummy) <- "gauss"
+  pow$test <- dummy 
+  pow$null <- dummy
+  pow$null_dist <- null 
+  pow$test_dist <- test 
+  pow
+}
 
-pow <- vector("list", length=2)
-class(pow) <- "pow"
-dummy <- list(loglik=0, k=0)
-class(dummy) <- "gauss"
-pow$test <- dummy 
-pow$null <- dummy
-pow$null_dist <- null 
-pow$test_dist <- test 
-
+pow <- init.pow(null,test)
 
 roc_curve(pow, cex=2, cex.lab=2, cex.axis=2, lwd=3)
 points(t(roc_pts), col=1:5, pch=19, cex=4)
 
 dev.off()
 
+
+
+png("compare_rocs.png", width=3*480, height=2*480)
+par(mfrow=c(2,3), mar=c(5,5,4,2))
+t <- seq(3,8,length=5)
+for(i in 1:3){
+  test <- rnorm(1000, i+4, 1)
+  pow <- init.pow(null,test)
+  plot(pow, show_text=FALSE)
+}
+
+for(i in 1:3){
+  test <- rnorm(1000, i+4, 1)
+  pow <- init.pow(null,test)
+  roc_curve(pow, cex=2, cex.lab=2, cex.axis=2, lwd=3)
+}
+dev.off()
+
+
+
+
+
+
 M <- 5
 png("ErrorTypes.png", width=480*M)
 par(mfrow=c(1,M))
 for(t in seq(.5, .95, length=M))
  plot(pow, show_data=F, xlab="Difference in Log Likelihood", shade_aic=T, shade=F, 
-      threshold=t, info="threshold", legend=F)
+      threshold=t, info="threshold", legend=F, cex=2, cex.axis=2, cex.lab=2)
 dev.off()
+
+
+
+
 
 ### Social report
 require(socialR)
 script <- "roc_figure.R"
 gitaddr <- gitcommit(script) # ok to do last since quick-run script
 tags="warningsignals, stochpop"
-upload("ErrorTypes.png", script=script, gitaddr=gitaddr, tags=tags)
-upload("roc_example.png", script=script, gitaddr=gitaddr, tags=tags)
-upload("roc_for_dummies.png", script=script, gitaddr=gitaddr, tags=tags)
+#upload("ErrorTypes.png", script=script, gitaddr=gitaddr, tags=tags)
+#upload("roc_example.png", script=script, gitaddr=gitaddr, tags=tags)
+#upload("roc_for_dummies.png", script=script, gitaddr=gitaddr, tags=tags)
 
