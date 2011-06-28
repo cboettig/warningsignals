@@ -4,14 +4,14 @@ require(warningsignals)
 
 roc_fig <- function(null, test, thresh= 5, xlim=NULL, ylim=NULL, bw = "nrd0", 
                     color.null=rgb(0,0,1,.5), color.test=rgb(1,0,0,.5),
-                    legend=TRUE, numeric_legend=FALSE, ...){
+                    color.line="black", lwd=3, legend=TRUE, numeric_legend=FALSE, ...){
   nd <- density(null,bw=bw,n=length(null))
   td <- density(test,bw=bw,n=length(test))
 ## Calculate Axis Limits
   if(is.null(xlim)) xlim <- c(min(td$x, nd$x), max(td$x,nd$x))
   if(is.null(ylim)) ylim <- c(min(td$y, nd$y), max(td$y,nd$y))
-  plot(nd, xlim=xlim, ylim=ylim, type="s", col=color.null, lwd=3, ...) 
-  lines(td, col=color.test, lwd=3)
+  plot(nd, xlim=xlim, ylim=ylim, type="s", col=color.null, lwd=lwd, ...) 
+  lines(td, col=color.test, lwd=lwd)
   shade <- which(nd$x > thresh)
   polygon(c(thresh,nd$x[shade]), c(0,nd$y[shade]),
           col=color.null, border=color.test)
@@ -19,10 +19,10 @@ roc_fig <- function(null, test, thresh= 5, xlim=NULL, ylim=NULL, bw = "nrd0",
   polygon(c(thresh,td$x[shade]), c(0,td$y[shade]),
           col=color.test, border=color.test)
 
-  abline(v=thresh, col="black", lwd=2)
+  abline(v=thresh, col=color.line, lwd=lwd)
 
-  false_warning <- 100*sum(nd$x > thresh)/length(nd$x)
-  true_warning <- 100*sum(td$x > thresh)/length(td$x)
+  false_warning <- 100*sum(null > thresh)/length(null)
+  true_warning <- 100*sum(test > thresh)/length(test)
   if(legend & !numeric_legend)
     legend("topright",
          c("False Positive","True Positive"),
@@ -34,10 +34,12 @@ roc_fig <- function(null, test, thresh= 5, xlim=NULL, ylim=NULL, bw = "nrd0",
          paste("True Positive (", 
          prettyNum(true_warning,digits=3), "%)", sep="")),
          pch=c(15,15), col=c(color.null, color.test))
+
+  c(false_pos = false_warning/100, true_pos = true_warning/100)
 }
 
-null <- rnorm(10000, 5.5, 1)
-test <- rnorm(10000, 6.5, 1)
+null <- rnorm(1000, 5.5, 1)
+test <- rnorm(1000, 6.5, 1)
 
 png("roc_example.png")
 par(mar=c(5,5,4,2))
@@ -47,8 +49,8 @@ dev.off()
 
 png("roc_for_dummies.png", width=3*480, height=2*480)
 par(mfrow=c(2,3), mar=c(5,5,4,2))
-for(t in seq(3,8,length=5))
-  roc_fig(null, test, thresh=t, xlab="Difference in Log Likelihood", main="", legend=F, cex=2, cex.axis=2, cex.lab=2)
+t <- seq(3,8,length=5)
+roc_pts <- sapply(1:5, function(i) roc_fig(null, test, thresh=t[i], xlab="Difference in Log Likelihood", main="", legend=F, cex=2, cex.axis=2, cex.lab=2, color.line=i, lwd=5))
 
 
 pow <- vector("list", length=2)
@@ -61,7 +63,9 @@ pow$null_dist <- null
 pow$test_dist <- test 
 
 
-roc_curve(pow, cex=2, cex.lab=2, cex.axis=2)
+roc_curve(pow, cex=2, cex.lab=2, cex.axis=2, lwd=3)
+points(t(roc_pts), col=1:5, pch=19, cex=4)
+
 dev.off()
 
 M <- 5
