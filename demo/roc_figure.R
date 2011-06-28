@@ -5,7 +5,7 @@ require(warningsignals)
 roc_fig <- function(null, test, thresh= 5, xlim=NULL, ylim=NULL, bw = "nrd0", 
                     color.null=rgb(0,0,1,.5), color.test=rgb(1,0,0,.5),
                     color.line="black", lwd=3, legend=TRUE, numeric_legend=FALSE,
-                    cex.legend=1, ...){
+                    cex.legend=.5, ...){
   nd <- density(null,bw=bw,n=length(null))
   td <- density(test,bw=bw,n=length(test))
 ## Calculate Axis Limits
@@ -44,14 +44,19 @@ test <- rnorm(1000, 6.5, 1)
 
 png("roc_example.png")
 par(mar=c(5,5,4,2))
-roc_fig(null, test, thresh=5, xlab="Difference in Log Likelihood", main="", numeric_legend=T, cex=2, cex.axis=2, cex.lab=2)
+  roc_fig(null, test, thresh=5, xlab="Difference in Log Likelihood", main="", numeric_legend=T, cex=2, cex.axis=2, cex.lab=2)
 dev.off()
 
 
 png("roc_for_dummies.png", width=3*480, height=2*480)
 par(mfrow=c(2,3), mar=c(7,7,4,2))
 t <- seq(3,8,length=5)
-roc_pts <- sapply(1:5, function(i) roc_fig(null, test, thresh=t[i], xlab="Difference in Log Likelihood", main="", legend=F, cex=2, cex.axis=3, cex.lab=3, color.line=i, lwd=5, numeric_legend=T, cex.legend=3))
+roc_pts <- sapply(1:5, 
+                  function(i) 
+                    roc_fig(null, test, thresh=t[i], 
+                    xlab="Difference in Log Likelihood", 
+                    main="", legend=F, cex=2, cex.axis=3, cex.lab=3, 
+                    color.line=i, lwd=5, numeric_legend=T, cex.legend=3))
 
 init.pow <- function(null, test){
   pow <- vector("list", length=2)
@@ -67,7 +72,7 @@ init.pow <- function(null, test){
 
 pow <- init.pow(null,test)
 
-roc_curve(pow, cex=3, cex.lab=3, cex.axis=3, lwd=3)
+roc_curve(pow, cex=3, cex.lab=3, cex.axis=2.3, lwd=3)
 points(t(roc_pts), col=1:5, pch=19, cex=4)
 
 dev.off()
@@ -80,13 +85,13 @@ t <- seq(3,8,length=5)
 for(i in 1:3){
   test <- rnorm(1000, i+4, 1)
   pow <- init.pow(null,test)
-  plot(pow, show_text=FALSE, cex.lab=3, cex.axis=3)
+  plot(pow, show_text=FALSE, cex.lab=3, cex.axis=2.3, xlab="Difference in Log Likelihood")
 }
 
 for(i in 1:3){
   test <- rnorm(1000, i+4.5, 1)
   pow <- init.pow(null,test)
-  roc_curve(pow, cex=2, cex.lab=3, cex.axis=3, lwd=3)
+  roc_curve(pow, cex=2, cex.lab=3, cex.axis=2.3, lwd=3)
 }
 dev.off()
 
