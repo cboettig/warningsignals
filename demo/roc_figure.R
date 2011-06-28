@@ -1,12 +1,83 @@
 # Generate a figure to show how ROC curves originate from the distributions
+rm(list=ls())
 require(warningsignals)
+
+roc_fig <- function(null, test, thresh= 5, xlim=NULL, ylim=NULL, bw = "nrd0", 
+                    color.null=rgb(0,0,1,.5), color.test=rgb(1,0,0,.5),
+                    legend=TRUE, numeric_legend=FALSE, ...){
+  nd <- density(null,bw=bw,n=length(null))
+  td <- density(test,bw=bw,n=length(test))
+## Calculate Axis Limits
+  if(is.null(xlim)) xlim <- c(min(td$x, nd$x), max(td$x,nd$x))
+  if(is.null(ylim)) ylim <- c(min(td$y, nd$y), max(td$y,nd$y))
+  plot(nd, xlim=xlim, ylim=ylim, type="s", col=color.null, lwd=3, ...) 
+  lines(td, col=color.test, lwd=3)
+  shade <- which(nd$x > thresh)
+  polygon(c(thresh,nd$x[shade]), c(0,nd$y[shade]),
+          col=color.null, border=color.test)
+  shade <- which(td$x > thresh)
+  polygon(c(thresh,td$x[shade]), c(0,td$y[shade]),
+          col=color.test, border=color.test)
+
+  abline(v=thresh, col="black", lwd=2)
+
+  false_warning <- 100*sum(nd$x > thresh)/length(nd$x)
+  true_warning <- 100*sum(td$x > thresh)/length(td$x)
+  if(legend & !numeric_legend)
+    legend("topright",
+         c("False Positive","True Positive"),
+         pch=c(15,15), col=c(color.null, color.test))
+  if(numeric_legend)
+   legend("topright",
+         c(paste("False Positive (", 
+         prettyNum(false_warning,digits=3), "%)", sep=""), 
+         paste("True Positive (", 
+         prettyNum(true_warning,digits=3), "%)", sep="")),
+         pch=c(15,15), col=c(color.null, color.test))
+}
+
+null <- rnorm(10000, 5.5, 1)
+test <- rnorm(10000, 6.5, 1)
+
+png("roc_example.png")
+par(mar=c(5,5,4,2))
+roc_fig(null, test, thresh=5, xlab="Difference in Log Likelihood", main="", numeric_legend=T, cex=2, cex.axis=2, cex.lab=2)
+dev.off()
+
+
+png("roc_for_dummies.png", width=3*480, height=2*480)
+par(mfrow=c(2,3), mar=c(5,5,4,2))
+for(t in seq(3,8,length=5))
+  roc_fig(null, test, thresh=t, xlab="Difference in Log Likelihood", main="", legend=F, cex=2, cex.axis=2, cex.lab=2)
+
+
 pow <- vector("list", length=2)
 class(pow) <- "pow"
 dummy <- list(loglik=0, k=0)
 class(dummy) <- "gauss"
 pow$test <- dummy 
 pow$null <- dummy
+pow$null_dist <- null 
+pow$test_dist <- test 
 
-pow$null_dist <- rnorm(10000, 4, 1)
-pow$test_dist <- rnorm(10000, 7, 1)
-plot(pow, show_data=F, bw=.05)
+
+roc_curve(pow, cex=2, cex.lab=2, cex.axis=2)
+dev.off()
+
+M <- 5
+png("ErrorTypes.png", width=480*M)
+par(mfrow=c(1,M))
+for(t in seq(.5, .95, length=M))
+ plot(pow, show_data=F, xlab="Difference in Log Likelihood", shade_aic=T, shade=F, 
+      threshold=t, info="threshold", legend=F)
+dev.off()
+
+### Social report
+require(socialR)
+script <- "roc_figure.R"
+gitaddr <- gitcommit(script) # ok to do last since quick-run script
+tags="warningsignals, stochpop"
+upload("ErrorTypes.png", script=script, gitaddr=gitaddr, tags=tags)
+upload("roc_example.png", script=script, gitaddr=gitaddr, tags=tags)
+upload("roc_for_dummies.png", script=script, gitaddr=gitaddr, tags=tags)
+
