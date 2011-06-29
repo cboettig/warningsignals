@@ -21,8 +21,10 @@ freq <- c(1, 2, 10) #c(.1, .5, 1.5, 2, 5)
 source("analysis.R")
 
 
-plot_tau_sampling_freq <- function(sampling, freq){
-  sampling <- reformat_tau_dists(sampling)
+plot_tau_sampling_freq <- function(sampling_all, freq){
+  sampling_vars <- lapply(1:length(sampling_all), function(i) sampling_all[[i]][[1]])
+  sampling <- reformat_tau_dists(sampling_vars)
+
   auc <- numeric(length(sampling))
   auc[1] <- roc_curve(sampling[[1]], lwd=2, col=1)
   legend_txt <- character(length(sampling))
