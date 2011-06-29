@@ -30,9 +30,9 @@ roc_fig <- function(null, test, thresh= 5, xlim=NULL, ylim=NULL, bw = "nrd0",
          pch=c(15,15), col=c(color.null, color.test), cex=cex.legend, bty="n")
   if(numeric_legend)
    legend("topright",
-         c(paste("False Positive (", 
+         c(paste("False Pos (", 
          prettyNum(false_warning,digits=3), "%)", sep=""), 
-         paste("True Positive (", 
+         paste("True Pos (", 
          prettyNum(true_warning,digits=3), "%)", sep="")),
          pch=c(15,15), col=c(color.null, color.test), cex=cex.legend,
          bty="n")
