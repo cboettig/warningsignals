@@ -40,8 +40,8 @@ roc_fig <- function(null, test, thresh= 5, xlim=NULL, ylim=NULL, bw = "nrd0",
   c(false_pos = false_warning/100, true_pos = true_warning/100)
 }
 
-null <- rnorm(1000, 5.5, 1)
-test <- rnorm(1000, 6.5, 1)
+null <- rnorm(1000, 5.5, 3)
+test <- rnorm(1000, 10.5, 1)
 
 png("roc_example.png")
 par(mar=c(5,5,4,2))
