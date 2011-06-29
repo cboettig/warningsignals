@@ -21,13 +21,13 @@ freq <- c(1, 2, 10) #c(.1, .5, 1.5, 2, 5)
 source("analysis.R")
 
 
-plot_sampling_freq <- function(sampling, freq){
+plot_tau_sampling_freq <- function(sampling, freq){
+  sampling <- reformat_tau_dists(sampling)
   auc <- numeric(length(sampling))
   auc[1] <- roc_curve(sampling[[1]], lwd=2, col=1)
   legend_txt <- character(length(sampling))
   legend_txt[1] <- paste("Effort", freq[1], "AUC =",round(auc[1],3))
   for(i in 2:length(sampling)){
-#    sampling[[i]] <- remove_unconverged(sampling[[i]])
     auc[i] <- roc_curve(sampling[[i]], lwd=2, col=i, add=TRUE)
     legend_txt[i] <- paste("Effort", freq[i], "AUC =",round(auc[i],3))
   }
@@ -36,16 +36,16 @@ plot_sampling_freq <- function(sampling, freq){
 
 
 
-data(ibms)
-m <- fit_models(ibm_critical, "LSN")
-sampling <- indicator_sampling_freq(m, cpu, nboot, sample_effort=freq,
-                               length.original=length(m$X)) 
+#data(ibms)
+#m <- fit_models(ibm_critical, "LSN")
+#sampling <- indicator_sampling_freq(m, cpu, nboot, sample_effort=freq,
+#                               length.original=length(m$X)) 
+#save(list=ls(), file="ibm_sampling_tau.Rdat")
 
-save(list=ls(), file="ibm_sampling_tau.Rdat")
 
 
 png("tau_sampling.png")
-plot_sampling_freq(sampling, freq)
+plot_tau_sampling_freq(sampling, freq)
 dev.off()
 upload("tau_sampling.png", script=script, gitaddr=gitaddr, tags=tags)
 
