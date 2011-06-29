@@ -11,11 +11,10 @@ tweet_errors(script, tags=tags)
 on.exit(system("git push")) 
 
 cpu <- 4
-nboot <- 100
+nboot <- 1000
 freq <- c(1, 2, 5, 8) 
 
 source("analysis.R")
-load("ibm_sampling_tau.Rdat")
 
 
 plot_tau_sampling_freq <- function(sampling_all, freq, pts=pts){
@@ -35,25 +34,25 @@ plot_tau_sampling_freq <- function(sampling_all, freq, pts=pts){
 
 
 data(ibms)
-#m <- fit_models(ibm_critical, "LSN")
-#if(m$timedep$pars[['m']] > 0)
-#  stop("m > 0")
+m <- fit_models(ibm_critical, "LSN")
+if(m$timedep$pars[['m']] > 0)
+  stop("m > 0")
 
-#sampling <- indicator_sampling_freq(m, cpu, nboot, sample_effort=freq,
-#                               length.original=length(m$X)) 
-#save(list=ls(), file="ibm_sampling_tau.Rdat")
+sampling <- indicator_sampling_freq(m, cpu, nboot, sample_effort=freq,
+                               length.original=length(m$X)) 
+save(list=ls(), file="ibm_sampling_tau.Rdat")
 
 png("tau_sampling.png")
-plot_tau_sampling_freq(sampling, freq, pts=10)
+plot_tau_sampling_freq(sampling, freq, pts=50)
 dev.off()
 upload("tau_sampling.png", script=script, gitaddr=gitaddr, tags=tags)
 
 
-#for(i in 1:length(sampling)){
-#  png("dists.png")
-#  plot(sampling[[i]])
-#  dev.off()
-#  upload("dists.png", script=script, gitaddr=gitaddr, tags=tags)
-#}
+for(i in 1:length(sampling)){
+  png("dists.png")
+  plot(sampling[[i]])
+  dev.off()
+  upload("dists.png", script=script, gitaddr=gitaddr, tags=tags)
+}
 
 
