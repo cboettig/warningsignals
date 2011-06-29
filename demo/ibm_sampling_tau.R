@@ -1,6 +1,12 @@
 #ibm_sampling_tau.R
 
 require(warningsignals)
+
+
+source("../R/bootstrap_indicators.R")
+
+
+
 require(socialR)
 script <- "ibm_sampling_tau.R"
 gitaddr <- gitcommit(script)
