@@ -27,7 +27,7 @@ plot_sampling_freq <- function(sampling, freq){
   legend_txt <- character(length(sampling))
   legend_txt[1] <- paste("Effort", freq[1], "AUC =",round(auc[1],3))
   for(i in 2:length(sampling)){
-    sampling[[i]] <- remove_unconverged(sampling[[i]])
+#    sampling[[i]] <- remove_unconverged(sampling[[i]])
     auc[i] <- roc_curve(sampling[[i]], lwd=2, col=i, add=TRUE)
     legend_txt[i] <- paste("Effort", freq[i], "AUC =",round(auc[i],3))
   }
@@ -41,7 +41,7 @@ m <- fit_models(ibm_critical, "LSN")
 sampling <- indicator_sampling_freq(m, cpu, nboot, sample_effort=freq,
                                length.original=length(m$X)) 
 
-save(list=ls(), file="ibm_sampling_tau.Rout")
+save(list=ls(), file="ibm_sampling_tau.Rdat")
 
 
 png("tau_sampling.png")
