@@ -75,6 +75,8 @@ pow <- init.pow(null,test)
 
 roc_curve(pow, cex=3, cex.lab=3, cex.axis=2.3, lwd=3)
 points(t(roc_pts), col=1:5, pch=19, cex=4)
+axis(1, col=rgb(0,0,1,.5))
+axis(2, col=rgb(1,0,0,.5))
 
 dev.off()
 
