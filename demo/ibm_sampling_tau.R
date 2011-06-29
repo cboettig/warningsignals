@@ -32,7 +32,7 @@ plot_tau_sampling_freq <- function(sampling_all, freq){
   legend("bottomright",legend_txt, col=c(1:length(sampling)), lty=1, lwd=3) 
 }
 
-load("ibms.rda")
+load("../data/ibms.rda")
 
 #data(ibms)
 m <- fit_models(ibm_critical, "LSN")
