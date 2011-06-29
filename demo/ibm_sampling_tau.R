@@ -3,10 +3,6 @@
 require(warningsignals)
 
 
-source("../R/bootstrap_indicators.R")
-
-
-
 require(socialR)
 script <- "ibm_sampling_tau.R"
 gitaddr <- gitcommit(script)
@@ -36,16 +32,17 @@ plot_tau_sampling_freq <- function(sampling_all, freq){
   legend("bottomright",legend_txt, col=c(1:length(sampling)), lty=1, lwd=3) 
 }
 
-
+load("ibms.rda")
 
 #data(ibms)
-#m <- fit_models(ibm_critical, "LSN")
-#sampling <- indicator_sampling_freq(m, cpu, nboot, sample_effort=freq,
-#                               length.original=length(m$X)) 
-#save(list=ls(), file="ibm_sampling_tau.Rdat")
+m <- fit_models(ibm_critical, "LSN")
 
+if(m$timedep$pars[['m']] > 0)
+  stop("m > 0")
 
-
+sampling <- indicator_sampling_freq(m, cpu, nboot, sample_effort=freq,
+                               length.original=length(m$X)) 
+save(list=ls(), file="ibm_sampling_tau.Rdat")
 png("tau_sampling.png")
 plot_tau_sampling_freq(sampling, freq)
 dev.off()
