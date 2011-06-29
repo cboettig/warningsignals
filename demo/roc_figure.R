@@ -27,14 +27,15 @@ roc_fig <- function(null, test, thresh= 5, xlim=NULL, ylim=NULL, bw = "nrd0",
   if(legend & !numeric_legend)
     legend("topright",
          c("False Positive","True Positive"),
-         pch=c(15,15), col=c(color.null, color.test), cex=cex.legend)
+         pch=c(15,15), col=c(color.null, color.test), cex=cex.legend, bty="n")
   if(numeric_legend)
    legend("topright",
          c(paste("False Positive (", 
          prettyNum(false_warning,digits=3), "%)", sep=""), 
          paste("True Positive (", 
          prettyNum(true_warning,digits=3), "%)", sep="")),
-         pch=c(15,15), col=c(color.null, color.test), cex=cex.legend)
+         pch=c(15,15), col=c(color.null, color.test), cex=cex.legend,
+         bty="n")
 
   c(false_pos = false_warning/100, true_pos = true_warning/100)
 }
@@ -44,7 +45,7 @@ test <- rnorm(1000, 6.5, 1)
 
 png("roc_example.png")
 par(mar=c(5,5,4,2))
-  roc_fig(null, test, thresh=5, xlab="Difference in Log Likelihood", main="", numeric_legend=T, cex.axis=2, cex.lab=2, cex.legend=1)
+  roc_fig(null, test, thresh=5, xlab="Difference in Log Likelihood", main="", numeric_legend=T, cex.axis=2, cex.lab=2, cex.legend=1.5)
 dev.off()
 
 
