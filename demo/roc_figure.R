@@ -55,7 +55,7 @@ t <- seq(3,8,length=5)
 roc_pts <- sapply(1:5, 
                   function(i) 
                     roc_fig(null, test, thresh=t[i], 
-                    xlab="Test Statistic", 
+                    xlab="Test Statistic", ylim=c(0,.54), 
                     main="", legend=F, cex=2, cex.axis=3, cex.lab=3, 
                     color.line=i, lwd=5, numeric_legend=T, cex.legend=3))
 
