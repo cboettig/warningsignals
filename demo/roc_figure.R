@@ -45,7 +45,7 @@ test <- rnorm(1000, 6.5, 1)
 
 png("roc_example.png")
 par(mar=c(5,5,4,2))
-  roc_fig(null, test, thresh=5, xlab="Difference in Log Likelihood", main="", numeric_legend=T, cex.axis=2, cex.lab=2, cex.legend=1.5)
+  roc_fig(null, test, thresh=5, xlab="Test Statistic", main="", numeric_legend=T, cex.axis=2, cex.lab=2, cex.legend=1.5)
 dev.off()
 
 
@@ -55,7 +55,7 @@ t <- seq(3,8,length=5)
 roc_pts <- sapply(1:5, 
                   function(i) 
                     roc_fig(null, test, thresh=t[i], 
-                    xlab="Difference in Log Likelihood", 
+                    xlab="Test Statistic", 
                     main="", legend=F, cex=2, cex.axis=3, cex.lab=3, 
                     color.line=i, lwd=5, numeric_legend=T, cex.legend=3))
 
@@ -86,7 +86,7 @@ t <- seq(3,8,length=5)
 tests <- lapply(1:3, function(i) rnorm(1000, i+4.5, 1))
 for(i in 1:3){
   pow <- init.pow(null,tests[[i]])
-  plot(pow, show_text=FALSE, cex.lab=3, cex.axis=2.3, xlab="Difference in Log Likelihood")
+  plot(pow, show_text=FALSE, cex.lab=3, cex.axis=2.3, xlab="Test Statistic")
 }
 
 for(i in 1:3){
@@ -105,7 +105,7 @@ M <- 5
 png("ErrorTypes.png", width=480*M)
 par(mfrow=c(1,M))
 for(t in seq(.5, .95, length=M))
- plot(pow, show_data=F, xlab="Difference in Log Likelihood", shade_aic=T, shade=F, 
+ plot(pow, show_data=F, xlab="Test Statistic", shade_aic=T, shade=F, 
       threshold=t, info="threshold", legend=F, cex=2, cex.axis=2, cex.lab=2)
 dev.off()
 
