@@ -28,7 +28,7 @@ compare_roc_curves <- function(taus, mc, legend=TRUE, ...){
 
 
 plot_sampling_freq <- function(sampling, freq){
-  auc <- numeric(length(sampling))
+  auc <- numeric(length(sampling)) # area under curve
   auc[1] <- roc_curve(sampling[[1]], lwd=2, col=1)
   legend_txt <- character(length(sampling))
   legend_txt[1] <- paste("Effort", freq[1], "AUC =",round(auc[1],3))

@@ -13,11 +13,13 @@ deteriorating <- simulateGauss(timedep_LSN, pars, N=100, T=100, Xo=500)
 const_pars <- updateGauss(constOU, const_pars, deteriorating, control=list(maxit=1000))$pars
 constant <- simulateGauss(constOU, const_pars, N=100, T=100, Xo=500)
 
-# put both datasets into a list and plot side-by-side
-dat <- list(deteriorating=deteriorating, constant=constant)
-all_indicators(dat)
 
-social_plot(all_indicators(dat), tags="stochpop warningsignals sim")
+save(list=c("deteriorating", "constant"), file="linear_sim.rda")
+
+# put both datasets into a list and plot side-by-side
+#dat <- list(deteriorating=deteriorating, constant=constant)
+#all_indicators(dat)
+#social_plot(all_indicators(dat), tags="stochpop warningsignals sim")
 
 
 
