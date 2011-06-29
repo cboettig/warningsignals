@@ -83,15 +83,15 @@ dev.off()
 png("compare_rocs.png", width=3*480, height=2*480)
 par(mfrow=c(2,3), mar=c(5,5,4,2))
 t <- seq(3,8,length=5)
+tests <- lapply(1:3, function(i) rnorm(1000, i+4.5, 1))
 for(i in 1:3){
-  test <- rnorm(1000, i+4.5, 1)
-  pow <- init.pow(null,test)
+  pow <- init.pow(null,tests[[i]])
   plot(pow, show_text=FALSE, cex.lab=3, cex.axis=2.3, xlab="Difference in Log Likelihood")
 }
 
 for(i in 1:3){
   test <- rnorm(1000, i+4.5, 1)
-  pow <- init.pow(null,test)
+  pow <- init.pow(null,tests[[i]])
   roc_curve(pow, cex=2, cex.lab=3, cex.axis=2.3, lwd=3)
 }
 dev.off()
