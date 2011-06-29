@@ -49,11 +49,11 @@ dev.off()
 upload("tau_sampling.png", script=script, gitaddr=gitaddr, tags=tags)
 
 
-for(i in 1:length(sampling)){
-  png("dists.png")
-  plot(sampling[[i]])
-  dev.off()
-  upload("dists.png", script=script, gitaddr=gitaddr, tags=tags)
-}
+#for(i in 1:length(sampling)){
+#  png("dists.png")
+#  plot(sampling[[i]])
+#  dev.off()
+#  upload("dists.png", script=script, gitaddr=gitaddr, tags=tags)
+#}
 
 
