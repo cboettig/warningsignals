@@ -29,7 +29,7 @@ plt_tau <- function(test_tau_dist, null_tau_dist, indicator, ylim=NULL, legend=F
 }
 
 
-tau_dist_montecarlo <- function(X, const, timedep, signal=c("Variance", "Autocorrelation", "Skew", "CV"), nboot=100, cpu=2, windowsize=round(length(X)/2), method=c("kendall", "pearson", "spearman"))
+tau_dist_montecarlo <- function(X, const, timedep, signal=c("Variance", "Autocorrelation", "Skew", "CV"), nboot=100, cpu=2, times=NA, windowsize=round(length(X)/2), method=c("kendall", "pearson", "spearman"))
 ## Compute Monte Carlo bootstrap of tau under each model
 {
 
@@ -53,12 +53,12 @@ tau_dist_montecarlo <- function(X, const, timedep, signal=c("Variance", "Autocor
 
 ## Look at the distribution of Taus when simulating from timedep
 	test_tau_dist <- sfSapply(1:nboot, function(i){
-		Z <- simulate(timedep)
+		Z <- simulate(timedep, times=times)
 		compute_tau(Z, signal, windowsize, method=method)
 	})
 ## Distribution of Taus simulating from const model
 	null_tau_dist <- sfSapply(1:nboot, function(i){
-		Y <- simulate(const)
+		Y <- simulate(const, times=times)
 		compute_tau(Y, signal, windowsize, method=method)
 	})
 
