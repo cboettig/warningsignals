@@ -34,10 +34,9 @@ plot_tau_sampling_freq <- function(sampling_all, freq){
 
 
 data(ibms)
-m <- fit_models(ibm_critical, "LSN")
-
-if(m$timedep$pars[['m']] > 0)
-  stop("m > 0")
+#m <- fit_models(ibm_critical, "LSN")
+#if(m$timedep$pars[['m']] > 0)
+#  stop("m > 0")
 
 #sampling <- indicator_sampling_freq(m, cpu, nboot, sample_effort=freq,
 #                               length.original=length(m$X)) 
