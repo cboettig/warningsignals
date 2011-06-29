@@ -12,7 +12,7 @@ on.exit(system("git push"))
 
 cpu <- 4
 nboot <- 100
-freq <- c(1, 2, 10) #c(.1, .5, 1.5, 2, 5)
+freq <- c(1, 2, 5, 8) 
 
 source("analysis.R")
 
@@ -32,9 +32,8 @@ plot_tau_sampling_freq <- function(sampling_all, freq){
   legend("bottomright",legend_txt, col=c(1:length(sampling)), lty=1, lwd=3) 
 }
 
-load("../data/ibms.rda")
 
-#data(ibms)
+data(ibms)
 m <- fit_models(ibm_critical, "LSN")
 
 if(m$timedep$pars[['m']] > 0)
@@ -47,5 +46,13 @@ png("tau_sampling.png")
 plot_tau_sampling_freq(sampling, freq)
 dev.off()
 upload("tau_sampling.png", script=script, gitaddr=gitaddr, tags=tags)
+
+
+for(i in 1:length(sampling)){
+  png("dists.png")
+  plot(sampling[[i]])
+  dev.off()
+  upload("dists.png", script=script, gitaddr=gitaddr, tags=tags)
+}
 
 
