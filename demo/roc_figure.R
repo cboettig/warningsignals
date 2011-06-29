@@ -40,8 +40,8 @@ roc_fig <- function(null, test, thresh= 5, xlim=NULL, ylim=NULL, bw = "nrd0",
   c(false_pos = false_warning/100, true_pos = true_warning/100)
 }
 
-null <- rnorm(1000, 5.5, 3)
-test <- rnorm(1000, 10.5, 1)
+null <- rnorm(1000, 5.5, 1)
+test <- rnorm(1000, 6.5, 1)
 
 png("roc_example.png")
 par(mar=c(5,5,4,2))
@@ -120,7 +120,7 @@ require(socialR)
 script <- "roc_figure.R"
 gitaddr <- gitcommit(script) # ok to do last since quick-run script
 tags="warningsignals, stochpop"
-upload("ErrorTypes.png", script=script, gitaddr=gitaddr, tags=tags)
+upload("compare_rocs.png", script=script, gitaddr=gitaddr, tags=tags)
 upload("roc_example.png", script=script, gitaddr=gitaddr, tags=tags)
 upload("roc_for_dummies.png", script=script, gitaddr=gitaddr, tags=tags)
 
