@@ -5,7 +5,7 @@ require(warningsignals)
 roc_fig <- function(null, test, thresh= 5, xlim=NULL, ylim=NULL, bw = "nrd0", 
                     color.null=rgb(0,0,1,.5), color.test=rgb(1,0,0,.5),
                     color.line="black", lwd=3, legend=TRUE, numeric_legend=FALSE,
-                    cex.legend=.5, ...){
+                    cex.legend=1, ...){
   nd <- density(null,bw=bw,n=length(null))
   td <- density(test,bw=bw,n=length(test))
 ## Calculate Axis Limits
@@ -44,7 +44,7 @@ test <- rnorm(1000, 6.5, 1)
 
 png("roc_example.png")
 par(mar=c(5,5,4,2))
-  roc_fig(null, test, thresh=5, xlab="Difference in Log Likelihood", main="", numeric_legend=T, cex=2, cex.axis=2, cex.lab=2)
+  roc_fig(null, test, thresh=5, xlab="Difference in Log Likelihood", main="", numeric_legend=T, cex.axis=2, cex.lab=2, cex.legend=1)
 dev.off()
 
 
