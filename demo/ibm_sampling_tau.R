@@ -14,9 +14,9 @@ tags="warningsignals, stochpop"
 tweet_errors(script, tags=tags)
 on.exit(system("git push")) 
 
-cpu <- 16
-nboot <- 2
-freq <- c(.5, 2) #c(.1, .5, 1.5, 2, 5)
+cpu <- 4
+nboot <- 100
+freq <- c(1, 2, 10) #c(.1, .5, 1.5, 2, 5)
 
 source("analysis.R")
 
