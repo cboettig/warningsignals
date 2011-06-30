@@ -22,6 +22,6 @@ upload("deut1_roc.png", script=script, gitaddr=gitaddr, tags=tags)
 mc <- remove_unconverged(deut[[1]]$mc)
 taus <- reformat_tau_dists(deut[[1]]$taus) 
 
-png("deut1_roc.png"); plot_roc_curves(taus); dev.off()
+png("deut1_roc.png"); plot_roc_curves(c(mc,taus)); dev.off()
 upload("deut1_roc.png", script=script, gitaddr=gitaddr, tags=tags)
 
