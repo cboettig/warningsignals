@@ -17,8 +17,9 @@ tweet_errors(script, tags=tags)
 ## plots at increasing effort
 for(i in 1:length(freq)){
   file <- paste("ibm_crit_", freq[i], ".png")
+  a <- reformat_tau_dists(indicator_sampling[[i]])
   png(file); 
-  plot_roc_curves(list(sampling[[i]], indicator_sampling[[i]])); 
+  plot_roc_curves(c(sampling[i],a)); 
   dev.off()
   upload(file, script=script, gitaddr=gitaddr, tags=tags)
 }
