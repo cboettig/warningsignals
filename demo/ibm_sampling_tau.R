@@ -64,7 +64,7 @@ test <- sampling[[1]][[1]]$test_tau_dist
 
 png("roc_example.png")
 par(mar=c(5,5,4,2))
-  roc_fig(null, test, thresh=5, xlab="Test Statistic", main="", numeric_legend=T, cex.axis=2, cex.lab=2, cex.legend=1.5, ylim=c(0,.54))
+  roc_fig(null, test, thresh=0, xlab="Test Statistic", main="", numeric_legend=T, cex.axis=2, cex.lab=2, cex.legend=1.5)
 dev.off()
 upload("roc_example.png", script=script, gitaddr=gitaddr, tags=tags)
 
