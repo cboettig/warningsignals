@@ -46,7 +46,7 @@ plot_tau_sampling_freq <- function(sampling_all, freq, pts=pts){
 png("tau_sampling.png")
 plot_tau_sampling_freq(sampling, freq, pts=100)
 dev.off()
-#upload("tau_sampling.png", script=script, gitaddr=gitaddr, tags=tags)
+upload("tau_sampling.png", script=script, gitaddr=gitaddr, tags=tags)
 
 
 #for(i in 1:length(sampling)){
