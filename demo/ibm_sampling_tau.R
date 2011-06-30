@@ -11,9 +11,9 @@ on.exit(system("git push"))
 ############
 
 source("analysis.R")
-freq <- c(1, 2, 5, 10, 20)
+freq <- c(1, 5, 10, 20)
 cpu <- 4
-nboot <- 100
+nboot <- 200
 
 sampling <- indicator_sampling_freq(m, cpu, nboot,
                                     sample_effort=freq,
@@ -31,8 +31,8 @@ upload("tau_sampling.png", script=script, gitaddr=gitaddr, tags=tags)
 
 
 
-png("dists.png", width=2*480, height=2*480)
-par(mfrow=c(2,2))
+png("dists.png", width=4*480, height=480)
+par(mfrow=c(1,4))
 for(i in 1:length(sampling))
   plot(sampling[[i]][[stat]], xlab=paste("tau for trend in stat", stat),
        cex=2, cex.axis=2, cex.lab=2)
