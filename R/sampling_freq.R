@@ -28,12 +28,17 @@ indicator_sampling_freq <- function(m, cpu=16, nboot=200,
 #                    is interpreted as a fraction of this original data length
   if(!is.null(length.original))
     sample_effort <- sample_effort * length.original
-  lapply(sample_effort, 
+  out <- lapply(sample_effort, 
          function(effort){
-          bootstrap_tau(m$X, m$const, m$timedep, cpu=cpu, nboot=nboot, times=effort)
+          reformat_tau_dists(bootstrap_tau(m$X, m$const, m$timedep, cpu=cpu, 
+                                           nboot=nboot, times=effort))
          })
-}
 
+
+
+
+
+}
 
 plot_sampling_freq <- function(sampling, freq){
   auc <- numeric(length(sampling)) # area under curve
@@ -56,7 +61,6 @@ plot_tau_sampling_freq <- function(sampling_all, freq, pts=pts, stat=1){
   # usually 1 is variance, 2 is autocorrelation, 3 is skew, 4 is cv
   sampling_vars <- lapply(1:length(sampling_all), 
                           function(i) sampling_all[[i]][[stat]])
-  sampling <- reformat_tau_dists(sampling_vars)
 
   auc <- numeric(length(sampling))
   auc[1] <- roc_curve(sampling[[1]], lwd=2, col=1, pts=pts)

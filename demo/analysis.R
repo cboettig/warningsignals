@@ -28,6 +28,24 @@ compare_roc_curves <- function(taus, mc, legend=TRUE, ...){
 
 
 
+plot_roc_curves <- function(objects, legend=TRUE, ...){
+  # objects a list in which entry contains a fit object with null and 
+  # test dists for all the indicators.  
+
+  auc <- numeric(length(objects)) # store area under curve
+  legend_txt <- character(length(objects)) # AUC will go in legend
+
+  auc[1] <- roc_curve(objects[[1]], lwd=2, col=1, ...)
+  legend_txt[1] <- paste("AUC =",round(auc[1],2))
+  for(i in 2:length(objects)){
+    auc[i] <- roc_curve(objects[[i]], lwd=2, col=i, add=TRUE, ...)
+    legend_txt[i] <- paste("AUC =",round(auc[i],2))
+  }
+  legend("bottomright",legend_txt, col=c(1:length(objects)), lty=1, lwd=3) 
+}
+
+
+
 
 
 
