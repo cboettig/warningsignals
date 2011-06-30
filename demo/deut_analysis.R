@@ -28,7 +28,7 @@ m <- fit_models(deuterium[[i]], "LSN")
 indicator_sampling <- indicator_sampling_freq(m, cpu, nboot,
                                               sample_effort=freq_indicator,
                                               length.original=length(m$X)) 
-save(list="deut", file="deut_analysis.rda")
+save(list=ls(), file="deut_analysis.rda")
 
 
 
