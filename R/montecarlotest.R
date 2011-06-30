@@ -26,11 +26,14 @@ montecarlotest <- function(null, test, nboot = 100, cpu = 2,
 #   times: simulations can be sampled at specified times.  If NA, will draw
 #          sample points in simulating the process that match those of the 
 #          original data.  If just a scalar number is given, will use the same 
-#          interval, but draw that number of sample points.  If a numeric is 
-#          given, will sample at those time intervals.  
+#          interval, but draw that number of sample points.  If a numeric 
+#          vector is given, it will sample at those time intervals.  
 #
 #          FIXME needs to be extended to sample at times longer/shorter 
-#          than original domain.  
+#          than original domain. this is really a function of the simulate
+#          method for the model objects, the montecarlotest function just 
+#          passes this to the simulation function.  
+# 
 # Returns:
 #   A list with the following objects:
 #       null, test: the models passed in as null and test, 
