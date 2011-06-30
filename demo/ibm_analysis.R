@@ -27,7 +27,7 @@ mc <- remove_unconverged(montecarlotest(m$const, m$timedep,
 indicator_sampling <- indicator_sampling_freq(m, cpu, nboot,
                                               sample_effort=freq) 
 
-save("ibm_analysis.Rdat")
+save(list=ls(), file="ibm_analysis.Rdat")
 
 ### Plot methods
 
