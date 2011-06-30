@@ -54,12 +54,12 @@ fit_models <- function(X, model=c("LTC", "LSN"), integrateOU=FALSE,
 bootstrap_tau <- function(X, const, timedep, 
 						  indicators = c("Variance", "Autocorrelation", "Skew", "CV"),
 						  nboot=100, cpu=2, windowsize=round(length(X)/2), 
-						  method="kendall"){
+						  method="kendall", times=NA){
 # Tau approach comparison
 	taus <- lapply(indicators, 
 				   function(stat){
 						tau_dist_montecarlo(X, const, timedep, signal=stat, 
-						                    nboot=nboot, cpu=cpu, method=method) 
+						                    nboot=nboot, cpu=cpu, method=method, times=times) 
 						})
 	class(taus) <- "bootstrap_tau"
 	taus

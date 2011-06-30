@@ -7,7 +7,7 @@ export(getParameters.gauss, loglik.gauss, update.gauss, simulate.gauss, updateGa
 
 
 # sampling_freq.R
-export(sampling_freq)
+export(sampling_freq, indicator_sampling_freq)
 
 # functions in likelihood_bifur_models.R
 export(setLSN, setLTC, R, const_R, timedep_LTC, timedep_LSN, const_LTC, const_LSN, constOU)
