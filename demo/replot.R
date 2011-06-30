@@ -2,8 +2,7 @@
 rm(list=ls())
 require(warningsignals)
 
-
-load("5882379329.Rdat")
+load("5887222271.Rdat")
 
 ###############
 require(socialR)
