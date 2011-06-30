@@ -46,7 +46,7 @@ plot_tau_sampling_freq <- function(sampling_all, freq, pts=pts){
 png("tau_sampling.png")
 plot_tau_sampling_freq(sampling, freq, pts=100)
 dev.off()
-upload("tau_sampling.png", script=script, gitaddr=gitaddr, tags=tags)
+#upload("tau_sampling.png", script=script, gitaddr=gitaddr, tags=tags)
 
 
 #for(i in 1:length(sampling)){
@@ -55,5 +55,18 @@ upload("tau_sampling.png", script=script, gitaddr=gitaddr, tags=tags)
 #  dev.off()
 #  upload("dists.png", script=script, gitaddr=gitaddr, tags=tags)
 #}
+
+# Generate a figure to show how ROC curves originate from the distributions
+
+
+null <- sampling[[1]][[1]]$null_tau_dist
+test <- sampling[[1]][[1]]$test_tau_dist
+
+png("roc_example.png")
+par(mar=c(5,5,4,2))
+  roc_fig(null, test, thresh=5, xlab="Test Statistic", main="", numeric_legend=T, cex.axis=2, cex.lab=2, cex.legend=1.5, ylim=c(0,.54))
+dev.off()
+upload("roc_example.png", script=script, gitaddr=gitaddr, tags=tags)
+
 
 
