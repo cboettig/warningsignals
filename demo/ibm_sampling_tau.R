@@ -19,9 +19,8 @@ sampling <- indicator_sampling_freq(m, cpu, nboot,
                                     sample_effort=freq,
                                     length.original=length(m$X)) 
 
-save(list=ls(), file="ibm_sampling.Rdat")
 
-for(i in 1:3){
+for(i in 4){
 stat <- i # 1 is var, 2 autcor, 3 skew, 4 CV
 
 png("tau_sampling.png"); 
