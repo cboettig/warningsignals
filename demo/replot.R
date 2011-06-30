@@ -2,7 +2,7 @@
 rm(list=ls())
 require(warningsignals)
 
-load("5887222271.Rdat")
+load("~/flickr/5888212714.Rdat")
 
 ###############
 require(socialR)
@@ -13,9 +13,9 @@ tweet_errors(script, tags=tags)
 ###############
 
 
-png(paste("deut_", i, "_roc.png", sep="")); 
-compare_roc_curves(deut[[i]]$taus, deut[[i]]$mc); 
+png("tau_sampling.png"); # variance (stat=1) at different sampling efforts
+plot_tau_sampling_freq(indicator_sampling, freq_indicator, pts=100, stat=1); 
 dev.off()
-upload(paste("deut_", i, "_roc.png", sep=""), 
-       script=script, gitaddr=gitaddr, tags=tags)
+upload("tau_sampling.png", script=script, gitaddr=gitaddr, tags=tags)
+
 
