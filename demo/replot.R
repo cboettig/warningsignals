@@ -11,11 +11,11 @@ gitaddr <- gitcommit(script)
 tags="warningsignals, stochpop"
 tweet_errors(script, tags=tags)
 ###############
+source("analysis.R")
 
+mc <- remove_unconverged(mc)
+taus <- reformat_tau_dists(taus) 
 
-png("tau_sampling.png"); # variance (stat=1) at different sampling efforts
-plot_tau_sampling_freq(indicator_sampling, freq_indicator, pts=100, stat=1); 
-dev.off()
-upload("tau_sampling.png", script=script, gitaddr=gitaddr, tags=tags)
-
+png("deut1_roc.png"); plot_roc_curves(c(mc, taus)); dev.off()
+upload("deut1_roc.png", script=script, gitaddr=gitaddr, tags=tags)
 
