@@ -9,9 +9,9 @@ tweet_errors(script, tags=tags)
 on.exit(system("git push")) 
 
 cpu <- 16
-nboot <- 16
+nboot <- 32
 #freq <- c(25, 50, 100, 200, 500)
-freq <- c(25, 50)
+freq <- c(50)
 
 source("analysis.R")
 
@@ -27,12 +27,12 @@ mc <- remove_unconverged(montecarlotest(m$const, m$timedep,
 indicator_sampling <- indicator_sampling_freq(m, cpu, nboot,
                                               sample_effort=freq) 
 
-
+save("ibm_analysis.Rdat")
 
 ### Plot methods
 
 ## Original plot
-png("ibm_crit_roc.png"); plot_roc_curves(c(taus, mc)); dev.off()
+png("ibm_crit_roc.png"); plot_roc_curves(c(mc, taus)); dev.off()
 upload("ibm_crit_roc.png", script=script, gitaddr=gitaddr, tags=tags)
 
 ## plots at increasing effort
