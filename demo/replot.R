@@ -14,15 +14,11 @@ tweet_errors(script, tags=tags)
 
 
 
-## Original plot
-png("ibm_crit_roc.png"); plot_roc_curves(c(list(mc), taus)); dev.off()
-upload("ibm_crit_roc.png", script=script, gitaddr=gitaddr, tags=tags)
-
 ## plots at increasing effort
 for(i in 1:length(freq)){
   file <- paste("ibm_crit_", freq[i], ".png")
   png(file); 
-  plot_roc_curves(c(sampling[[i]], indicator_sampling[[i]])); 
+  plot_roc_curves(list(sampling[[i]], indicator_sampling[[i]])); 
   dev.off()
   upload(file, script=script, gitaddr=gitaddr, tags=tags)
 }
