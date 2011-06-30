@@ -12,6 +12,8 @@ on.exit(system("git push"))
 ############
 
 source("analysis.R")
+source("../R/sampling_freq.R")
+
 
 stat <- 3 # 1 is var, 2 autcor, 3 skew, 4 CV
 
