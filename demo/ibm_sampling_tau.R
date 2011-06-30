@@ -59,8 +59,8 @@ dev.off()
 # Generate a figure to show how ROC curves originate from the distributions
 
 
-null <- sampling[[1]][[1]]$null_tau_dist
-test <- sampling[[1]][[1]]$test_tau_dist
+null <- sampling[[4]][[1]]$null_tau_dist
+test <- sampling[[4]][[1]]$test_tau_dist
 
 png("roc_example.png")
 par(mar=c(5,5,4,2))
