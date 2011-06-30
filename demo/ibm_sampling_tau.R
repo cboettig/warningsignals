@@ -1,5 +1,4 @@
 #ibm_sampling_tau.R
-load("ibm_sampling_tau.Rdat")
 require(warningsignals)
 
 ############
@@ -12,10 +11,18 @@ on.exit(system("git push"))
 ############
 
 source("analysis.R")
-source("../R/sampling_freq.R")
+freq <- c(1, 2, 5, 10, 20)
+cpu <- 4
+nboot <- 100
 
+sampling <- indicator_sampling_freq(m, cpu, nboot,
+                                    sample_effort=freq,
+                                    length.original=length(m$X)) 
 
-stat <- 2 # 1 is var, 2 autcor, 3 skew, 4 CV
+save(list=ls(), file="ibm_sampling.Rdat")
+
+for(i in 1:3){
+stat <- i # 1 is var, 2 autcor, 3 skew, 4 CV
 
 png("tau_sampling.png"); 
 plot_tau_sampling_freq(sampling, freq, pts=100, stat=stat); 
@@ -45,5 +52,5 @@ par(mar=c(5,5,4,2))
 dev.off()
 upload("roc_example.png", script=script, gitaddr=gitaddr, tags=tags)
 
-
+}
 
