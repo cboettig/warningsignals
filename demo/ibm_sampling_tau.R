@@ -19,7 +19,7 @@ source("analysis.R")
 
 plot_tau_sampling_freq <- function(sampling_all, freq, pts=pts){
   sampling_vars <- lapply(1:length(sampling_all), 
-                          function(i) sampling_all[[i]][[3]])
+                          function(i) sampling_all[[i]][[4]])
   sampling <- reformat_tau_dists(sampling_vars)
 
   auc <- numeric(length(sampling))
