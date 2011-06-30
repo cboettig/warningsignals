@@ -15,10 +15,11 @@ source("analysis.R")
 
 
 
-png("dists.png")
-par(mfrow=c(4,1))
+png("dists.png", width=2*480, height=2*480)
+par(mfrow=c(2,2))
 for(i in 1:length(sampling))
-  plot(sampling[[i]][[1]])
+  plot(sampling[[i]][[1]], main="variance", xlab="tau",
+       cex=2, cex.axis=2, cex.lab=2)
 dev.off()
 upload("dists.png", script=script, gitaddr=gitaddr, tags=tags)
 
