@@ -15,7 +15,7 @@ source("analysis.R")
 source("../R/sampling_freq.R")
 
 
-stat <- 3 # 1 is var, 2 autcor, 3 skew, 4 CV
+stat <- 2 # 1 is var, 2 autcor, 3 skew, 4 CV
 
 png("tau_sampling.png"); 
 plot_tau_sampling_freq(sampling, freq, pts=100, stat=stat); 
@@ -27,7 +27,7 @@ upload("tau_sampling.png", script=script, gitaddr=gitaddr, tags=tags)
 png("dists.png", width=2*480, height=2*480)
 par(mfrow=c(2,2))
 for(i in 1:length(sampling))
-  plot(sampling[[i]][[stat]], xlab=paste("tau for trend in stat", stat)
+  plot(sampling[[i]][[stat]], xlab=paste("tau for trend in stat", stat),
        cex=2, cex.axis=2, cex.lab=2)
 dev.off()
 upload("dists.png", script=script, gitaddr=gitaddr, tags=tags)
