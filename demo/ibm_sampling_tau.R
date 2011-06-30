@@ -13,6 +13,9 @@ on.exit(system("git push"))
 
 source("analysis.R")
 
+png("tau_sampling.png"); plot_tau_sampling_freq(sampling, freq, pts=100); dev.off()
+upload("tau_sampling.png", script=script, gitaddr=gitaddr, tags=tags)
+
 
 
 png("dists.png", width=2*480, height=2*480)
@@ -21,7 +24,7 @@ for(i in 1:length(sampling))
   plot(sampling[[i]][[1]], xlab="tau for trend in variance",
        cex=2, cex.axis=2, cex.lab=2)
 dev.off()
-upload("dists.png", script=script, gitaddr=gitaddr, tags=tags)
+#upload("dists.png", script=script, gitaddr=gitaddr, tags=tags)
 
 
 
