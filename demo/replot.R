@@ -2,7 +2,7 @@
 rm(list=ls())
 require(warningsignals)
 
-load("~/flickr/5887680595.Rdat")
+load("~/flickr/5888212714.Rdat")
 
 ###############
 require(socialR)
