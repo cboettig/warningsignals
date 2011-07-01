@@ -1,4 +1,5 @@
 #ibm_sampling_tau.R
+rm(list=ls())
 require(warningsignals)
 
 ############
@@ -14,6 +15,9 @@ source("analysis.R")
 freq <- c(1, 5, 10, 20)
 cpu <- 4
 nboot <- 200
+
+data(ibms)
+m <- fit_models(ibm_critical, "LSN")
 
 sampling <- indicator_sampling_freq(m, cpu, nboot,
                                     sample_effort=freq,

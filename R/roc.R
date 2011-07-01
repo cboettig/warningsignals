@@ -1,10 +1,19 @@
 
 reformat_tau_dists <- function(taus){
-# rename tau_dists so that they follow the same naming convention as likelihood
+# rename tau_dists so that they follow the same naming conv as likelihood
+# this lets them work with the same commands as the montecarlotest output
+# but does not break any functionality of functions using the old form.
   lapply(taus, 
     function(pow){
       pow$null_dist <- pow$null_tau_dist[1,] # just tau, not p-values
       pow$test_dist <- pow$test_tau_dist[1,] # just tau, not p-values
+
+      # mc plot fns look for this, need to remove. meanwhile: 
+      dummy <- list(loglik=0, k=0)
+      class(dummy) <- "gauss"
+      pow$test <- dummy 
+      pow$null <- dummy
+
       pow})
 }
 
