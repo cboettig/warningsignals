@@ -7,7 +7,7 @@ export(getParameters.gauss, loglik.gauss, update.gauss, simulate.gauss, updateGa
 
 
 # sampling_freq.R
-export(sampling_freq, indicator_sampling_freq)
+export(sampling_freq, indicator_sampling_freq, plot_sampling_freq, plot_tau_sampling_freq)
 
 # functions in likelihood_bifur_models.R
 export(setLSN, setLTC, R, const_R, timedep_LTC, timedep_LSN, const_LTC, const_LSN, constOU)
@@ -33,6 +33,10 @@ export(fit_models, bootstrap_tau, plot.bootstrap_tau)
 export(dakos_data_processing, plot.dakos)
 #export(heteroOU)
 export(saddle_node_ibm)
+
+
+## errorrates.R
+export(roc_fig)
 
 
 import(snowfall, sde, odesolve, psych)

@@ -1,29 +1,46 @@
 
 reformat_tau_dists <- function(taus){
-# rename tau_dists so that they follow the same naming convention as likelihood
+# rename tau_dists so that they follow the same naming conv as likelihood
+# this lets them work with the same commands as the montecarlotest output
+# but does not break any functionality of functions using the old form.
   lapply(taus, 
     function(pow){
-      pow$null_dist <- pow$null_tau_dist
-      pow$test_dist <- pow$test_tau_dist
+      pow$null_dist <- pow$null_tau_dist[1,] # just tau, not p-values
+      pow$test_dist <- pow$test_tau_dist[1,] # just tau, not p-values
+
+      # mc plot fns look for this, need to remove. meanwhile: 
+      dummy <- list(loglik=0, k=0)
+      class(dummy) <- "gauss"
+      pow$test <- dummy 
+      pow$null <- dummy
+
       pow})
 }
 
-roc_curve <- function(pow, add=FALSE, ...){
+roc_curve <- function(pow, add=FALSE, pts=50, ...){
   n_null <- length(pow$null_dist)
   n_test <- length(pow$test_dist)
-  false_positive <- seq(0, 1-1/n_null, length=n_null)
-  roc <- sapply(false_positive, 
-                function(fp){
-                  thresh <- sort(pow$null_dist)[
-                                 round((1-fp)*n_null)]
-	                sum(pow$test_dist > thresh)/n_test})
-  delta <-false_positive[2]-false_positive[1]
-  area <- sum(roc*delta)
+
+  lower <- min(pow$null_dist, pow$test_dist)
+  upper <- max(pow$null_dist, pow$test_dist)
+  threshold <- seq(lower, upper, length=pts)
+
+
+  roc <- sapply(threshold, 
+                function(thresh){
+                  c(sum(pow$null_dist > thresh)/n_null,
+	                sum(pow$test_dist > thresh)/n_test)
+                })
+  roc <- t(roc)
+
+  f<-approx(roc[,1], roc[,2], n=200) 
+  delta <- f$x[2] - f$x[1]
+  area  <- sum(f$y*delta)
   print(paste("Area Under Curve = ", area))
   if(add)
-    lines(false_positive, roc,...)
+    lines(roc, ...)
   else
-    plot(false_positive, roc, type="l", xlab="False Postive",
+    plot(roc, xlab="False Postive", type="l",
          ylab="True Positive", ylim=c(0,1), xlim=c(0,1), ...)
   curve(1*x, add=TRUE, lty=2)
 

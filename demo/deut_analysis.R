@@ -9,22 +9,60 @@ gitaddr <- gitcommit(script)
 tags="warningsignals, stochpop"
 tweet_errors(script, tags=tags)
 ###############
-
-cpu <- 16
-nboot <- 500
-freq <- c(.1, .3, .5, .7, .9)
-
 source("analysis.R")
+
 data(deuterium)
-deut <- vector("list", length=3)
-for(i in 2){
-  deut[[i]] <- analysis(deuterium[[i]], cpu=cpu, nboot=nboot, freq=freq)
-  png(paste("deut_", i, "_roc.png", sep="")); 
-  compare_roc_curves(deut[[i]]$taus, deut[[i]]$mc); dev.off()
-  upload(paste("deut_", i, "_roc.png", sep=""), script=script, gitaddr=gitaddr, tags=tags)
-  png(paste("deut_", i, "_sampling.png", sep="")); plot_sampling_freq(deut[[i]]$sampling, deut[[i]]$freq); dev.off()
-  upload(paste("deut_", i, "_sampling.png", sep=""), script=script, gitaddr=gitaddr, tags=tags)
+i <- 1 ## Which deut?
+m <- fit_models(deuterium[[i]], "LSN")
+
+
+cpu <- 8
+nboot <- 500
+freq <- c(25, 50, 100, 200, 500)
+
+
+## Run the Analyses
+sampling <- 
+sampling_freq(m$const, m$timedep, cpu=cpu,
+              nboot=nboot, sample_effort=freq)
+
+taus <- 
+reformat_tau_dists(
+  bootstrap_tau(m$X, m$const, m$timedep, 
+                cpu=cpu, nboot=nboot))
+
+mc <- 
+remove_unconverged(
+  montecarlotest(m$const, m$timedep, 
+                 cpu=cpu, nboot=nboot)) 
+
+indicator_sampling <- 
+indicator_sampling_freq(m, cpu, nboot,
+                        sample_effort=freq) 
+
+
+
+### Plot methods
+## Original plot
+png("deut_roc.png"); plot_roc_curves(c(list(mc), taus)); dev.off()
+upload("deut_roc.png", script=script, gitaddr=gitaddr, tags=tags)
+
+
+for(i in 1:length(freq)){
+  input <- c(sampling[i], indicator_sampling[[i]])
+  file <- paste("deut_", freq[i], ".png", sep="")
+  png(file); 
+  plot_roc_curves(input, cex.axis=2, cex.lab=2); 
+  dev.off()
+  upload(file, script=script, gitaddr=gitaddr, tags=tags)
+
+  file <- paste("dist_deut_", freq[i], ".png", sep="")
+  png(file, width=480*length(input))
+  plot_dists(input, cex.axis=3, cex.lab=3.5); 
+  dev.off()
+  upload(file, script=script, gitaddr=gitaddr, tags=tags)
 }
 
-save(list="deut", file="deut_analysis.rda")
+
+
 
