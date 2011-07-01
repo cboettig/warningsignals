@@ -13,7 +13,7 @@ source("analysis.R")
 
 data(drake)
 
-m <- fit_models(drake_deterior, "LSN")
+m <- fit_models(drake_deterior$H6, "LSN")
 
 
 cpu <- 16
