@@ -210,7 +210,8 @@ plot.pow <- function(pow, threshold=.95, main="", legend=FALSE, type="density",
 			threshold_tail <- sort(pow$null_dist)[ round(threshold*n_null) ]
 			if(shade_power){
 				shade_power <- which(td$x > threshold_tail)
-				polygon(c(threshold_tail, td$x[shade_power]), c(0,td$y[shade_power]), col=rgb(1,0,0,.3), border=rgb(1,0,0,.5))
+				polygon(c(threshold_tail, td$x[shade_power]), c(0,td$y[shade_power]),
+                col=rgb(1,0,0,.3), border=rgb(1,0,0,.5))
 			} else if(shade){
 				polygon(td$x, td$y, col=rgb(1,0,0,.3), border=rgb(1,0,0,.5))
 			}
