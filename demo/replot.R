@@ -2,8 +2,7 @@
 rm(list=ls())
 require(warningsignals)
 
-#load("~/flickr/5888212714.Rdat")
-load("ibm_analysis.Rdat")
+load("~/flickr/5888212714.Rdat")
 ###############
 require(socialR)
 script <- "replot.R"
@@ -14,14 +13,13 @@ tweet_errors(script, tags=tags)
 
 
 
-## plots at increasing effort
-for(i in 1:length(freq)){
-  file <- paste("ibm_crit_", freq[i], ".png", sep="")
-  a <- reformat_tau_dists(indicator_sampling[[i]])
-  png(file); 
-  plot_roc_curves(c(sampling[i],a)); 
-  dev.off()
-  upload(file, script=script, gitaddr=gitaddr, tags=tags)
+plot_dists <- function(objects, ...){
+  n <- length(objects)
+  par(mfrow=c(1,n))
+  for(i in 1:n){
+    plot(objects[[i]], ...)
+  }
 }
 
+plot_dists(c(sampling[i], indicator_sampling[[i]])); 
 
