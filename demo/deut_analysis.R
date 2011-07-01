@@ -12,11 +12,11 @@ tweet_errors(script, tags=tags)
 source("analysis.R")
 
 data(deuterium)
-i <- 3 ## Which deut?
+i <- 1 ## Which deut?
 m <- fit_models(deuterium[[i]], "LSN")
 
 
-cpu <- 16
+cpu <- 8
 nboot <- 500
 freq <- c(25, 50, 100, 200, 500)
 
