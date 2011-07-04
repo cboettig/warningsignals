@@ -12,11 +12,11 @@ tweet_errors(script, tags=tags)
 source("analysis.R")
 
 data(deuterium)
-i <- 1 ## Which deut?
+i <- 3 ## Which deut?
 m <- fit_models(deuterium[[i]], "LSN")
 
 
-cpu <- 8
+cpu <- 16
 nboot <- 500
 freq <- c(25, 50, 100, 200, 500)
 
@@ -36,9 +36,10 @@ remove_unconverged(
   montecarlotest(m$const, m$timedep, 
                  cpu=cpu, nboot=nboot)) 
 
-indicator_sampling <- 
-indicator_sampling_freq(m, cpu, nboot,
-                        sample_effort=freq) 
+
+#indicator_sampling <- 
+#indicator_sampling_freq(m, cpu, nboot,
+#                        sample_effort=freq) 
 
 
 
@@ -48,6 +49,7 @@ png("deut_roc.png"); plot_roc_curves(c(list(mc), taus)); dev.off()
 upload("deut_roc.png", script=script, gitaddr=gitaddr, tags=tags)
 
 
+compare <- function(){
 for(i in 1:length(freq)){
   input <- c(sampling[i], indicator_sampling[[i]])
   file <- paste("deut_", freq[i], ".png", sep="")
@@ -63,6 +65,6 @@ for(i in 1:length(freq)){
   upload(file, script=script, gitaddr=gitaddr, tags=tags)
 }
 
-
+}
 
 
