@@ -2,15 +2,20 @@
 rm(list=ls())
 require(warningsignals)
 
-###############
+## Load must come BEFORE socialR block ##
+load("~/flickr/5895991499.Rdat")
+
+
+
+
+############### Use correct tagging for replot file ########
 require(socialR)
 script <- "replot.R"
 gitaddr <- gitcommit(script)
 tags="warningsignals, stochpop"
-tweet_errors(script, tags=tags)
-###############
+tweet_errors(script, tags=tags)     
+###########################################################
 
-load("~/flickr/5895991499.Rdat")
 
 cpu=16
 indicator_sampling <- indicator_sampling_freq(m, cpu, nboot,
