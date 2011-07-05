@@ -11,30 +11,23 @@ tweet_errors(script, tags=tags)
 on.exit(system("git push")) 
 #########################
 
-source("analysis.R")
-
-## The analyses -- slow!
+function(){ # not run
 data(ibms)
 ibm_crit <- fit_models(ibm_critical, "LSN")
 ibm_stable <- fit_models(ibm_stable, "LSN")
-
-
+data(CaCO3) 
+caco3 <- fit_models(CaCO3, "LSN")
+source("simulate_data.R")
+load("linear_sim.rda")
+lin_deterior <- fit_models(deteriorating, "LSN")
+lin_const <- fit_models(constant, "LSN")
 data(deuterium)
 deut1 <- fit_models(deuterium[[1]], "LSN")
 deut3 <- fit_models(deuterium[[3]], "LSN")
+}
 
 data(drake)
-daphnia <- fit_models(drake_deterior$H6, "LTC")
-
-data(CaCO3) 
-caco3 <- fit_models(CaCO3, "LSN")
-
-source("simulate_data.R")
-load("linear_sim.rda")
-
-lin_deterior <- fit_models(deteriorating, "LSN")
-lin_const <- fit_models(constant, "LSN")
-
+daphnia <- sfLapply(drake_deterior, fit_models, "LTC")
 
 get.mt <- function(fit){
  m <- fit$timedep$pars['m']  
@@ -42,11 +35,14 @@ get.mt <- function(fit){
  m*T
 }
 
-mt <- sapply(list(ibm_crit=ibm_crit, ibm_stable=ibm_stable, deut1=deut1, deut3=deut3, daphnia=daphnia, caco3=caco3, lin_deterior=lin_deterior, lin_const=lin_const), get.mt)
+sfInit(parallel=TRUE, cpu=16)
+mt <- sfSapply(daphnia, get.mt)
+
+#mt <- sapply(list(ibm_crit=ibm_crit, ibm_stable=ibm_stable, deut1=deut1, deut3=deut3, daphnia=daphnia, caco3=caco3, lin_deterior=lin_deterior, lin_const=lin_const), get.mt)
 
 save(list="mt", file="all_model_fits.Rdat")
 
-png("all_fits.png")
+png("all_fits.png", width=5*480)
 barplot(mt)
 dev.off()
 
