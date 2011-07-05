@@ -12,8 +12,8 @@ tweet_errors(script, tags=tags)
 
 load("~/flickr/5904550426.Rdat")
 
-cpu=1
-out_50 <-  bootstrap_tau(m$X, m$const, m$timedep, cpu=cpu, nboot=nboot, times=25)
+cpu=16
+out_25 <-  bootstrap_tau(m$X, m$const, m$timedep, cpu=cpu, nboot=nboot, times=25)
 
 
-save(list=ls(), file="replot_50.Rdat")
+
