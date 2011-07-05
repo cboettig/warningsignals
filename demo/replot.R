@@ -10,14 +10,12 @@ tags="warningsignals, stochpop"
 tweet_errors(script, tags=tags)
 ###############
 
-load("5905640579.Rdat")
-
-mt <- sapply(list(ibm_crit=ibm_crit, deut1=deut1, deut3=deut3, daphnia=daphnia, caco3=caco3, lin_deterior=lin_deterior, lin_const=lin_const), get.mt)
+load("~/flickr/5904550426.Rdat")
 
 
+effort <- 25 
+out_25 <-  reformat_tau_dists(bootstrap_tau(m$X, m$const, m$timedep, cpu=cpu, 
+                                           nboot=nboot, times=effort))
 
-png("all_fits.png", width=2*480)
-barplot(mt)
-dev.off()
-upload("all_fits.png", script=script, gitaddr=gitaddr, tags=tags)
 
+save("replot.Rdat")
