@@ -12,9 +12,9 @@ tweet_errors(script, tags=tags)
 
 load("~/flickr/5904550426.Rdat")
 
+cpu=16
+out_50 <-  reformat_tau_dists(bootstrap_tau(m$X, m$const, m$timedep, cpu=cpu, 
+                                           nboot=nboot, effort=50))
 
-out <-  reformat_tau_dists(bootstrap_tau(m$X, m$const, m$timedep, cpu=cpu, 
-                                           nboot=nboot))
 
-
-save("replot.Rdat")
+save("replot_50.Rdat")
