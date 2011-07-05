@@ -143,11 +143,14 @@ plot_indicator <- function(X, indicator=c("Autocorrelation", "Variance",
   }
 }
 	
-compute_tau <- function(X, indicator, windowsize=length(X)/2,
+compute_tau <- function(X, indicator, windowsize=NULL,
                         method=c("kendall", "pearson", "spearman"))
 ## unlike warning_stats, takes indicator as character instead of a function
 ## assumes X is ts object -- should add to a check(?)
 {
+  if(is.null(windowsize))
+    windowsize=length(X)/2
+
 	Y <- compute_indicator(X, indicator, windowsize)
 	out <- cor.test(time(X)[windowsize:length(X)], Y, method=method)
 	c(out$estimate, out$p.value)
