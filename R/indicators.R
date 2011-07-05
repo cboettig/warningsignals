@@ -82,16 +82,22 @@ compute_indicator <- function(X, indicator=c("Autocorrelation", "Variance", "Ske
 
 
 ## Compute and plot the given indicator
-plot_indicator <- function(X, indicator=c("Autocorrelation", "Variance", "Skew", "CV"), windowsize=length(X)/2, xpos=0, ypos=90, method=c("kendall", "pearson", "spearman"), ...)
+plot_indicator <- function(X, indicator=c("Autocorrelation", "Variance",
+                           "Skew", "CV"), windowsize=length(X)/2, xpos=0,
+                           ypos=90, method=c("kendall", "pearson", "spearman"),
+                           pval=TRUE, cor=TRUE, ...)
 ## Description
 ## Args:
 ##		X -- data, either ts object or matrix w/ time in col 1 and data in col 2
 ##		indicator -- name of the early warning indicator to be computed
 ##		windowsize -- size of the sliding window over which statistic is calculated
 ##		xpos, ypos -- % position from bottom left for text to appear
+##    cor -- (logical) show the correlation statistic?
+##    pval -- (logical) show the p value?
 ##		... -- extra arguments passed to plot
 ## Returns:
-##		A plot of indicator statistic over time interval, with kendall's tau and p-val
+##		A plot of indicator statistic over time interval, with kendall's tau 
+##      and p-val
 {	
 	method <- match.arg(method)
 	if(!is.ts(X)){
@@ -102,41 +108,43 @@ plot_indicator <- function(X, indicator=c("Autocorrelation", "Variance", "Skew",
 	}
 	Y <- compute_indicator(X, indicator, windowsize)
 	time_window <- time(X)[windowsize:length(X)]
-	plot(time_window, Y, xlim=c(start(X)[1], end(X)[1]), type="l", xlab="time", ylab=indicator, ...)
+	plot(time_window, Y, xlim=c(start(X)[1], end(X)[1]), type="l",
+       xlab="time", ylab=indicator, ...)
 	abline(v=time_window[1], lty="dashed")
 
 	out <- cor.test(time(X)[windowsize:length(X)], Y, method=method)
 
+  if(cor){
 	w <- c(out$estimate, out$p.value)
     if (method=="kendall"){ 
-## newline character doesn't work
-#            text(xshift(xpos), yshift(ypos),
-#                 substitute(paste(tau == val, "\n (p== ", pval, ")"), list(val=round(w[1],2),pval=format.pval(w[2]))), 
-#            pos=4, cex=par()$cex.lab)
             text(xshift(0), yshift(ypos),
                  substitute(paste(tau == val), 
                             list(val=round(w[1],2) )),
                  pos=4, cex=par()$cex.axis)
+            if(pval){
             text(xshift(0), yshift(ypos-20),
                  substitute(paste("(",p == pval,")"), 
                             list(pval=format.pval(w[2], digits=2))),
                  pos=4, cex=par()$cex.axis)
-#            legend("topleft", substitute(tau == val, list(val=round(w[1],2) )))
+            }
     }
     else if (method=="pearson") {
             text(xshift(xpos), yshift(ypos),
-                 substitute(paste(r == val, "\n (p== ", pval, ")"), list(val=round(w[1],2),pval=format.pval(w[2]))), 
+                 substitute(paste(r == val, "\n (p== ", pval, ")"),
+                 list(val=round(w[1],2),pval=format.pval(w[2]))), 
             pos=4, cex=par()$cex.lab)
     }
     else if (method=="spearman") {
             text(xshift(xpos), yshift(ypos),
-                 substitute(paste(rho == val, " (p== ", pval, ")"), list(val=round(w[1],2),pval=format.pval(w[2]))), 
+                 substitute(paste(rho == val, " (p== ", pval, ")"),
+                 list(val=round(w[1],2),pval=format.pval(w[2]))), 
             pos=4, cex=par()$cex.lab)
     }
-
+  }
 }
 	
-compute_tau <- function(X, indicator, windowsize=length(X)/2, method=c("kendall", "pearson", "spearman"))
+compute_tau <- function(X, indicator, windowsize=length(X)/2,
+                        method=c("kendall", "pearson", "spearman"))
 ## unlike warning_stats, takes indicator as character instead of a function
 ## assumes X is ts object -- should add to a check(?)
 {
@@ -148,12 +156,19 @@ compute_tau <- function(X, indicator, windowsize=length(X)/2, method=c("kendall"
 
 
 
-all_indicators <- function(X, indicators = c("Variance", "Autocorrelation", "Skew", "CV"), method=c("kendall", "pearson", "spearman"), ...)
+all_indicators <- function(X, indicators = c("Variance", "Autocorrelation", 
+                           "Skew", "CV"), method=c("kendall", "pearson",
+                           "spearman"), pval=TRUE, cor=TRUE, ...)
 ## Calc and plot all the leading indicators in a single frame plot
 ##		using a simple loop over the plot_indicator fn
 ## Args 
 ##		X -- can be a list of n ts objects or a single ts object
 ##		indicators -- a list of indicators m to calculate
+##		windowsize -- size of the sliding window over which statistic is calculated
+##		xpos, ypos -- % position from bottom left for text to appear
+##    cor -- (logical) show the correlation statistic?
+##    pval -- (logical) show the p value?
+##		... -- extra arguments passed to plot
 ## Returns:
 ##      Plot m+1 x n matrix of plots, showing data across the first row
 ##		 and various indicators below.  Columns for different datasets
@@ -183,10 +198,12 @@ all_indicators <- function(X, indicators = c("Variance", "Autocorrelation", "Ske
 		} else {	xaxt <- "n"
 		}
 		for(i in 1:n){
-			plot_indicator(X[[i]], indicators[j], xaxt=xaxt, method=method, xpos=-15, ...) 
-			if(i==1) mtext(indicators[j], WEST<-2, line=3, cex=par()$cex.lab, las=0) ## stat name on each row
-## i == 2 breaks generality of this plot, making the x-axis appear only on the second column always
-			if(j==m & i==2) mtext("Time", SOUTH<-1, line=2, cex=par()$cex.lab) ## x-axis label
+			plot_indicator(X[[i]], indicators[j], xaxt=xaxt, method=method, xpos=-15, cor=cor, pval=pval, ...) 
+			if(i==1) 
+        mtext(indicators[j], WEST<-2, line=3, cex=par()$cex.lab, las=0) ## stat name on each row
+      ## i == 2 breaks generality of this plot, making the x-axis appear only on the second column always
+			if(j==m & i==2) 
+        mtext("Time", SOUTH<-1, line=2, cex=par()$cex.lab) ## x-axis label
 		}
 	}
 }
