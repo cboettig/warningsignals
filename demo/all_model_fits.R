@@ -26,6 +26,12 @@ deut1 <- fit_models(deuterium[[1]], "LSN")
 deut3 <- fit_models(deuterium[[3]], "LSN")
 }
 
+
+
+
+
+sfInit(parallel=TRUE, cpu=16)
+
 data(drake)
 daphnia <- sfLapply(drake_deterior, fit_models, "LTC")
 
@@ -35,7 +41,6 @@ get.mt <- function(fit){
  m*T
 }
 
-sfInit(parallel=TRUE, cpu=16)
 mt <- sfSapply(daphnia, get.mt)
 
 #mt <- sapply(list(ibm_crit=ibm_crit, ibm_stable=ibm_stable, deut1=deut1, deut3=deut3, daphnia=daphnia, caco3=caco3, lin_deterior=lin_deterior, lin_const=lin_const), get.mt)
