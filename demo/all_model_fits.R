@@ -3,12 +3,12 @@ rm(list=ls())
 require(warningsignals)
 
 ##########################
-#require(socialR)
-#script <- "all_model_fits.R"
-#gitaddr <- gitcommit(script)
-#tags="warningsignals, stochpop"
-#tweet_errors(script, tags=tags)
-#on.exit(system("git push")) 
+require(socialR)
+script <- "all_model_fits.R"
+gitaddr <- gitcommit(script)
+tags="warningsignals, stochpop"
+tweet_errors(script, tags=tags)
+on.exit(system("git push")) 
 #########################
 
 source("analysis.R")
@@ -46,4 +46,8 @@ mt <- sapply(list(ibm_crit=ibm_crit, ibm_stable=ibm_stable, deut1=deut1, deut3=d
 
 save(list="mt", file="all_model_fits.Rdat")
 
+png("all_fits.png")
+barplot(mt)
+dev.off()
 
+upload("all_fits.png", script=script, gitaddr=gitaddr, tags=tags)
