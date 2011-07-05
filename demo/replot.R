@@ -10,10 +10,10 @@ tags="warningsignals, stochpop"
 tweet_errors(script, tags=tags)
 ###############
 
-load("~/flickr/5895991499.Rdat")
+load("~/flickr/5904550426.Rdat")
 
 cpu=1
-out_50 <-  bootstrap_tau(m$X, m$const, m$timedep, cpu=cpu, nboot=nboot, times=50)
+out_50 <-  bootstrap_tau(m$X, m$const, m$timedep, cpu=cpu, nboot=nboot, times=500)
 
 
 save(list=ls(), file="replot_50.Rdat")
