@@ -1,4 +1,6 @@
 # analysis.R
+
+rm(list=ls())
 ##########
 #require(socialR)
 #script <- "caco3_analysis.R"
@@ -7,6 +9,7 @@
 #tweet_errors(script, tags=tags)
 #on.exit(system("git push")) 
 ##########
+
 require(warningsignals)
 data(CaCO3) 
 m <- fit_models(CaCO3, "LSN")
