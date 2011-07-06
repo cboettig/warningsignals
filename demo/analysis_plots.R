@@ -1,7 +1,8 @@
 # analysis_plots.R
 rm(list=ls())
 
-load("deut1.Rdat")
+load("~/flickr/5910219566.Rdat")
+
 
 ###########################
 require(socialR)
@@ -15,28 +16,33 @@ on.exit(system("git push"))
 require(warningsignals)
 source("analysis.R")
 
-indicator_sampling <- 
-indicator_sampling_freq(m, cpu, nboot,
-                        sample_effort=freq) 
 
 
-png("deut1_roc.png"); plot_roc_curves(c(list(mc), taus)); dev.off()
-upload("deut1_roc.png", script=script, gitaddr=gitaddr, tags=tags)
 
-for(i in 1:length(freq)){
-  input <- c(sampling[i], indicator_sampling[[i]])
-  file <- paste("deut1_", freq[i], ".png", sep="")
-  png(file); 
-  plot_roc_curves(input, cex.axis=2, cex.lab=2); 
-  dev.off()
-  upload(file, script=script, gitaddr=gitaddr, tags=tags)
+roc_effort_plot <- function(input, main=main){
+# plots as a column
+  n <- length(input)
 
-#  file <- paste("dist_deut1_", freq[i], ".png", sep="")
-#  png(file, width=480*length(input))
-#  plot_dists(input, cex.axis=3, cex.lab=3.5); 
-#  dev.off()
-#  upload(file, script=script, gitaddr=gitaddr, tags=tags)
+  par(mfrow=c(n,1))
+  par(mar=c(0,5,6,2))
+    plot_roc_curves(input[[1]], cex.axis=3, cex.lab=3, cex.main=3, legend=F, lwd=4, xlab="", xaxs="n",main=main, ...)
+  for(i in 2:(n-1)){
+    par(mar=c(0,5,0,2))
+    plot_roc_curves(input[[i]], cex.axis=3, cex.lab=3, legend=F, lwd=4, xlab="", xaxs="n", ...)
+  }
+  plot_roc_curves(input[[n]], cex.axis=3, cex.lab=3, legend=F, lwd=4, ...)
 }
+
+
+
+input <- lapply(1:length(freq),
+                function(i) c(sampling[i], indicator_sampling[[i]]))
+
+png("rocs.png", width=2, units="in", height=8, resolution=400)
+roc_effort_plot(input, main="Glaciation I")
+dev.off()
+
+upload(file, script=script, gitaddr=gitaddr, tags=tags)
 
 
 
