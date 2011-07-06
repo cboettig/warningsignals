@@ -24,7 +24,7 @@ windows <- c(5,10,25,50)
 lapply(windows, function(w){
   reformat_tau_dists(
     bootstrap_tau(m$X, m$const, m$timedep, cpu, nboot,
-                  sample_effort=500, windowsize=w))
+                  times=500, windowsize=w))
 })
 
 
