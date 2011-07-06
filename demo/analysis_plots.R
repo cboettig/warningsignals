@@ -41,7 +41,7 @@ png("rocs.png", width=2, units="in", height=8, res=400)
 roc_effort_plot(input, main="Glaciation I")
 dev.off()
 
-upload(file, script=script, gitaddr=gitaddr, tags=tags)
+upload("rocs.png", script=script, gitaddr=gitaddr, tags=tags)
 
 
 
