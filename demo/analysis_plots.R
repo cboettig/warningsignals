@@ -62,7 +62,7 @@ ylab <- c("25 pts", "50 pts", "200 pts")
 roc_effort_plot(resample, freq=ylab)
 dev.off()
 
-png("roc_fig3.png", width=8, units="in", height=4, res=400)
+png("roc_fig3.png", width=3*8, units="in", height=4, res=400)
 roc_fig3(roc_data)
 dev.off()
 
@@ -73,7 +73,7 @@ script <- "analysis_plots.R"
 gitaddr <- gitcommit(script)
 tags="warningsignals, stochpop"
 ###########################
-#upload("rocs.png", script=script, gitaddr=gitaddr, tags=tags)
+upload("rocs.png", script=script, gitaddr=gitaddr, tags=tags)
 
 
 upload("roc_fig3.png", script=script, gitaddr=gitaddr, tags=tags)
