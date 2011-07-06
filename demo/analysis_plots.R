@@ -16,20 +16,16 @@ require(warningsignals)
 source("analysis.R")
 
 
-
-
 roc_effort_plot <- function(input, main=main, ...){
 # plots as a column
   n <- length(input)
 
-  par(mfrow=c(n,1))
-  par(mar=c(0,5,6,2))
-    plot_roc_curves(input[[1]], cex.axis=3, cex.lab=3, cex.main=3, legend=F, lwd=4, xaxt="n",main=main, ...)
+  par(mfrow=c(n,1), mar=c(0,5,0,2), oma=c(4,0,4,0))
+    plot_roc_curves(input[[1]], cex.axis=1.5, cex.lab=1.5, cex.main=1.5, legend=F, lwd=4, xaxt="n",main=main, ...)
   for(i in 2:(n-1)){
-    par(mar=c(0,5,0,2))
-    plot_roc_curves(input[[i]], cex.axis=4, cex.lab=3, legend=F, lwd=4, xaxt="n", ...)
+    plot_roc_curves(input[[i]], cex.axis=1.5, cex.lab=1.5, legend=F, lwd=4, xaxt="n", ...)
   }
-  plot_roc_curves(input[[n]], cex.axis=3, cex.lab=3, legend=F, lwd=4, ...)
+  plot_roc_curves(input[[n]], cex.axis=1.5, cex.lab=1.5, legend=F, lwd=4, ...)
 }
 
 
