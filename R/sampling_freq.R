@@ -30,8 +30,9 @@ indicator_sampling_freq <- function(m, cpu=16, nboot=200,
     sample_effort <- sample_effort * length.original
   out <- lapply(sample_effort, 
          function(effort){
-          reformat_tau_dists(bootstrap_tau(m$X, m$const, m$timedep, cpu=cpu, 
-                                           nboot=nboot, times=effort, windowsize=windowsize))
+          reformat_tau_dists(
+          bootstrap_tau(m$X, m$const, m$timedep, cpu=cpu, 
+                        nboot=nboot, times=effort, windowsize=windowsize))
          })
 
 

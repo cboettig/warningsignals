@@ -9,14 +9,15 @@ plot_roc_curves <- function(objects, legend=TRUE, cex.legend=1, ...){
   auc <- numeric(length(objects)) # store area under curve
   legend_txt <- character(length(objects)) # AUC will go in legend
 
-  auc[1] <- roc_curve(objects[[1]], lwd=2, col=1, ...)
+  auc[1] <- roc_curve(objects[[1]], col=1, ...)
   legend_txt[1] <- paste(stats[1], ", ", round(auc[1],2), sep="")
   for(i in 2:length(objects)){
-    auc[i] <- roc_curve(objects[[i]], lwd=2, col=i, add=TRUE, ...)
+    auc[i] <- roc_curve(objects[[i]], col=i, add=TRUE, ...)
     legend_txt[i] <- paste(stats[i], ", ", round(auc[i],2),sep="")
   }
-  legend("bottomright",legend_txt, col=c(1:length(objects)),
-  lty=1, lwd=3, cex=cex.legend) 
+  if(legend)
+    legend("bottomright",legend_txt, col=c(1:length(objects)),
+           lty=1, lwd=3, cex=cex.legend) 
 }
 
 
@@ -35,7 +36,7 @@ which_statistic <- function(objects){
     if(is(x, "pow")) 
       "log(Lik Ratio)"
     else if(is(x, "tau_dist_montecarlo"))
-        gsub("^(.{7}).*", "\\1",x$signal)  ## TRUNCATE name to 7 chars
+        gsub("^(.{8}).*", "\\1",x$signal)  ## TRUNCATE name to 7 chars
   })
 }
 

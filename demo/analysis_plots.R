@@ -16,7 +16,7 @@ roc_effort_plot <- function(input, freq, ...){
      if(j==1) 
        mtext(names(input)[i],  NORTH<-3, cex=2, line=2) 
      if(i==1)
-      mtext(freq, WEST<-2, cex=2, line=2)
+      mtext(freq[j], WEST<-2, cex=2, line=2)
     }
   }
 }
@@ -46,7 +46,7 @@ ibm <-  lapply(sets,
 
 
 
-input <- list(Critical=ibm, Daphnia=drake, GlaciationI=deut1)
+input <- list(Simulation=ibm, Daphnia=drake, GlaciationI=deut1)
 
 
 source("analysis.R")
