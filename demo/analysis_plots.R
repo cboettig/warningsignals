@@ -8,11 +8,14 @@ roc_effort_plot <- function(input, freq, ...){
 # plots as a column
   n <- length(input) # 1..i..n datafiles
   m <- length(input[[1]]) # 1..j..m levels
-  
+  legend=FALSE
     par(mfrow=c(n,m), mar=c(0,0,0,0), oma=c(4,4,4,2))
   for(j in 1:m){ #row number
     for(i in 1:n){ #work across, col pos
-     plot_roc_curves(input[[i]][[j]], cex.axis=1.5, cex.lab=1.5, legend=F, lwd=3, xaxt="n", yaxt="n", ...)
+     if(i==n && j == m) 
+       legend=TRUE ## legend in last plot
+     plot_roc_curves(input[[i]][[j]], cex.axis=1.5, cex.lab=1.5,
+                     lwd=3, xaxt="n", yaxt="n", hide_auc=T, legend=legend, ...)
      if(j==1) 
        mtext(names(input)[i],  NORTH<-3, cex=2, line=2) 
      if(i==1)
@@ -40,7 +43,10 @@ input <- list(Simulation=ibm, Daphnia=drake, Glaciation=deut3)
 
 source("analysis.R")
 png("rocs.png", width=3*4, units="in", height=8, res=400)
-roc_effort_plot(input, freq=freq[sets])
+
+ylab <- c("25 pts", "50 pts", "200 pts")
+
+roc_effort_plot(input, freq=ylab)
 dev.off()
 
 
