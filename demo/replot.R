@@ -16,30 +16,27 @@ tags="warningsignals, stochpop"
 tweet_errors(script, tags=tags)     
 ###########################################################
 
-
+freq=500
 cpu=16
-indicator_sampling <- 
-indicator_sampling_freq(m, cpu, nboot,
-                        sample_effort=freq,
-                        windowsize=20) 
+indicator_sampling <-
 
-### Plot methods
-## Original plot
+windows <- c(5,10,25,50)
+lapply(windows, function(w){
+  reformat_tau_dists(
+    bootstrap_tau(m$X, m$const, m$timedep, cpu, nboot,
+                  sample_effort=500, windowsize=w))
+})
 
 
-for(i in 1:length(freq)){
-  input <- c(sampling[i], indicator_sampling[[i]])
-  file <- paste("deut3_", freq[i], ".png", sep="")
+for(i in 1:length(windows)){
+  input <- indicator_sampling[[i]]
+  file <- paste("deut3_", windows[i], ".png", sep="")
+
   png(file); 
   plot_roc_curves(input, cex.axis=2, cex.lab=2); 
   dev.off()
   upload(file, script=script, gitaddr=gitaddr, tags=tags)
 
-  file <- paste("dist_deut3_", freq[i], ".png", sep="")
-  png(file, width=480*length(input))
-  plot_dists(input, cex.axis=3, cex.lab=3.5); 
-  dev.off()
-  upload(file, script=script, gitaddr=gitaddr, tags=tags)
 }
 
 
