@@ -14,7 +14,7 @@ roc_effort_plot <- function(input, freq, ...){
     for(i in 1:n){ #work across, col pos
      if(i==n && j == m) 
        legend=TRUE ## legend in last plot
-     plot_roc_curves(input[[i]][[j]], cex.axis=1.5, cex.lab=1.5,
+     plot_roc_curves(input[[i]][[j]], cex.axis=1.5, cex.lab=1.5, cex.legend=1.75,
                      lwd=3, xaxt="n", yaxt="n", hide_auc=T, legend=legend, ...)
      if(j==1) 
        mtext(names(input)[i],  NORTH<-3, cex=2, line=2) 
