@@ -16,7 +16,7 @@ tags="warningsignals, stochpop"
 tweet_errors(script, tags=tags)     
 ###########################################################
 
-freq=c(500, 1000, 2000)
+freq=c(5000, 10000, 20000)
 
 cpu=16
 indicator_sampling <- indicator_sampling_freq(m, cpu, nboot,
