@@ -59,7 +59,8 @@ bootstrap_tau <- function(X, const, timedep,
 	taus <- lapply(indicators, 
 				   function(stat){
 						tau_dist_montecarlo(X, const, timedep, signal=stat, 
-						                    nboot=nboot, cpu=cpu, method=method, times=times) 
+						                    nboot=nboot, cpu=cpu, method=method,
+                                times=times, windowsize=windowsize) 
 						})
 	class(taus) <- "bootstrap_tau"
 	taus

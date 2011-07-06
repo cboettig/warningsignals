@@ -40,7 +40,7 @@ tau_dist_montecarlo <- function(X, const, timedep, signal=c("Variance", "Autocor
 
 	method <- match.arg(method)
 	signal <- match.arg(signal)
-	observed <- compute_tau(X, signal, windowsize, method=method) 
+	observed <- compute_tau(X, signal, windowsize=windowsize, method=method) 
 
 	## prepare parallel environment
 	if(cpu>1 & !sfIsRunning()){ 	
@@ -54,12 +54,12 @@ tau_dist_montecarlo <- function(X, const, timedep, signal=c("Variance", "Autocor
 ## Look at the distribution of Taus when simulating from timedep
 	test_tau_dist <- sfSapply(1:nboot, function(i){
 		Z <- simulate(timedep, times=times)
-		compute_tau(Z, signal, windowsize, method=method)
+		compute_tau(Z, signal, windowsize=windowsize, method=method)
 	})
 ## Distribution of Taus simulating from const model
 	null_tau_dist <- sfSapply(1:nboot, function(i){
 		Y <- simulate(const, times=times)
-		compute_tau(Y, signal, windowsize, method=method)
+		compute_tau(Y, signal, windowsize=windowsize, method=method)
 	})
 
 ## should pass out a generic "observed"

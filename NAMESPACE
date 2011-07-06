@@ -14,7 +14,7 @@ export(setLSN, setLTC, R, const_R, timedep_LTC, timedep_LSN, const_LTC, const_LS
 ## doesn't export quadratic saddlenode functions
 
 ## indicators.R
-export(window_mean, window_var, window_skew, window_kurtosi, warning_stats, window_autocorr, window_ar.ols, show_stats, compute_indicator, plot_indicator, compute_tau, all_indicators, xshift, yshift)
+export(window_mean, window_var, window_skew, window_kurtosi,  window_autocorr, window_ar.ols, compute_indicator, plot_indicator, compute_tau, all_indicators, xshift, yshift)
 
 ## tau_dist_montecarlo.R
 export(tau_dist_montecarlo, plot.tau_dist_montecarlo, plot_kendalls, plot_sample)

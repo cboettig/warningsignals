@@ -5,7 +5,7 @@
 ## requires psych package for skew & kurosis calculations
 ## used to require Kendall package, has been replaced with cor.test from the base package, 
 ## which resolves ties for more accurate p value, but doesn't matter since we focus on tau 
-## and becayse cor.test is used by others i.e. Dakos 2008
+## and because cor.test is used by others i.e. Dakos 2008
 
 #require(psych)
 
@@ -145,9 +145,10 @@ plot_indicator <- function(X, indicator=c("Autocorrelation", "Variance",
 	
 compute_tau <- function(X, indicator, windowsize=NULL,
                         method=c("kendall", "pearson", "spearman"))
-## unlike warning_stats, takes indicator as character instead of a function
 ## assumes X is ts object -- should add to a check(?)
 {
+
+  method=match.arg(method)
   if(is.null(windowsize))
     windowsize=length(X)/2
 
@@ -158,7 +159,7 @@ compute_tau <- function(X, indicator, windowsize=NULL,
 
 
 
-
+## PLOTTING FUNCTION
 all_indicators <- function(X, indicators = c("Variance", "Autocorrelation", 
                            "Skew", "CV"), method=c("kendall", "pearson",
                            "spearman"), pval=TRUE, cor=TRUE, ...)
@@ -225,29 +226,5 @@ yshift <- function(ysteps){
 
 
 
-
-
-################ DEPRICATED?? ##############
-
-warning_stats <- function(X, indicator, method=c("kendall", "pearson", "spearman")){
-	method <- match.arg(method)
-	if(is(X,"ts")){
-		w <- length(X)/2
-		end <- length(X)
-		out <- cor.test(time(X)[w:end], indicator(X), method=method)
-	} else {
-		w <- length(X[,1])/2
-		end <- length(X[,1])
-		out <- cor.test(X[w:end,1], indicator(X[,2]), method=method)
-	}
-	c(out$estimate, out$p.value)
-}
-
-show_stats <- function(X, indicator, xpos=20, ypos=0, method=c("kendall", "pearson", "spearman")){
-		w <- warning_stats(X, indicator)
-	text(xshift(xpos), yshift(ypos), paste(method, "coef=", round(w[1],2), "pval=", format.pval(w[2]) ) 
-#		 substitute(paste(method, "coef=", val, " (p ", pval, ")"), list(val=round(w[1],2),pval=format.pval(w[2])))
-	)
-}
 
 
