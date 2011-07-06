@@ -1,29 +1,70 @@
 # analysis.R
-require(warningsignals)
 
+rm(list=ls())
 ##########
-require(socialR)
-script <- "caco3_analysis.R"
-gitaddr <- gitcommit(script)
-tags="warningsignals, stochpop"
-tweet_errors(script, tags=tags)
-on.exit(system("git push")) 
+#require(socialR)
+#script <- "caco3_analysis.R"
+#gitaddr <- gitcommit(script)
+#tags="warningsignals, stochpop"
+#tweet_errors(script, tags=tags)
+#on.exit(system("git push")) 
 ##########
+
+require(warningsignals)
+data(CaCO3) 
+m <- fit_models(CaCO3, "LSN")
 
 cpu <- 16
-nboot <- 16
-#freq <- c(.1, .5, 1.5, 2, 5)
-freq <- c(.5, 1.5)
+nboot <- 500
+freq <- c(25, 50, 100, 200)
 
-source("analysis.R") ## Custom functions
 
-data(CaCO3) 
-caco3 <- analysis(CaCO3, cpu=cpu, nboot=nboot, freq=freq)
-save(list="caco3", file="caco3_analysis.rda")
-png("caco3_roc.png"); compare_roc_curves(caco3$taus, caco3$mc); dev.off()
-upload("caco3_roc.png", script=script, gitaddr=gitaddr, tags=tags)
-png("caco3_sampling.png"); plot_sampling_freq(caco3$sampling, caco3$freq); dev.off()
-upload("caco3_sampling.png", script=script, gitaddr=gitaddr, tags=tags)
+## Run the Analyses
+sampling <- 
+sampling_freq(m$const, m$timedep, cpu=cpu,
+              nboot=nboot, sample_effort=freq)
+save(list=ls(), file="caco3.Rdat")
+
+taus <- 
+reformat_tau_dists(
+  bootstrap_tau(m$X, m$const, m$timedep, 
+                cpu=cpu, nboot=nboot))
+save(list=ls(), file="caco3.Rdat")
+
+mc <- 
+remove_unconverged(
+  montecarlotest(m$const, m$timedep, 
+                 cpu=cpu, nboot=nboot)) 
+save(list=ls(), file="caco3.Rdat")
+
+indicator_sampling <- 
+indicator_sampling_freq(m, cpu, nboot,
+                        sample_effort=freq) 
+
+save(list=ls(), file="caco3.Rdat")
+
+### Plot methods
+## Original plot
+#png("caco3_roc.png"); plot_roc_curves(c(list(mc), taus)); dev.off()
+#upload("caco3_roc.png", script=script, gitaddr=gitaddr, tags=tags)
+
+function(){
+for(i in 1:length(freq)){
+  input <- c(sampling[i], indicator_sampling[[i]])
+  file <- paste("caco3_", freq[i], ".png", sep="")
+  png(file); 
+  plot_roc_curves(input, cex.axis=2, cex.lab=2); 
+  dev.off()
+  upload(file, script=script, gitaddr=gitaddr, tags=tags)
+
+  file <- paste("dist_caco3_", freq[i], ".png", sep="")
+  png(file, width=480*length(input))
+  plot_dists(input, cex.axis=3, cex.lab=3.5); 
+  dev.off()
+  upload(file, script=script, gitaddr=gitaddr, tags=tags)
+}
+}
+
 
 
 

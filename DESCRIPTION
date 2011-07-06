@@ -6,6 +6,6 @@ Author: Carl Boettiger <cboettig@gmail.com>
 Maintainer: Carl Boettiger <cboettig@gmail.com>
 Description: Tools for the detection of early warning signals of critical transitions.  Accompanies Boettiger & Hastings (2011). 
 Depends: snowfall
-Imports: sde, odesolve, psych, NORMT3
+Imports: odesolve, psych, NORMT3
 License: GPL (>= 2)
 

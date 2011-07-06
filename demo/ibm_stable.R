@@ -1,12 +1,13 @@
 # ibm_stable_analysis.R
 rm(list=ls())
 require(warningsignals)
-require(socialR)
-script <- "ibm_analysis.R"
-gitaddr <- gitcommit(script)
-tags="warningsignals, stochpop"
-tweet_errors(script, tags=tags)
-on.exit(system("git push")) 
+#require(socialR)
+#script <- "ibm_analysis.R"
+#gitaddr <- gitcommit(script)
+#tags="warningsignals, stochpop"
+#tweet_errors(script, tags=tags)
+#on.exit(system("git push")) 
+
 
 cpu <- 4
 nboot <- 500

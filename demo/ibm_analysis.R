@@ -10,13 +10,13 @@ on.exit(system("git push"))
 
 cpu <- 16
 nboot <- 500
-freq <- c(25, 50, 100, 200, 500)
+freq <- c(25, 50, 100)
 
 source("analysis.R")
 
 ## The analyses -- slow!
 data(ibms)
-m <- fit_models(ibm_critical, "LSN")
+m <- fit_models(ibm_critical, "LTC")
 sampling <- sampling_freq(m$const, m$timedep, cpu=cpu, nboot=nboot,
                           sample_effort=freq)
 taus <- reformat_tau_dists(bootstrap_tau(m$X, m$const, m$timedep, 
