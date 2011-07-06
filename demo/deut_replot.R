@@ -16,16 +16,16 @@ tags="warningsignals, stochpop"
 tweet_errors(script, tags=tags)     
 ###########################################################
 
-freq=c(5000, 10000, 20000)
+freq=c(500, 1000, 2000)
 
 cpu=16
 indicator_sampling <- indicator_sampling_freq(m, cpu, nboot,
-                                              sample_effort=freq) 
+                                              sample_effort=freq, windowsize=60) 
 
 ### Plot methods
 ## Original plot
 for(i in 1:length(freq)){
-  input <- c(sampling[i], indicator_sampling[[i]])
+  input <- c(indicator_sampling[[i]])
   file <- paste("deut_", freq[i], ".png", sep="")
   png(file); 
   plot_roc_curves(input, cex.axis=2, cex.lab=2); 
