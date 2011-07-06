@@ -15,22 +15,27 @@ roc_effort_plot <- function(input, ...){
     for(i in 1:n){
       plot_roc_curves(input[[j]][[i]], cex.axis=1.5, cex.lab=1.5, legend=F, lwd=3, xaxt="n", yaxt="n", ...)
     }
-    mtext(names(input)[j],  NORTH<-3, cex=2, line=1, outer=TRUE) 
+    mtext(names(input)[j],  NORTH<-3, cex=2, line=2) 
   }
 }
 
+#freq=25,50,100,200,500
+sets <- c(1,2,4)
+
 load("~/flickr/5910219566.Rdat")
-deut1 <- lapply(1:length(freq),
+deut1 <- lapply(sets,
                 function(i) c(sampling[i], indicator_sampling[[i]]))
 
 
 load("~/flickr/5910198136.Rdat")
-drake <- lapply(1:length(freq),
+drake <- lapply(sets,
                 function(i) c(sampling[i], indicator_sampling[[i]]))
 
 load("~/flickr/5906482315.Rdat")
-ibm <-  lapply(1:length(freq),
+ibm <-  lapply(sets,
                 function(i) c(sampling[i], indicator_sampling[[i]]))
+
+
 
 load("~/flickr/5909491217.Rdat")
 deut3 <- lapply(1:length(freq),
@@ -41,7 +46,7 @@ caco3 <-  lapply(1:length(freq),
                 function(i) c(sampling[i], indicator_sampling[[i]]))
 
 
-input <- list(Critical=ibm, Daphnia=drake, GlaciationI=deut1, GlaciationIII=deut3)
+input <- list(Critical=ibm, Daphnia=drake, GlaciationI=deut1)
 
 
 source("analysis.R")
