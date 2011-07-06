@@ -10,7 +10,6 @@ script <- "analysis_plots.R"
 gitaddr <- gitcommit(script)
 tags="warningsignals, stochpop"
 tweet_errors(script, tags=tags)
-on.exit(system("git push")) 
 ###########################
 
 require(warningsignals)
@@ -19,7 +18,7 @@ source("analysis.R")
 
 
 
-roc_effort_plot <- function(input, main=main){
+roc_effort_plot <- function(input, main=main, ...){
 # plots as a column
   n <- length(input)
 
