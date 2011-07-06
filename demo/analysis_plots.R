@@ -7,8 +7,8 @@ roc_fig3 <- function(input, ...){
   n <- length(input) # 1..i..n datafiles
     par(mfrow=c(1,n), mar=c(6,6,5,2))
     for(i in 1:n){ #work across, col pos
-     plot_roc_curves(input[[i]], cex.axis=1.5, cex.lab=1.5, cex.legend=1.75,
-                     lwd=3, legend=TRUE, main=names(input)[i], ...)
+     plot_roc_curves(input[[i]], cex.axis=2, cex.lab=2, cex.legend=1.75,
+                     lwd=3, cex.main=2, legend=TRUE, main=names(input)[i], ...)
     }
 }
 
