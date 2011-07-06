@@ -1,6 +1,6 @@
 require(socialR)
 require(warningsignals)
-gitcommit()
+#gitcommit()
 
 
 pars <- c(Ro=5.0, m= -.04999, theta=500, sigma=5)
