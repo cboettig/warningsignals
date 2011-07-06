@@ -19,7 +19,7 @@ tweet_errors(script, tags=tags)
 
 cpu=16
 indicator_sampling <- indicator_sampling_freq(m, cpu, nboot,
-                                              sample_effort=freq) 
+                                              sample_effort=freq, windowsize=8) 
 
 ### Plot methods
 ## Original plot
