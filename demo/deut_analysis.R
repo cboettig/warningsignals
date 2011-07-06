@@ -18,8 +18,8 @@ data(deuterium)
 i <- 3 ## Which deut?
 
 
-cpu <- 16
-nboot <- 16
+cpu <- 1
+nboot <- 2
 taus <- 
 reformat_tau_dists(
   bootstrap_tau(m$X, m$const, m$timedep, 
