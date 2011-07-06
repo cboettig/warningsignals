@@ -3,12 +3,14 @@ rm(list=ls())
 
 require(warningsignals)
 
+ce <- 1.2
+
 roc_fig3 <- function(input, ...){
   n <- length(input) # 1..i..n datafiles
     par(mfrow=c(1,n), mar=c(6,6,5,2))
     for(i in 1:n){ #work across, col pos
-     plot_roc_curves(input[[i]], cex.axis=1, cex.lab=1, cex.legend=.3,
-                     lwd=2, cex.main=1, legend=TRUE, main=names(input)[i], ...)
+     plot_roc_curves(input[[i]], cex.axis=ce, cex.lab=ce, cex.legend=1,
+                     lwd=2, cex.main=ce, legend=TRUE, main=names(input)[i], ...)
     }
 }
 
@@ -23,12 +25,12 @@ roc_effort_plot <- function(input, freq, ...){
     for(i in 1:n){ #work across, col pos
      if(i==n && j == m) 
        legend=TRUE ## legend in last plot
-     plot_roc_curves(input[[i]][[j]], cex.axis=1, cex.lab=1, cex.legend=.5,
+     plot_roc_curves(input[[i]][[j]], cex.axis=ce, cex.lab=ce, cex.legend=ce,
                      lwd=2, xaxt="n", yaxt="n", hide_auc=T, legend=legend, ...)
      if(j==1) 
-       mtext(names(input)[i],  NORTH<-3, cex=1, line=2) 
+       mtext(names(input)[i],  NORTH<-3, cex=ce, line=2) 
      if(i==1)
-      mtext(freq[j], WEST<-2, cex=1, line=2)
+      mtext(freq[j], WEST<-2, cex=ce, line=2)
     }
   }
 }
