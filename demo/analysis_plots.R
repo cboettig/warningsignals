@@ -7,8 +7,8 @@ roc_fig3 <- function(input, ...){
   n <- length(input) # 1..i..n datafiles
     par(mfrow=c(1,n), mar=c(6,6,5,2))
     for(i in 1:n){ #work across, col pos
-     plot_roc_curves(input[[i]], cex.axis=2, cex.lab=2, cex.legend=1.75,
-                     lwd=3, cex.main=2, legend=TRUE, main=names(input)[i], ...)
+     plot_roc_curves(input[[i]], cex.axis=1, cex.lab=1, cex.legend=1,
+                     lwd=2, cex.main=1, legend=TRUE, main=names(input)[i], ...)
     }
 }
 
@@ -23,12 +23,12 @@ roc_effort_plot <- function(input, freq, ...){
     for(i in 1:n){ #work across, col pos
      if(i==n && j == m) 
        legend=TRUE ## legend in last plot
-     plot_roc_curves(input[[i]][[j]], cex.axis=1.5, cex.lab=1.5, cex.legend=1.75,
-                     lwd=3, xaxt="n", yaxt="n", hide_auc=T, legend=legend, ...)
+     plot_roc_curves(input[[i]][[j]], cex.axis=1, cex.lab=1, cex.legend=1,
+                     lwd=2, xaxt="n", yaxt="n", hide_auc=T, legend=legend, ...)
      if(j==1) 
-       mtext(names(input)[i],  NORTH<-3, cex=2, line=2) 
+       mtext(names(input)[i],  NORTH<-3, cex=1, line=2) 
      if(i==1)
-      mtext(freq[j], WEST<-2, cex=2, line=2)
+      mtext(freq[j], WEST<-2, cex=1, line=2)
     }
   }
 }
@@ -57,12 +57,12 @@ resample <- list(Simulation=ibm_resample, Daphnia=drake_resample, Glaciation=deu
 
 
 source("analysis.R")
-png("rocs.png", width=3*4, units="in", height=8, res=400)
+png("rocs.png", width=8, units="in", height=8*2/3, res=400)
 ylab <- c("25 pts", "50 pts", "200 pts")
 roc_effort_plot(resample, freq=ylab)
 dev.off()
 
-png("roc_fig3.png", width=2*8, units="in", height=4, res=400)
+png("roc_fig3.png", width=8, units="in", height=2, res=400)
 roc_fig3(roc_data)
 dev.off()
 
