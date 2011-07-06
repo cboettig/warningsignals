@@ -38,7 +38,7 @@ roc_effort_plot <- function(input, main=main){
 input <- lapply(1:length(freq),
                 function(i) c(sampling[i], indicator_sampling[[i]]))
 
-png("rocs.png", width=2, units="in", height=8, resolution=400)
+png("rocs.png", width=2, units="in", height=8, res=400)
 roc_effort_plot(input, main="Glaciation I")
 dev.off()
 
