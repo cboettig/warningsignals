@@ -2,6 +2,9 @@
 rm(list=ls())
 require(warningsignals)
 
+
+load("~/flickr/5904550426.Rdat")
+
 ###############
 require(socialR)
 script <- "deut_analysis.R"
@@ -13,7 +16,6 @@ source("analysis.R")
 
 data(deuterium)
 i <- 3 ## Which deut?
-m <- fit_models(deuterium[[i]], "LSN")
 
 
 cpu <- 16
