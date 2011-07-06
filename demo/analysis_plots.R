@@ -7,7 +7,7 @@ roc_fig3 <- function(input, ...){
   n <- length(input) # 1..i..n datafiles
     par(mfrow=c(1,n), mar=c(6,6,5,2))
     for(i in 1:n){ #work across, col pos
-     plot_roc_curves(input[[i]], cex.axis=1, cex.lab=1, cex.legend=1,
+     plot_roc_curves(input[[i]], cex.axis=1, cex.lab=1, cex.legend=.3,
                      lwd=2, cex.main=1, legend=TRUE, main=names(input)[i], ...)
     }
 }
@@ -23,7 +23,7 @@ roc_effort_plot <- function(input, freq, ...){
     for(i in 1:n){ #work across, col pos
      if(i==n && j == m) 
        legend=TRUE ## legend in last plot
-     plot_roc_curves(input[[i]][[j]], cex.axis=1, cex.lab=1, cex.legend=1,
+     plot_roc_curves(input[[i]][[j]], cex.axis=1, cex.lab=1, cex.legend=.5,
                      lwd=2, xaxt="n", yaxt="n", hide_auc=T, legend=legend, ...)
      if(j==1) 
        mtext(names(input)[i],  NORTH<-3, cex=1, line=2) 
@@ -62,7 +62,7 @@ ylab <- c("25 pts", "50 pts", "200 pts")
 roc_effort_plot(resample, freq=ylab)
 dev.off()
 
-png("roc_fig3.png", width=8, units="in", height=2, res=400)
+png("roc_fig3.png", width=8, units="in", height=3, res=400)
 roc_fig3(roc_data)
 dev.off()
 
@@ -73,9 +73,7 @@ script <- "analysis_plots.R"
 gitaddr <- gitcommit(script)
 tags="warningsignals, stochpop"
 ###########################
-#upload("rocs.png", script=script, gitaddr=gitaddr, tags=tags)
-
-
+upload("rocs.png", script=script, gitaddr=gitaddr, tags=tags)
 upload("roc_fig3.png", script=script, gitaddr=gitaddr, tags=tags)
 
 
