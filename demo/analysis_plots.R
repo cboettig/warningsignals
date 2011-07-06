@@ -25,28 +25,17 @@ roc_effort_plot <- function(input, freq, ...){
 sets <- c(1,2,4)
 
 load("~/flickr/5909491217.Rdat")
-deut3 <- lapply(1:length(freq),
-                function(i) c(sampling[i], indicator_sampling[[i]]))
+deut3 <- lapply(sets, function(i) c(sampling[i], indicator_sampling[[i]]))
 load("~/flickr/5909610015.Rdat")
-caco3 <-  lapply(1:length(freq),
-                function(i) c(sampling[i], indicator_sampling[[i]]))
-
+caco3 <-  lapply(sets, function(i) c(sampling[i], indicator_sampling[[i]]))
 load("~/flickr/5910219566.Rdat")
-deut1 <- lapply(sets,
-                function(i) c(sampling[i], indicator_sampling[[i]]))
-
-
+deut1 <- lapply(sets, function(i) c(sampling[i], indicator_sampling[[i]]))
 load("~/flickr/5910198136.Rdat")
-drake <- lapply(sets,
-                function(i) c(sampling[i], indicator_sampling[[i]]))
-
+drake <- lapply(sets,function(i) c(sampling[i], indicator_sampling[[i]]))
 load("~/flickr/5906482315.Rdat")
-ibm <-  lapply(sets,
-                function(i) c(sampling[i], indicator_sampling[[i]]))
+ibm <-  lapply(sets, function(i) c(sampling[i], indicator_sampling[[i]]))
 
-
-
-input <- list(Simulation=ibm, Daphnia=drake, GlaciationI=deut1)
+input <- list(Simulation=ibm, Daphnia=drake, Glaciation=deut3)
 
 
 source("analysis.R")
