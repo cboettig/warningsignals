@@ -13,6 +13,7 @@ on.exit(system("git push"))
 ###########################
 
 require(warningsignals)
+source("analysis.R")
 
 indicator_sampling <- 
 indicator_sampling_freq(m, cpu, nboot,
