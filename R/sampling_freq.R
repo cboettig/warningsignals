@@ -19,7 +19,7 @@ sampling_freq <- function(null, test, cpu=16, nboot=200,
 
 indicator_sampling_freq <- function(m, cpu=16, nboot=200, 
                           sample_effort = c(10, 50, 100),
-                          length.original=NULL){
+                          length.original=NULL, windowsize=NULL){
 # Evaluate the effect of changing the sampling effort
 # Args:
 #   m: a set of model fits from fit_models()
@@ -31,7 +31,7 @@ indicator_sampling_freq <- function(m, cpu=16, nboot=200,
   out <- lapply(sample_effort, 
          function(effort){
           reformat_tau_dists(bootstrap_tau(m$X, m$const, m$timedep, cpu=cpu, 
-                                           nboot=nboot, times=effort))
+                                           nboot=nboot, times=effort, windowsize=windowsize))
          })
 
 
