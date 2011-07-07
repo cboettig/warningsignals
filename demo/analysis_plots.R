@@ -7,9 +7,9 @@ ce <- 1.2
 
 roc_fig3 <- function(input, ...){
   n <- length(input) # 1..i..n datafiles
-    par(mfrow=c(1,n), mar=c(6,6,5,2))
+    par(mfrow=c(1,n))
     for(i in 1:n){ #work across, col pos
-     plot_roc_curves(input[[i]], cex.axis=ce, cex.lab=ce, cex.legend=1,
+     plot_roc_curves(input[[i]], cex.axis=ce, cex.lab=ce, cex.legend=.8,
                      lwd=2, cex.main=ce, legend=TRUE, main=names(input)[i], ...)
     }
 }
@@ -75,7 +75,7 @@ script <- "analysis_plots.R"
 gitaddr <- gitcommit(script)
 tags="warningsignals, stochpop"
 ###########################
-upload("rocs.png", script=script, gitaddr=gitaddr, tags=tags)
+#upload("rocs.png", script=script, gitaddr=gitaddr, tags=tags)
 upload("roc_fig3.png", script=script, gitaddr=gitaddr, tags=tags)
 
 
