@@ -24,9 +24,9 @@ indicator_sampling <- lapply(windows, function(w){
   indicator_sampling_freq(m, cpu, nboot, sample=500, windowsize=w)
 })
 
-
+save(list=ls(), file="replot.Rdat")
 for(i in 1:length(windows)){
-  input <- indicator_sampling[[i]]
+  input <- indicator_sampling[[i]][[1]]
   file <- paste("deut3_", windows[i], ".png", sep="")
 
   png(file); 
