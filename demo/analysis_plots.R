@@ -76,7 +76,7 @@ script <- "analysis_plots.R"
 gitaddr <- gitcommit(script)
 tags="warningsignals, stochpop"
 ###########################
-#upload("rocs.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
-#upload("roc_fig3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+upload("rocs.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+upload("roc_fig3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
 
 
