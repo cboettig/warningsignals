@@ -23,7 +23,6 @@ indicator_sampling <- indicator_sampling_freq(m, cpu, nboot,
                                     sample_effort=freq,
                                     length.original=length(m$X)) 
 
-save(list=ls(), file="ibm_sampling.Rdat")
 
 for(i in 1:length(freq)){
   input <- c(indicator_sampling[[i]])
