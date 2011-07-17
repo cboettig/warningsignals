@@ -21,13 +21,15 @@ roc_effort_plot <- function(input, freq, ...){
   n <- length(input) # 1..i..n datafiles
   m <- length(input[[1]]) # 1..j..m levels
   legend=FALSE
-    par(mfrow=c(m,n), mar=c(0,0,0,0), oma=c(4,6,4,2))
+    par(mfrow=c(m,n), mar=c(0,0,0,0), oma=c(5,6,4,2))
   for(j in 1:m){ #row number
     for(i in 1:n){ #work across, col pos
      if(i==n && j == m) 
        legend=TRUE ## legend in last plot
      plot_roc_curves(input[[i]][[j]], cex.axis=ce, cex.lab=ce, cex.legend=ce,
                      lwd=2, xaxt="n", yaxt="n", hide_auc=T, legend=legend, ...)
+     if(j==m) 
+       axis(1,cex.axis=ce) 
      if(j==1) 
        mtext(names(input)[i],  NORTH<-3, cex=ce, line=2) 
      if(i==1)
@@ -35,7 +37,7 @@ roc_effort_plot <- function(input, freq, ...){
     }
   }
   mtext("True Positive", outer=TRUE, WEST<-2, cex=1.1*ce, line=1)
-  mtext("False Positive", outer=TRUE, SOUTH<-1, cex=1.1*ce, line=1)
+  mtext("False Positive", outer=TRUE, SOUTH<-1, cex=1.1*ce, line=3)
 }
 
 #freq=25,50,100,200,500
@@ -84,7 +86,7 @@ gitaddr <- gitcommit(script)
 tags="warningsignals, stochpop"
 ###########################
 #upload("boettiger_fig4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
-upload("boettiger_fig3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+#upload("boettiger_fig3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
 
 
 png("appendix4.png", width=8, units="in", height=8*2/3, res=400)
@@ -92,11 +94,11 @@ ylab <- c("25 pts", "50 pts", "200 pts")
 roc_effort_plot(appendix_resample, freq=ylab)
 dev.off()
 
-png("appendix3.png", width=8, units="in", height=3, res=400)
+png("appendix3.png", width=8, units="in", height=3*3/2, res=400)
 roc_fig3(appendix)
 dev.off()
 
-#upload("appendix4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
-#upload("appendix3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+upload("appendix4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+upload("appendix3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
 
 
