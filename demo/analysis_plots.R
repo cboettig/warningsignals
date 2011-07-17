@@ -38,6 +38,8 @@ dists_fig3 <- function(input, ...){
         if(j==1 || j==m)
           axis(1, line=-1,cex.axis=ce)
       }
+        if(j==m)
+          mtext(paste(expression(tau)), SOUTH<-1, cex=ce)
     }
 }
 
@@ -45,7 +47,7 @@ roc_effort_plot <- function(input, freq, ...){
   n <- length(input) # 1..i..n datafiles
   m <- length(input[[1]]) # 1..j..m levels
   legend=FALSE
-    par(mfrow=c(m,n), mar=c(0,0,0,0), oma=c(5,7,4,2))
+    par(mfrow=c(m,n), mar=c(0,0,0,0), oma=c(5,7,5,2))
   for(j in 1:m){ #row number
     for(i in 1:n){ #work across, col pos
      if(i==n && j == m) 
@@ -55,7 +57,7 @@ roc_effort_plot <- function(input, freq, ...){
      if(j==m) 
        axis(1,cex.axis=ce) 
      if(j==1) 
-       mtext(names(input)[i],  NORTH<-3, cex=ce, line=2) 
+       mtext(names(input)[i],  NORTH<-3, cex=ce, line=3) 
      if(i==1){
       mtext(freq[j], WEST<-2, cex=ce, line=5)
       axis(2,cex.axis=ce) 
