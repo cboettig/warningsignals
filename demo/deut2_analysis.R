@@ -9,6 +9,14 @@ script <- "deut2_analysis.R"
 gitaddr <- gitcommit(script)
 tags="warningsignals, stochpop"
 ###############
+
+
+cpu <- 16
+nboot <- 500
+freq <- c(25, 50, 100)
+
+
+
 source("analysis.R")
 data(deuterium)
 i <- 2 ## Which deut?
