@@ -22,14 +22,19 @@ dists_fig3 <- function(input, ...){
     par(mfrow=c(m,n), mar=c(0,0,0,0), oma=c(4,6,4,2))
     for(j in 1:m){
       for(i in 1:n){
-        plot(input[[i]][[j]], xlab=stats[j], ylab="", xaxt="n", ylim=c(0,2), yaxt="n", ...)
+        if(j>1)
+          plot(input[[i]][[j]], xlab=stats[j], ylab="", xaxt="n", ylim=c(0,1.5),
+          yaxt="n", ...)
+        else
+          plot(input[[i]][[j]], xlab=stats[j], ylab="", xaxt="n", ylim=c(0,0.5),
+          yaxt="n", ...)
         if(i==1){
-          axis(2)
+          axis(2, cex.axis=ce)
           mtext(stats[j], WEST<-2, cex=ce, line=4) 
 #          mtext("Density", WEST<-2, cex=ce, line=2) 
         }
         if(j==1 || j==m)
-          axis(1, line=-1)
+          axis(1, line=-1,cex.axis=ce)
       }
     }
 }
@@ -108,11 +113,11 @@ ylab <- c("25 pts", "50 pts", "200 pts")
 roc_effort_plot(appendix_resample, freq=ylab)
 dev.off()
 
-png("dists_fig4.png", width=8, units="in", height=20, res=400)
+png("dists_fig4.png", width=4, units="in", height=10, res=400)
 dists_fig3(roc_data)
 dev.off()
 
-png("dists_a4.png", width=8, units="in", height=4*5, res=400)
+png("dists_a4.png", width=4, units="in", height=10, res=400)
 dists_fig3(appendix)
 dev.off()
 
