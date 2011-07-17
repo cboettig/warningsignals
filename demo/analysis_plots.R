@@ -19,10 +19,16 @@ dists_fig3 <- function(input, ...){
     n <- length(input) # 1..i..n datafiles
     m <- length(input[[1]]) # 1..j..m levels
     stats <- which_statistic(input[[1]])
-    par(mfrow=c(m,n))
+    par(mfrow=c(m,n), mar=c(0,0,0,0), oma=c(4,4,4,2))
     for(j in 1:m){
       for(i in 1:n){
-        plot(input[[i]][[j]], xlab=stats[i], ...)
+        plot(input[[i]][[j]], xlab=stats[j], ylab="", ...)
+        if(i==1){
+          mtext(stats[j], WEST<-2, cex=ce, line=3) 
+          mtext("Density", WEST<-2, cex=ce, line=2) 
+        }
+        if(j==1 || j==m)
+          axis(1, line=-1)
       }
     }
 }
