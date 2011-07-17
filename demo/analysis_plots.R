@@ -31,7 +31,7 @@ dists_fig3 <- function(input, ...){
           mtext(names(input)[i], NORTH<-3, cex=ce)
         }
         if(i==1){
-          axis(2, at=c(.25, .5, 1), cex.axis=ce)
+          axis(2, at=c(.1, .5, .9), cex.axis=ce)
           mtext(stats[j], WEST<-2, cex=ce, line=4) 
 #          mtext("Density", WEST<-2, cex=ce, line=2) 
         }
@@ -115,11 +115,11 @@ ylab <- c("25 pts", "50 pts", "200 pts")
 roc_effort_plot(appendix_resample, freq=ylab)
 dev.off()
 
-png("dists_fig4.png", width=4, units="in", height=6, res=400)
+png("dists_fig4.png", width=6, units="in", height=6, res=400)
 dists_fig3(roc_data)
 dev.off()
 
-png("dists_a4.png", width=4, units="in", height=6, res=400)
+png("dists_a4.png", width=6, units="in", height=6, res=400)
 dists_fig3(appendix)
 dev.off()
 
@@ -138,7 +138,7 @@ tags="warningsignals, stochpop"
 #upload("appendix4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
 
 upload("dists_fig4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
-#upload("dists_a4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+upload("dists_a4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
 
 
 
