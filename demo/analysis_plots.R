@@ -56,16 +56,19 @@ load("~/flickr/5906482315.Rdat")
 ibm_resample <-  lapply(sets, function(i) c(sampling[i], indicator_sampling[[i]]))
 ibm <- c(list(mc), taus)
 
+appendix <- list("Greenhouse Earth"=caco3, "Glaciation I"=deut1)
+appendix_resample <- list("Greenhouse Earth"=caco3_resample, "Glaciation I"=deut1_resample)
+
 roc_data <- list(Simulation=ibm, Daphnia=drake, Glaciation=deut3)
 resample <- list(Simulation=ibm_resample, Daphnia=drake_resample, Glaciation=deut3_resample)
 
 source("analysis.R")
 
 
-#png("rocs.png", width=8, units="in", height=8*2/3, res=400)
-#ylab <- c("25 pts", "50 pts", "200 pts")
-#roc_effort_plot(resample, freq=ylab)
-#dev.off()
+png("rocs.png", width=8, units="in", height=8*2/3, res=400)
+ylab <- c("25 pts", "50 pts", "200 pts")
+roc_effort_plot(resample, freq=ylab)
+dev.off()
 
 png("roc_fig3.png", width=8, units="in", height=3, res=400)
 roc_fig3(roc_data)
@@ -80,5 +83,18 @@ tags="warningsignals, stochpop"
 ###########################
 #upload("rocs.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
 #upload("roc_fig3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+
+
+png("appendix4.png", width=8, units="in", height=8*2/3, res=400)
+ylab <- c("25 pts", "50 pts", "200 pts")
+roc_effort_plot(appendix_resample, freq=ylab)
+dev.off()
+
+png("appendix3.png", width=8, units="in", height=3, res=400)
+roc_fig3(roc_data)
+dev.off()
+
+upload("appendix4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+upload("appendix3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
 
 
