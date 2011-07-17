@@ -83,8 +83,8 @@ script <- "analysis_plots.R"
 gitaddr <- gitcommit(script)
 tags="warningsignals, stochpop"
 ###########################
-upload("boettiger_fig4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
-#upload("boettiger_fig3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+#upload("boettiger_fig4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+upload("boettiger_fig3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
 
 
 png("appendix4.png", width=8, units="in", height=8*2/3, res=400)
@@ -96,7 +96,7 @@ png("appendix3.png", width=8, units="in", height=3, res=400)
 roc_fig3(appendix)
 dev.off()
 
-upload("appendix4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
-upload("appendix3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+#upload("appendix4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+#upload("appendix3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
 
 
