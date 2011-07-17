@@ -71,15 +71,24 @@ resample <- list(Simulation=ibm_resample, Daphnia=drake_resample, Glaciation=deu
 source("analysis.R")
 
 
-png("boettiger_fig4.png", width=8, units="in", height=8*2/3, res=400)
-ylab <- c("25 pts", "50 pts", "200 pts")
-roc_effort_plot(resample, freq=ylab)
-dev.off()
 
 png("boettiger_fig3.png", width=8, units="in", height=3, res=400)
 roc_fig3(roc_data)
 dev.off()
 
+png("boettiger_fig4.png", width=8, units="in", height=8*2/3, res=400)
+ylab <- c("25 pts", "50 pts", "200 pts")
+roc_effort_plot(resample, freq=ylab)
+dev.off()
+
+png("appendix3.png", width=8, units="in", height=3*3/2, res=400)
+roc_fig3(appendix)
+dev.off()
+
+png("appendix4.png", width=8, units="in", height=8*2/3, res=400)
+ylab <- c("25 pts", "50 pts", "200 pts")
+roc_effort_plot(appendix_resample, freq=ylab)
+dev.off()
 
 ###########################
 require(socialR)
@@ -87,20 +96,12 @@ script <- "analysis_plots.R"
 gitaddr <- gitcommit(script)
 tags="warningsignals, stochpop"
 ###########################
-#upload("boettiger_fig4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+
 #upload("boettiger_fig3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+upload("boettiger_fig4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
 
 
-png("appendix4.png", width=8, units="in", height=8*2/3, res=400)
-ylab <- c("25 pts", "50 pts", "200 pts")
-roc_effort_plot(appendix_resample, freq=ylab)
-dev.off()
-
-png("appendix3.png", width=8, units="in", height=3*3/2, res=400)
-roc_fig3(appendix)
-dev.off()
-
-upload("appendix4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
-upload("appendix3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+#upload("appendix3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+#upload("appendix4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
 
 
