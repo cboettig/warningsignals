@@ -21,7 +21,7 @@ roc_effort_plot <- function(input, freq, ...){
   n <- length(input) # 1..i..n datafiles
   m <- length(input[[1]]) # 1..j..m levels
   legend=FALSE
-    par(mfrow=c(m,n), mar=c(0,0,0,0), oma=c(5,5,4,2))
+    par(mfrow=c(m,n), mar=c(0,0,0,0), oma=c(4,5,4,2))
   for(j in 1:m){ #row number
     for(i in 1:n){ #work across, col pos
      if(i==n && j == m) 
@@ -31,11 +31,11 @@ roc_effort_plot <- function(input, freq, ...){
      if(j==1) 
        mtext(names(input)[i],  NORTH<-3, cex=ce, line=2) 
      if(i==1)
-      mtext(freq[j], WEST<-2, cex=ce, line=2)
+      mtext(freq[j], WEST<-2, cex=ce, line=4)
     }
   }
-  mtext("True Positive", outer=TRUE, WEST<-2, cex=1.1*ce, line=3)
-  mtext("False Positive", outer=TRUE, SOUTH<-1, cex=1.1*ce, line=3)
+  mtext("True Positive", outer=TRUE, WEST<-2, cex=1.1*ce, line=2)
+  mtext("False Positive", outer=TRUE, SOUTH<-1, cex=1.1*ce, line=2)
 }
 
 #freq=25,50,100,200,500
@@ -67,12 +67,12 @@ resample <- list(Simulation=ibm_resample, Daphnia=drake_resample, Glaciation=deu
 source("analysis.R")
 
 
-png("rocs.png", width=8, units="in", height=8*2/3, res=400)
+png("boettiger_fig4.png", width=8, units="in", height=8*2/3, res=400)
 ylab <- c("25 pts", "50 pts", "200 pts")
 roc_effort_plot(resample, freq=ylab)
 dev.off()
 
-png("roc_fig3.png", width=8, units="in", height=3, res=400)
+png("boettiger_fig3.png", width=8, units="in", height=3, res=400)
 roc_fig3(roc_data)
 dev.off()
 
@@ -83,8 +83,8 @@ script <- "analysis_plots.R"
 gitaddr <- gitcommit(script)
 tags="warningsignals, stochpop"
 ###########################
-#upload("rocs.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
-#upload("roc_fig3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+upload("boettiger_fig4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+#upload("boettiger_fig3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
 
 
 png("appendix4.png", width=8, units="in", height=8*2/3, res=400)
