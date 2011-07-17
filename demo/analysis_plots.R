@@ -15,7 +15,17 @@ roc_fig3 <- function(input, ...){
     }
 }
 
-
+dists_fig3 <- function(input, ...){
+    n <- length(input) # 1..i..n datafiles
+    m <- length(input[[1]]) # 1..j..m levels
+    stats <- which_statistic(input[[1]])
+    par(mfrow=c(m,n))
+    for(j in 1:m){
+      for(i in 1:n){
+        plot(input[[i]][[j]], xlab=stats[i], ...)
+      }
+    }
+}
 
 roc_effort_plot <- function(input, freq, ...){
   n <- length(input) # 1..i..n datafiles
@@ -81,14 +91,25 @@ ylab <- c("25 pts", "50 pts", "200 pts")
 roc_effort_plot(resample, freq=ylab)
 dev.off()
 
+
+## Appendix plots
 png("appendix3.png", width=8, units="in", height=3*3/2, res=400)
 roc_fig3(appendix)
 dev.off()
-
 png("appendix4.png", width=8, units="in", height=8*2/3, res=400)
 ylab <- c("25 pts", "50 pts", "200 pts")
 roc_effort_plot(appendix_resample, freq=ylab)
 dev.off()
+
+png("dists_fig4.png", width=8, units="in", height=20, res=400)
+dists_fig3(roc_data)
+dev.off()
+
+png("dists_a4.png", width=8, units="in", height=4*5, res=400)
+dists_fig3(appendix)
+dev.off()
+
+
 
 ###########################
 require(socialR)
@@ -98,10 +119,12 @@ tags="warningsignals, stochpop"
 ###########################
 
 #upload("boettiger_fig3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
-upload("boettiger_fig4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
-
-
+#upload("boettiger_fig4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
 #upload("appendix3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
 #upload("appendix4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+
+upload("dists_fig4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+#upload("dists_a4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+
 
 
