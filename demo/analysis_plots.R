@@ -21,7 +21,7 @@ roc_effort_plot <- function(input, freq, ...){
   n <- length(input) # 1..i..n datafiles
   m <- length(input[[1]]) # 1..j..m levels
   legend=FALSE
-    par(mfrow=c(n,m), mar=c(0,0,0,0), oma=c(4,4,4,2))
+    par(mfrow=c(m,n), mar=c(0,0,0,0), oma=c(4,4,4,2))
   for(j in 1:m){ #row number
     for(i in 1:n){ #work across, col pos
      if(i==n && j == m) 
@@ -91,7 +91,7 @@ roc_effort_plot(appendix_resample, freq=ylab)
 dev.off()
 
 png("appendix3.png", width=8, units="in", height=3, res=400)
-roc_fig3(roc_data)
+roc_fig3(appendix)
 dev.off()
 
 upload("appendix4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
