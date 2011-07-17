@@ -10,10 +10,10 @@ gitaddr <- gitcommit(script)
 tags="warningsignals, stochpop"
 ###############
 source("analysis.R")
-m <- fit_models(ibm_critical, "LSN")
-
 data(deuterium)
 i <- 2 ## Which deut?
+m <- fit_models(deuterium[[i]], "LSN")
+
 sampling <- sampling_freq(m$const, m$timedep, cpu=cpu, nboot=nboot,
                           sample_effort=freq)
 taus <- reformat_tau_dists(bootstrap_tau(m$X, m$const, m$timedep, 
