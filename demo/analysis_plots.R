@@ -21,7 +21,7 @@ roc_effort_plot <- function(input, freq, ...){
   n <- length(input) # 1..i..n datafiles
   m <- length(input[[1]]) # 1..j..m levels
   legend=FALSE
-    par(mfrow=c(m,n), mar=c(0,0,0,0), oma=c(5,6,4,2))
+    par(mfrow=c(m,n), mar=c(0,0,0,0), oma=c(5,7,4,2))
   for(j in 1:m){ #row number
     for(i in 1:n){ #work across, col pos
      if(i==n && j == m) 
@@ -32,11 +32,13 @@ roc_effort_plot <- function(input, freq, ...){
        axis(1,cex.axis=ce) 
      if(j==1) 
        mtext(names(input)[i],  NORTH<-3, cex=ce, line=2) 
-     if(i==1)
-      mtext(freq[j], WEST<-2, cex=ce, line=4)
+     if(i==1){
+      mtext(freq[j], WEST<-2, cex=ce, line=5)
+      axis(2,cex.axis=ce) 
+     }
     }
   }
-  mtext("True Positive", outer=TRUE, WEST<-2, cex=1.1*ce, line=1)
+  mtext("True Positive", outer=TRUE, WEST<-2, cex=1.1*ce, line=3)
   mtext("False Positive", outer=TRUE, SOUTH<-1, cex=1.1*ce, line=3)
 }
 
