@@ -19,7 +19,7 @@ dists_fig3 <- function(input, ...){
     n <- length(input) # 1..i..n datafiles
     m <- length(input[[1]]) # 1..j..m levels
     stats <- which_statistic(input[[1]])
-    par(mfrow=c(m,n), mar=c(0,0,0,0), oma=c(4,6,4,2))
+    par(mfrow=c(m,n), mar=c(0,0,0,0), oma=c(5,6,4,2))
     for(j in 1:m){
       for(i in 1:n){
         if(j>1)
@@ -39,7 +39,7 @@ dists_fig3 <- function(input, ...){
           axis(1, line=-1,cex.axis=ce)
       }
         if(j==m)
-          mtext(paste(expression(tau)), SOUTH<-1, cex=ce)
+          mtext(expression(tau), SOUTH<-1, cex=ce, line=3, outer=TRUE)
     }
 }
 
