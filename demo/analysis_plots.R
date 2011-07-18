@@ -88,11 +88,11 @@ load("~/flickr/5906482315.Rdat")
 ibm_resample <-  lapply(sets, function(i) c(sampling[i], indicator_sampling[[i]]))
 ibm <- c(list(mc), taus)
 
-appendix <- list("Greenhouse Earth"=caco3, "Glaciation I"=deut1)
-appendix_resample <- list("Greenhouse Earth"=caco3_resample, "Glaciation I"=deut1_resample)
+appendix <- list("(a) Greenhouse Earth"=caco3, "(b) Glaciation I"=deut1)
+appendix_resample <- list("(a) Greenhouse Earth"=caco3_resample, "(b) Glaciation I"=deut1_resample)
 
-roc_data <- list(Simulation=ibm, Daphnia=drake, Glaciation=deut3)
-resample <- list(Simulation=ibm_resample, Daphnia=drake_resample, Glaciation=deut3_resample)
+roc_data <- list("(a) Simulation"=ibm, "(b) Daphnia"=drake, "(c) Glaciation III"=deut3)
+resample <- list("(a) Simulation"=ibm_resample, "(b) Daphnia"=drake_resample, "(c) Glaciation III"=deut3_resample)
 
 source("analysis.R")
 
@@ -134,10 +134,10 @@ gitaddr <- gitcommit(script)
 tags="warningsignals, stochpop"
 ###########################
 
-#upload("boettiger_fig3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
-#upload("boettiger_fig4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
-#upload("appendix3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
-#upload("appendix4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+upload("boettiger_fig3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+upload("boettiger_fig4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+upload("appendix3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+upload("appendix4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
 
 upload("dists_fig4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
 upload("dists_a4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
