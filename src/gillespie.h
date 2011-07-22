@@ -6,7 +6,7 @@
 #include <gsl/gsl_vector.h>
 #include <gsl/gsl_statistics.h>
 #include <time.h>
-#include <omp.h>
+//#include <omp.h>
 #define _RNDSEED 1 /* 1 for true */
 
 typedef double (* event_fn)(void * my_pars);
