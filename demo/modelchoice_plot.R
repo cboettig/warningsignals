@@ -3,7 +3,7 @@ rm(list=ls())
 require(warningsignals)
 
 
-load("drake_modelchoice.Rdat")
+load("ibm_modelchoice.Rdat")
 
 ############### Use correct tagging for replot file ########
 require(socialR)
@@ -16,5 +16,5 @@ tweet_errors(script, tags=tags)
 png("modelchoice.png")
 plot(mc)
 dev.off()
-upload("modelchoice.png", script=script, gitaddr=gitaddr, tags=tags, comment="drake$H6 model choice: LTC vs LSN")
+upload("modelchoice.png", script=script, gitaddr=gitaddr, tags=tags, comment="IBM model choice: LTC vs LSN")
 
