@@ -103,7 +103,7 @@ plot_indicator <- function(X, indicator=c("Autocorrelation", "Variance",
 	if(!is.ts(X)){
 		n <- length(X[,1])
 		start <- X[1,1]
-		end <- X[1,n]
+		end <- X[n,1]
 		X <- ts(X[,2], start=start, end=end, freq=(end-start)/n)
 	}
 	Y <- compute_indicator(X, indicator, windowsize)
