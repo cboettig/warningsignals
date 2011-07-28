@@ -1,6 +1,6 @@
 ## Simulate a dataset from the full individual, nonlinear model
 T<- 1200
-n_pts <- 100
+n_pts <- 1000
 require(warningsignals)
 
 ## Collapsing example parameters 
@@ -17,12 +17,11 @@ ibm_critical <- ts(sn$x1,start=sn$time[1], deltat=sn$time[2]-sn$time[1])
 system("rm *.png")
 
 ce <- 2.5 # character expansion magnification for plots
-M <- 10
+M <- 10 # how many points to add each frame?
 #windowsize <- 25
 for(i in 1:(n_pts/M)){
   int <- 1:(M*i)
-  png(paste(i, ".png", sep=""), width=11, height=8.5,
-      units="in", res=300)
+  png(paste("ind_", i, ".png", sep=""), height=850, width=1100)
 
   mat <-  rbind(c(1),c(2),c(3))  # three rows, 1 column
   layout(mat, height = c(1, .5, .5)) # height of each row
@@ -53,8 +52,7 @@ for(i in 1:(n_pts/M)){
   dev.off()
 }
 
-# -r is frequency, 2 = 5 frames a second
+# -r is frequency, 2 = 5 frames a second.  
 # -qscale is quality, smaller is better.  -b is bitrate. 
-#system("rm movie.mp4")
-#system("ffmpeg -qscale 5 -r 2 -b 9600 -i %d.png movie.mp4")
-#system("rm *.png")
+system("rm ind.mp4")
+system("ffmpeg -qscale 5 -r 4 -b 9600 -i ind_%d.png ind.mp4")

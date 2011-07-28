@@ -69,6 +69,7 @@ nd <- density(taus$null_tau_dist[1,])
 td <- density(taus$test_tau_dist[1,])
 ylim <- c( min(nd$y, td$y), max(nd$y, td$y))
 
+## PLOT THE NULL DISTRIBUTION OF TAU
 png("null.png", width=640, height=640)
 par(mar=c(4,5,6,2))
 plot(nd, type="n", col=rgb(0,0,1,1), xlim=c(-1,1), ylim=ylim,
@@ -77,19 +78,31 @@ plot(nd, type="n", col=rgb(0,0,1,1), xlim=c(-1,1), ylim=ylim,
 polygon(nd$x, nd$y, col=rgb(0,0,1,.5), border=rgb(0,0,1))
 mtext("Null Distribution", line=2.5, cex=2)
 mtext("(stable model, 100 data pts)", line=1, cex=1.5)
-#polygon(td$x, td$y, col=rgb(1,0,0,.5), border=rgb(1,0,0))
 dev.off()
 
+## PLOT TEST DISTRIBUTION OF TAU
 png("test.png", width=640, height=640)
 par(mar=c(4,5,6,2))
 plot(nd, type="n", col=rgb(0,0,1,1), xlim=c(-1,1), ylim=ylim,
         cex.axis=2, cex.lab=2, xlab=expression(paste("Kendall's ", tau)),
         main="")
-polygon(nd$x, nd$y, col=rgb(0,0,1,.5), border=rgb(0,0,1))
-mtext("Comparison to a sytem approaching transition", line=2.5, cex=2)
+mtext("System approaching transition", line=2.5, cex=2)
 mtext("(100 data pts)", line=1, cex=1.5)
 polygon(td$x, td$y, col=rgb(1,0,0,.5), border=rgb(1,0,0))
 dev.off()
+
+## PLOT BOTH TAU DISTRIBUTIONS
+png("both.png", width=640, height=640)
+par(mar=c(4,5,6,2))
+plot(nd, type="n", col=rgb(0,0,1,1), xlim=c(-1,1), ylim=ylim,
+        cex.axis=2, cex.lab=2, xlab=expression(paste("Kendall's ", tau)),
+        main="")
+polygon(nd$x, nd$y, col=rgb(0,0,1,.5), border=rgb(0,0,1))
+mtext("Comparison to a system approaching transition", line=2.5, cex=2)
+mtext("(100 data pts)", line=1, cex=1.5)
+polygon(td$x, td$y, col=rgb(1,0,0,.5), border=rgb(1,0,0))
+dev.off()
+
 
 
 
@@ -97,9 +110,8 @@ roc_curve(remove_unconverged(reformat_tau_dists(list(taus)))[[1]],
           lwd=4, col="darkblue", cex.axis=2, cex.lab=2)
 
 
+############## REPEAT WITH 1000 points #########################
 
-
-# esa_partII.R
 n_pts <- 1000
 pars = c(Xo = 730, e = 0.5, a = 100, K = 1000, h = 200, 
     i = 0, Da = 0, Dt = 0, p = 2)
