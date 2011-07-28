@@ -52,8 +52,10 @@ for(i in 1:M){
                   main="", legend=F, cex=2, cex.axis=2., 
                   cex.lab=3, color.line="black", lwd=5, 
                   numeric_legend=T, cex.legend=2)
+          n_pts <- length(roc_pts[1,])
+          col <- gray.colors(n_pts)
           plot(t(roc_pts), pch=19, cex=3, xlim=c(0,1), 
-               ylim=c(0,1), ylab="True Positive", 
+               ylim=c(0,1), ylab="True Positive", col=col,
                xlab="False Positive", cex.lab=3, cex.axis=2.)
           dev.off()
         }
