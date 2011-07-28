@@ -29,32 +29,94 @@ matrix2ts <- function(X){
 }
 
 int <- 1:90
-X <- cbind(time(ibm_critical)[int], ibm_critical[int])
-X <- matrix2ts(X)
+load("stable_pos.Rdat") # Load a saved ibm_critical for consistency
+M <- cbind(time(ibm_stable)[int], ibm_stable[int])
+X <- matrix2ts(M)
 
 png("large_tau.png", width=580, height=480)
 tau <- compute_tau(X, "CV")
 mat <-  rbind(c(1),c(2))  # three rows, 1 column
 layout(mat, height = c(.5, 1)) # height of each row
 par(mar=c(0,5,4,2))
-plot(X, xaxt="n", cex.axis=1.5, cex.lab=1.5, lwd=3, col="darkgray")
+plot(M, xaxt="n", cex.axis=1.5, cex.lab=1.5, lwd=3, col="darkgray",
+     type="l", ylab="abundance")
 par(mar=c(4,5,0,2))
 plot_indicator(X, "CV", cor=F, lwd=4, cex.axis=1.5, cex.lab=1.5)
-mtext(bquote(paste("Correlation test, ", tau==.(round(tau[1],3)) )), line=-2.1, cex=1.8)
+mtext(bquote(paste("Correlation test, ", tau==.(round(tau[1],3)) )), line=-2.1, cex=2.5)
 dev.off()
 
 png("small_tau.png", width=580, height=480)
-load("small_tau.Rdat")
-Y <- cbind(time(ibm_stable)[int], ibm_stable[int])
-Y <- matrix2ts(Y)
+load("small_tau.Rdat") # Load a saved ibm_stable for consistency
+M <- cbind(time(ibm_stable)[int], ibm_stable[int])
+Y <- matrix2ts(M)
 tau <- compute_tau(Y, "CV")
 mat <-  rbind(c(1),c(2))  # three rows, 1 column
 layout(mat, height = c(.5, 1)) # height of each row
 par(mar=c(0,5,4,2))
-plot(Y, xaxt="n", cex.axis=1.5, cex.lab=1.5, lwd=3, col="darkgray")
+plot(M, xaxt="n", cex.axis=1.5, cex.lab=1.5, lwd=3, col="darkgray",
+     type="l", ylab="abundance")
 par(mar=c(4,5,0,2))
 plot_indicator(Y, "CV", cor=F, lwd=4, cex.axis=1.5, cex.lab=1.5)
-mtext(bquote(paste("Correlation test, ", tau==.(round(tau[1],3)) )), line=-2.1, cex=1.8)
+mtext(bquote(paste("Correlation test, ", tau==.(round(tau[1],3)))), line=-2.1, cex=2.5)
 dev.off()
 
+
+
+#m <- fit_models(ibm_stable, "LSN")
+#taus <- tau_dist_montecarlo(ibm_stable, m$const, m$timedep, nboot=500, cpu=2)
+load("esa_taus.Rdat")
+nd <- density(taus$null_tau_dist[1,])
+td <- density(taus$test_tau_dist[1,])
+ylim <- c( min(nd$y, td$y), max(nd$y, td$y))
+
+png("null.png", width=640, height=640)
+par(mar=c(4,5,6,2))
+plot(nd, type="n", col=rgb(0,0,1,1), xlim=c(-1,1), ylim=ylim,
+        cex.axis=2, cex.lab=2, xlab=expression(paste("Kendall's ", tau)),
+        main="")
+polygon(nd$x, nd$y, col=rgb(0,0,1,.5), border=rgb(0,0,1))
+mtext("Null Distribution", line=2.5, cex=2)
+mtext("(stable model, 100 data pts)", line=1, cex=1.5)
+#polygon(td$x, td$y, col=rgb(1,0,0,.5), border=rgb(1,0,0))
+dev.off()
+
+png("test.png", width=640, height=640)
+par(mar=c(4,5,6,2))
+plot(nd, type="n", col=rgb(0,0,1,1), xlim=c(-1,1), ylim=ylim,
+        cex.axis=2, cex.lab=2, xlab=expression(paste("Kendall's ", tau)),
+        main="")
+polygon(nd$x, nd$y, col=rgb(0,0,1,.5), border=rgb(0,0,1))
+mtext("Comparison to a sytem approaching transition", line=2.5, cex=2)
+mtext("(100 data pts)", line=1, cex=1.5)
+polygon(td$x, td$y, col=rgb(1,0,0,.5), border=rgb(1,0,0))
+dev.off()
+
+
+
+roc_curve(remove_unconverged(reformat_tau_dists(list(taus)))[[1]],
+          lwd=4, col="darkblue", cex.axis=2, cex.lab=2)
+
+
+
+
+# esa_partII.R
+n_pts <- 1000
+pars = c(Xo = 730, e = 0.5, a = 100, K = 1000, h = 200, 
+    i = 0, Da = 0, Dt = 0, p = 2)
+## Run the individual based simulation
+sn <- saddle_node_ibm(pars, times=seq(0,T, length=n_pts))
+# format output as timeseries
+ibm_stable  <- ts(sn$x1,start=sn$time[1], deltat=sn$time[2]-sn$time[1])
+m <- fit_models(ibm_stable, "LSN")
+taus <- tau_dist_montecarlo(ibm_stable, m$const, m$timedep, nboot=500, cpu=2)
+nd <- density(taus$null_tau_dist[1,])
+td <- density(taus$test_tau_dist[1,])
+ylim <- c( min(nd$y, td$y), max(nd$y, td$y))
+
+plot(nd, type="n", col=rgb(0,0,1,1), xlim=c(-1,1), ylim=ylim,
+        cex.axis=2, cex.lab=2, xlab=expression(paste("Kendall's ", tau)),
+        main="")
+polygon(nd$x, nd$y, col=rgb(0,0,1,.5), border=rgb(0,0,1))
+mtext("Null Distribution", line=2.5, cex=2)
+mtext("(stable model, 1000 data pts)", line=1, cex=1.5)
 
