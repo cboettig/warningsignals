@@ -53,7 +53,8 @@ for(i in 1:M){
                   cex.lab=3, color.line="black", lwd=5, 
                   numeric_legend=T, cex.legend=2)
           n_pts <- length(roc_pts[1,])
-          col <- gray.colors(n_pts)
+          col <- palette(gray(seq(0,.9,len=n_pts)))
+
           plot(t(roc_pts), pch=19, cex=3, xlim=c(0,1), 
                ylim=c(0,1), ylab="True Positive", col=rev(col),
                xlab="False Positive", cex.lab=3, cex.axis=2.)
