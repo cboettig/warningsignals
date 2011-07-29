@@ -67,8 +67,13 @@ for(i in 1:(n_pts/M)){
 
 ## -r is frequency, 2 = 5 frames a second.  
 ## -qscale is quality, smaller is better.  -b is bitrate. 
+<<<<<<< HEAD
 #system("rm uncertainty.mp4")
 #system("ffmpeg -qscale 5 -r 4 -b 9600 -i %d.png movie.mp4")
+=======
+system("rm uncertainty.mp4")
+system("ffmpeg -qscale 5 -r 4 -b 9600 -i uncertainty_%d.png uncertainty.mp4")
+>>>>>>> 7af06a8cab811e39c0d57cf0f0d1d19d23c96124
 
 #upload("uncertainty_1.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
 
