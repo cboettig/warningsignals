@@ -40,5 +40,5 @@ indicator_sampling <-
 indicator_sampling_freq(m, cpu, nboot,
                         sample_effort=freq) 
 
-save(list=ls(), file="drake_ltc_I9.Rdat")
+save(list=ls(), file="drake_ltc2_I9.Rdat")
 

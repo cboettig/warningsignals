@@ -32,5 +32,5 @@ indicator_sampling <- indicator_sampling_freq(m, cpu, nboot,
                                               sample_effort=freq) 
 
 
-save(list=ls(), file="ibm_stable.Rdat")
+save(list=ls(), file="ibm_stable3.Rdat")
 

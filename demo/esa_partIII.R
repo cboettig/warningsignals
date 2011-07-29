@@ -24,10 +24,10 @@ ibm_critical <- ts(sn$x1,start=sn$time[1], deltat=sn$time[2]-sn$time[1])
 #load("esa.Rdat")
 
 ce <- 2.5 # character expansion magnification for plots
-M <- 100 # how many points to add each frame?
+M <- 10 # how many points to add each frame?
 for(i in 1:(n_pts/M)){
   int <- 1:(M*i)
-  png(paste("uncertainty_", i, ".png", sep=""), height=850, width=1100)
+  png(paste("uncertainty_lik_", i, ".png", sep=""), height=850, width=1100)
 
   # Plot size/layout
   mat <-  rbind(c(1),c(2),c(3))  # three rows, 1 column
@@ -53,11 +53,9 @@ for(i in 1:(n_pts/M)){
   Y <- cbind(time(ibm_critical)[int], ibm_critical[int])
   X <- matrix2ts(Y)
   m <- fit_models(X, "LSN")
-  taus <- tau_dist_montecarlo(X, m$const, m$timedep, nboot=500, cpu=cpu,
-                              signal="CV")
-  roc_curve(remove_unconverged(reformat_tau_dists(list(taus)))[[1]],
+  mc <- montecarlotest(m$const, m$timedep, nboot=500, cpu=cpu)
+  roc_curve(remove_unconverged(list(mc)),
           lwd=4, col="darkblue", cex.axis=2, cex.lab=2)
-
 
    dev.off()
 }

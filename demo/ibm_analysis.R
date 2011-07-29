@@ -16,7 +16,7 @@ source("analysis.R")
 
 ## The analyses -- slow!
 data(ibms)
-m <- fit_models(ibm_critical, "LTC")
+m <- fit_models(ibm_critical, "LSN")
 sampling <- sampling_freq(m$const, m$timedep, cpu=cpu, nboot=nboot,
                           sample_effort=freq)
 taus <- reformat_tau_dists(bootstrap_tau(m$X, m$const, m$timedep, 
