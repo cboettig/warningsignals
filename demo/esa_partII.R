@@ -29,12 +29,12 @@ matrix2ts <- function(X){
     deltat <- X[2,1]-X[1,1]
     ts(X[,2], start=start, end=end, deltat=deltat)
 }
-shorten_ts(X, int){
+shorten_ts <- function(X, int){
   M <- cbind(time(X)[int], X[int])
   matrix2ts(M)
 }
 
-
+###############################################################################################
 int <- 1:90
 load("stable_pos.Rdat") # Load a saved ibm_critical for consistency
 M <- cbind(time(ibm_stable)[int], ibm_stable[int])
@@ -98,7 +98,7 @@ png("crit_small_tau.png", width=580, height=480)
   plot_indicator(Y, "CV", cor=F, lwd=4, cex.axis=1.5, cex.lab=1.5)
   mtext(bquote(paste("Correlation test, ", tau==.(round(tau[1],3)))), line=-2.1, cex=2.5)
 dev.off()
-
+#######################################
 
 
 
