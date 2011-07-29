@@ -39,7 +39,7 @@ dev.off()
 
 
 ## ROC film 
-M <- 20 # frames
+M <- 5 # frames
 t <- seq(3,8,length=M) # sequence of thresholds
 system("rm roc*.png")
 roc_pts <- matrix(NA, nrow=2, ncol=M)
