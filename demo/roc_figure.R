@@ -41,22 +41,29 @@ dev.off()
 ## ROC film 
 M <- 20 # frames
 t <- seq(3,8,length=M) # sequence of thresholds
-system("rm roc*.png roc.mp4")
+system("rm roc*.png")
 roc_pts <- matrix(NA, nrow=2, ncol=M)
 for(i in 1:M){
-          png(paste("roc_", i, ".png", sep=""),
+        png(paste("roc_", i, ".png", sep=""),
                     width=600, height=1200)
-          par(mfrow=c(2,1), mar=c(4,6,4,2))
-          roc_pts[,i] <- roc_fig(null, test, thresh=t[i], 
+        par(mfrow=c(2,1), mar=c(4,6,4,2))
+
+        roc_pts[,i] <- roc_fig(null, test, thresh=t[i], 
                   xlab="Test Statistic", ylim=c(0,.54), 
                   main="", legend=F, cex=2, cex.axis=2., 
-                  cex.lab=3, color.line="black", lwd=5, 
+                  cex.lab=3, color.line="black", lwd=6, 
                   numeric_legend=T, cex.legend=2)
+
+          ## Show points on the ROC Curve 
           plot(t(roc_pts), pch=19, cex=3, xlim=c(0,1), 
-               ylim=c(0,1), ylab="True Positive", 
+               ylim=c(0,1), ylab="True Positive",
                xlab="False Positive", cex.lab=3, cex.axis=2.)
+
+          ## Show Curve
+          if(i==M) roc_curve(pow, add=TRUE, lwd=3)
           dev.off()
-        }
+}
+
 system("ffmpeg -qscale 2 -r 2 -b 9600 -i roc_%d.png roc.mp4")
 
 

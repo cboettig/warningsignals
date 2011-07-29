@@ -44,6 +44,9 @@ roc_curve <- function(pow, add=FALSE, pts=50, ...){
          ylab="True Positive", ylim=c(0,1), xlim=c(0,1), ...)
   curve(1*x, add=TRUE, lty=2)
 
+  id <- which(roc[,1]<=.05)[1]
+  print(paste("True Pos Prob = ", roc[id,2], "at false pos rate of", roc[id,1]))
+
   area
 }
 
