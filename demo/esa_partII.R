@@ -10,6 +10,8 @@ pars = c(Xo = 730, e = 0.5, a = 100, K = 1000, h = 200,
 sn <- saddle_node_ibm(pars, times=seq(0,T, length=n_pts))
 ## format output as timeseries
 ibm_critical <- ts(sn$x1,start=sn$time[1], deltat=sn$time[2]-sn$time[1])
+
+
 # Stable example parameters
 pars = c(Xo = 730, e = 0.5, a = 100, K = 1000, h = 200, 
     i = 0, Da = 0, Dt = 0, p = 2)
@@ -27,38 +29,77 @@ matrix2ts <- function(X){
     deltat <- X[2,1]-X[1,1]
     ts(X[,2], start=start, end=end, deltat=deltat)
 }
+shorten_ts(X, int){
+  M <- cbind(time(X)[int], X[int])
+  matrix2ts(M)
+}
+
 
 int <- 1:90
 load("stable_pos.Rdat") # Load a saved ibm_critical for consistency
 M <- cbind(time(ibm_stable)[int], ibm_stable[int])
 X <- matrix2ts(M)
-
 png("large_tau.png", width=580, height=480)
-tau <- compute_tau(X, "CV")
-mat <-  rbind(c(1),c(2))  # three rows, 1 column
-layout(mat, height = c(.5, 1)) # height of each row
-par(mar=c(0,5,4,2))
-plot(M, xaxt="n", cex.axis=1.5, cex.lab=1.5, lwd=3, col="darkgray",
-     type="l", ylab="abundance")
-par(mar=c(4,5,0,2))
-plot_indicator(X, "CV", cor=F, lwd=4, cex.axis=1.5, cex.lab=1.5)
-mtext(bquote(paste("Correlation test, ", tau==.(round(tau[1],3)) )), line=-2.1, cex=2.5)
+  tau <- compute_tau(X, "CV")
+  mat <-  rbind(c(1),c(2))  # three rows, 1 column
+  layout(mat, height = c(.5, 1)) # height of each row
+  par(mar=c(0,5,4,2))
+  plot(M, xaxt="n", cex.axis=1.5, cex.lab=1.5, lwd=3, col="darkgray",
+       type="l", ylab="abundance")
+  par(mar=c(4,5,0,2))
+  plot_indicator(X, "CV", cor=F, lwd=4, cex.axis=1.5, cex.lab=1.5)
+  mtext(bquote(paste("Correlation test, ", tau==.(round(tau[1],3)) )), line=-2.1, cex=2.5)
 dev.off()
 
 png("small_tau.png", width=580, height=480)
-load("small_tau.Rdat") # Load a saved ibm_stable for consistency
-M <- cbind(time(ibm_stable)[int], ibm_stable[int])
-Y <- matrix2ts(M)
-tau <- compute_tau(Y, "CV")
-mat <-  rbind(c(1),c(2))  # three rows, 1 column
-layout(mat, height = c(.5, 1)) # height of each row
-par(mar=c(0,5,4,2))
-plot(M, xaxt="n", cex.axis=1.5, cex.lab=1.5, lwd=3, col="darkgray",
-     type="l", ylab="abundance")
-par(mar=c(4,5,0,2))
-plot_indicator(Y, "CV", cor=F, lwd=4, cex.axis=1.5, cex.lab=1.5)
-mtext(bquote(paste("Correlation test, ", tau==.(round(tau[1],3)))), line=-2.1, cex=2.5)
+  load("small_tau.Rdat") # Load a saved ibm_stable for consistency
+  M <- cbind(time(ibm_stable)[int], ibm_stable[int])
+  Y <- matrix2ts(M)
+  tau <- compute_tau(Y, "CV")
+  mat <-  rbind(c(1),c(2))  # three rows, 1 column
+  layout(mat, height = c(.5, 1)) # height of each row
+  par(mar=c(0,5,4,2))
+  plot(M, xaxt="n", cex.axis=1.5, cex.lab=1.5, lwd=3, col="darkgray",
+       type="l", ylab="abundance")
+  par(mar=c(4,5,0,2))
+  plot_indicator(Y, "CV", cor=F, lwd=4, cex.axis=1.5, cex.lab=1.5)
+  mtext(bquote(paste("Correlation test, ", tau==.(round(tau[1],3)))), line=-2.1, cex=2.5)
 dev.off()
+
+
+int <- 1:85
+png("crit_large_tau.png", width=580, height=480)
+  load("true_positive.Rdat") # Load a saved ibm_critical for consistency
+  M <- cbind(time(ibm_critical)[int], ibm_critical[int])
+  X <- matrix2ts(M)
+
+  tau <- compute_tau(X, "CV")
+  mat <-  rbind(c(1),c(2))  # three rows, 1 column
+  layout(mat, height = c(.5, 1)) # height of each row
+  par(mar=c(0,5,4,2))
+  plot(M, xaxt="n", cex.axis=1.5, cex.lab=1.5, lwd=3, col="darkgray",
+       type="l", ylab="abundance")
+  par(mar=c(4,5,0,2))
+  plot_indicator(X, "CV", cor=F, lwd=4, cex.axis=1.5, cex.lab=1.5)
+  mtext(bquote(paste("Correlation test, ", tau==.(round(tau[1],3)) )), line=-2.1, cex=2.5)
+dev.off()
+
+png("crit_small_tau.png", width=580, height=480)
+  load("false_negative.Rdat") # Load a saved ibm_critical for consistency
+  M <- cbind(time(ibm_critical)[int], ibm_critical[int])
+  Y <- matrix2ts(M)
+  tau <- compute_tau(Y, "CV")
+  mat <-  rbind(c(1),c(2))  # three rows, 1 column
+  layout(mat, height = c(.5, 1)) # height of each row
+  par(mar=c(0,5,4,2))
+  plot(M, xaxt="n", cex.axis=1.5, cex.lab=1.5, lwd=3, col="darkgray",
+       type="l", ylab="abundance")
+  par(mar=c(4,5,0,2))
+  plot_indicator(Y, "CV", cor=F, lwd=4, cex.axis=1.5, cex.lab=1.5)
+  mtext(bquote(paste("Correlation test, ", tau==.(round(tau[1],3)))), line=-2.1, cex=2.5)
+dev.off()
+
+
 
 
 
@@ -111,7 +152,6 @@ roc_curve(remove_unconverged(reformat_tau_dists(list(taus)))[[1]],
 
 
 ############## REPEAT WITH 1000 points #########################
-
 n_pts <- 1000
 pars = c(Xo = 730, e = 0.5, a = 100, K = 1000, h = 200, 
     i = 0, Da = 0, Dt = 0, p = 2)
@@ -119,8 +159,9 @@ pars = c(Xo = 730, e = 0.5, a = 100, K = 1000, h = 200,
 sn <- saddle_node_ibm(pars, times=seq(0,T, length=n_pts))
 # format output as timeseries
 ibm_stable  <- ts(sn$x1,start=sn$time[1], deltat=sn$time[2]-sn$time[1])
-m <- fit_models(ibm_stable, "LSN")
-taus <- tau_dist_montecarlo(ibm_stable, m$const, m$timedep, nboot=500, cpu=2)
+load("esa_taus_1000pts.Rdat")
+#m <- fit_models(ibm_stable, "LSN")
+#taus <- tau_dist_montecarlo(ibm_stable, m$const, m$timedep, nboot=500, cpu=2)
 nd <- density(taus$null_tau_dist[1,])
 td <- density(taus$test_tau_dist[1,])
 ylim <- c( min(nd$y, td$y), max(nd$y, td$y))

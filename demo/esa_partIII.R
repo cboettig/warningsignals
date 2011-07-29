@@ -67,6 +67,6 @@ save(list=ls(), file="esaIII.Rdat")
 
 ## -r is frequency, 2 = 5 frames a second.  
 ## -qscale is quality, smaller is better.  -b is bitrate. 
-#system("rm movie.mp4")
-#system("ffmpeg -qscale 5 -r 4 -b 9600 -i %d.png movie.mp4")
+system("rm uncertainty.mp4")
+system("ffmpeg -qscale 5 -r 4 -b 9600 -i uncertainty_%d.png uncertainty.mp4")
 
