@@ -196,9 +196,9 @@ plot.pow <- function(pow, threshold=.95, main="", legend=FALSE, type="density",
 			if(shade_p){
 				shade_p <- which(nd$x > pow$lr)
 				polygon(c(pow$lr,nd$x[shade_p]), c(0,nd$y[shade_p]),
-                col=rgb(0,0,1,.3), border=rgb(0,0,1,.5))
+                col=rgb(0,0,1,.5), border=rgb(0,0,1))
 			} else if(shade){
-				polygon(nd$x, nd$y, col=rgb(0,0,1,.3), border=rgb(0,0,1,.5))
+				polygon(nd$x, nd$y, col=rgb(0,0,1,.5), border=rgb(0,0,1))
 			}
 		} else { 
 			plot(0,0, xlim=xlim, ylim = ylim, main=main, xlab=" Likelihood Ratio",
@@ -214,9 +214,9 @@ plot.pow <- function(pow, threshold=.95, main="", legend=FALSE, type="density",
 			if(shade_power){
 				shade_power <- which(td$x > threshold_tail)
 				polygon(c(threshold_tail, td$x[shade_power]), c(0,td$y[shade_power]),
-                col=rgb(1,0,0,.3), border=rgb(1,0,0,.5))
+                col=rgb(1,0,0,.5), border=rgb(1,0,0,1))
 			} else if(shade){
-				polygon(td$x, td$y, col=rgb(1,0,0,.3), border=rgb(1,0,0,.5))
+				polygon(td$x, td$y, col=rgb(1,0,0,.5), border=rgb(1,0,0,1))
 			}
 		}
 		## AIC shading 
