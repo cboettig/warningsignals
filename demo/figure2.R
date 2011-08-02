@@ -10,10 +10,10 @@ data(ibms)
 data(deuterium)
 data(drake)
 
-X <- list(Stable=ibm_stable, Deteriorating=ibm_critical, Glaciation=deuterium[[3]], Daphnia=drake_deterior$H6)
+X <- list("(a) Stable"=ibm_stable, "(b) Deteriorating"=ibm_critical, "(c) Daphnia"=drake_deterior$H6, "(d) Glaciation III"=deuterium[[3]])
 
 png("indicators.png", width=6, units="in", height=4.6, res=1200)
-all_indicators(X, indicators=c("Var", "Autocor", "Skew"), method="kendall", pval=FALSE)
+all_indicators(X, indicators=c("Var", "Autocor", "Skew", "CV"), method="kendall", pval=FALSE)
 dev.off()
 
 #upload("indicators.png", script=script, gitaddr=gitaddr, tags=tags)
