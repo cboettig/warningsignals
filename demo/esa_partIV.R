@@ -5,7 +5,7 @@ M <- cbind(time(ibm_critical)[int], ibm_critical[int])
 Y <- matrix2ts(M)
 save(list="Y", file="fn.Rdat")
 fn <- fit_models(Y, "LSN")
-#fn_mc <- montecarlotest(fn$const, fn$timedep, cpu=16, nboot=200)
+fn_mc <- montecarlotest(fn$const, fn$timedep, cpu=16, nboot=100)
 fn_taus <- tau_dist_montecarlo(Y, fn$const, fn$timedep, nboot=500, cpu=16)
 
 
@@ -15,7 +15,7 @@ M <- cbind(time(ibm_critical)[int], ibm_critical[int])
 Y <- matrix2ts(M)
 save(list="Y", file="tp.Rdat")
 tp <- fit_models(Y, "LSN")
-#tp_mc <- montecarlotest(tp$const, tp$timedep, cpu=16, nboot=200)
+tp_mc <- montecarlotest(tp$const, tp$timedep, cpu=16, nboot=100)
 tp_taus <- tau_dist_montecarlo(Y, tp$const, tp$timedep, nboot=500, cpu=16)
 
 
@@ -25,7 +25,7 @@ M <- cbind(time(ibm_stable)[int], ibm_stable[int])
 Y <- matrix2ts(M)
 save(list="Y", file="tn.Rdat")
 tn <- fit_models(Y, "LSN")
-#tn_mc <- montecarlotest(tn$const, tn$timedep, cpu=16, nboot=200)
+tn_mc <- montecarlotest(tn$const, tn$timedep, cpu=16, nboot=100)
 tn_taus <- tau_dist_montecarlo(Y, tn$const, tn$timedep, nboot=500, cpu=16)
 
 
@@ -35,7 +35,7 @@ M <- cbind(time(ibm_stable)[int], ibm_stable[int])
 Y <- matrix2ts(M)
 save(list="Y", file="fp.Rdat")
 fp <- fit_models(Y, "LSN")
-#fp_mc <- montecarlotest(fp$const, fp$timedep, cpu=16, nboot=200)
+fp_mc <- montecarlotest(fp$const, fp$timedep, cpu=16, nboot=100)
 fp_taus <- tau_dist_montecarlo(Y, fp$const, fp$timedep, nboot=500, cpu=16)
 
 
