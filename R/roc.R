@@ -40,7 +40,7 @@ roc_curve <- function(pow, add=FALSE, pts=50, ...){
   if(add)
     lines(roc, ...)
   else
-    plot(roc, xlab="False Postive", type="l",
+    plot(roc, xlab="False Positive", type="l",
          ylab="True Positive", ylim=c(0,1), xlim=c(0,1), ...)
   curve(1*x, add=TRUE, lty=2)
 
