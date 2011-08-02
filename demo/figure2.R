@@ -16,4 +16,4 @@ png("indicators.png", width=6, units="in", height=4.6, res=1200)
 all_indicators(X, indicators=c("Var", "Autocor", "Skew"), method="kendall", pval=FALSE)
 dev.off()
 
-upload("indicators.png", script=script, gitaddr=gitaddr, tags=tags)
+#upload("indicators.png", script=script, gitaddr=gitaddr, tags=tags)
