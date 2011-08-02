@@ -1,0 +1,22 @@
+Installation
+-------------
+
+Install system dependencies:
+* Requires compiler tools (gcc)
+* Requires the GNU scientific library (C)
+
+Install required R packages:
+* snowfall (parallelization)
+* odesolve (ordinary differential equations)
+* NORMT3 (statistical distributions)
+* psych (skew and kurtosis)
+
+
+Compile current version from source
+R CMD INSTALL warningsignals*.tar.gz
+
+
+Use
+---
+
+See the examples in demo/ directory to reproduce analyses from the mansucript
