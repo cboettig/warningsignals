@@ -134,13 +134,13 @@ gitaddr <- gitcommit(script)
 tags="warningsignals, stochpop"
 ###########################
 
-upload("boettiger_fig3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
-upload("boettiger_fig4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
-upload("appendix3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
-upload("appendix4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+#upload("boettiger_fig3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+#upload("boettiger_fig4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+#upload("appendix3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+#upload("appendix4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
 
-upload("dists_fig4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
-upload("dists_a4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+#upload("dists_fig4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+#upload("dists_a4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
 
 
 
