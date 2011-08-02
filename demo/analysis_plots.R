@@ -98,11 +98,11 @@ source("analysis.R")
 
 
 
-png("boettiger_fig3.png", width=8, units="in", height=3, res=400)
+cairo_pdf("Fig3.pdf", width=8, height=3)
 roc_fig3(roc_data)
 dev.off()
 
-png("boettiger_fig4.png", width=8, units="in", height=8*2/3, res=400)
+cairo_pdf("Fig4.pdf", width=8, height=8*2/3)
 ylab <- c("25 pts", "50 pts", "200 pts")
 roc_effort_plot(resample, freq=ylab)
 dev.off()
@@ -134,13 +134,13 @@ gitaddr <- gitcommit(script)
 tags="warningsignals, stochpop"
 ###########################
 
-upload("boettiger_fig3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
-upload("boettiger_fig4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
-upload("appendix3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
-upload("appendix4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+#upload("boettiger_fig3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+#upload("boettiger_fig4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+#upload("appendix3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+#upload("appendix4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
 
-upload("dists_fig4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
-upload("dists_a4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+#upload("dists_fig4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
+#upload("dists_a4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
 
 
 
