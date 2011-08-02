@@ -12,7 +12,7 @@ data(drake)
 
 X <- list("(a) Stable"=ibm_stable, "(b) Deteriorating"=ibm_critical, "(c) Daphnia"=drake_deterior$H6, "(d) Glaciation III"=deuterium[[3]])
 
-png("Fig2.png", width=6, units="in", height=4.6, res=600)
+cairo_pdf("Fig2.pdf", width=6, units="in", height=4.6)
 all_indicators(X, indicators=c("Var", "Autocor", "Skew", "CV"), method="kendall", pval=FALSE)
 dev.off()
 
