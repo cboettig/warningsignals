@@ -1,7 +1,7 @@
 Package: warningsignals
 Title: Detection of Early Warning Signals for Catastrophic Bifurcations 
-Version: 0.0-3
-Date: 2011-04-14
+Version: 0.0-4
+Date: 2011-08-02
 Author: Carl Boettiger <cboettig@gmail.com>
 Maintainer: Carl Boettiger <cboettig@gmail.com>
 Description: Tools for the detection of early warning signals of critical transitions.  Accompanies Boettiger & Hastings (2011). 

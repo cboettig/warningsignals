@@ -190,7 +190,7 @@ all_indicators <- function(X, indicators = c("Variance", "Autocorrelation",
 
 ## mar is inner margins, in order bottom, left, top, right. 
 ## oma is outer margins, default to 0 
-	par(mfrow=c(m+1,n), oma=c(3,3,2,.2), mar=c(0,1,0,1), ...)
+	par(mfrow=c(m+1,n), oma=c(4,3,2.5,.2), mar=c(0,1,0,1), ...)
 	for(i in 1:n){
 		plot(X[[i]], type="l", ylab="Data", xaxt="n", ...)
 		mtext(data_names[i],  NORTH<-3, cex=par()$cex.lab, line=1) ## data names on each col
@@ -206,10 +206,9 @@ all_indicators <- function(X, indicators = c("Variance", "Autocorrelation",
 			if(i==1) 
         mtext(indicators[j], WEST<-2, line=3, cex=par()$cex.lab, las=0) ## stat name on each row
       ## i == 2 breaks generality of this plot, making the x-axis appear only on the second column always
-			if(j==m & i==2) 
-        mtext("Time", SOUTH<-1, line=2, cex=par()$cex.lab) ## x-axis label
 		}
 	}
+  mtext("Time", SOUTH<-1, line=2, cex=par()$cex.lab, outer=TRUE) ## x-axis label
 }
 
 

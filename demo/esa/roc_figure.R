@@ -18,34 +18,14 @@ init.pow <- function(null, test){
 pow <- init.pow(null,test)
 
 
-## Manuscript Figure 1
-png("roc_for_dummies.png", width=3*480, height=2*480)
-  par(mfrow=c(2,3), mar=c(7,7,4,2))
-  M <- 5  
-  t <- seq(3,8,length=M) # sequence of thresholds
-  roc_pts <- sapply(1:M, 
-                    function(i){ 
-                      roc_fig(null, test, thresh=t[i], 
-                              xlab="Test Statistic", ylim=c(0,.54), 
-                              main="", legend=F, cex=2, cex.axis=3, 
-                              cex.lab=3, color.line=i, lwd=5, 
-                              numeric_legend=T, cex.legend=2)
-                    })
-  roc_curve(pow, cex=3, cex.lab=3, cex.axis=2.3, lwd=3)
-  points(t(roc_pts), col=1:5, pch=19, cex=4)
-  axis(1, col=rgb(0,0,1,.5))
-  axis(2, col=rgb(1,0,0,.5))
-dev.off()
-
-
 ## ROC film 
-M <- 20 # frames
-t <- seq(3,8,length=M) # sequence of thresholds
-system("rm roc*.png")
+M <- 10 # frames
+t <- seq(4,9,length=M) # sequence of thresholds
+system("rm roc*.png roc.mp4")
 roc_pts <- matrix(NA, nrow=2, ncol=M)
 for(i in 1:M){
         png(paste("roc_", i, ".png", sep=""),
-                    width=600, height=1200)
+                    width=400, height=800)
         par(mfrow=c(2,1), mar=c(4,6,4,2))
 
         roc_pts[,i] <- roc_fig(null, test, thresh=t[i], 
@@ -58,7 +38,8 @@ for(i in 1:M){
           plot(t(roc_pts), pch=19, cex=3, xlim=c(0,1), 
                ylim=c(0,1), ylab="True Positive",
                xlab="False Positive", cex.lab=3, cex.axis=2.)
-
+          abline(v=roc_pts[1,i], col="blue", lwd=4, lty=2)
+          abline(h=roc_pts[2,i], col="red", lwd=4, lty=2)
           ## Show Curve
           if(i==M) roc_curve(pow, add=TRUE, lwd=3)
           dev.off()
@@ -72,7 +53,7 @@ system("ffmpeg -qscale 2 -r 2 -b 9600 -i roc_%d.png roc.mp4")
 tests <- lapply(1:M, function(i) rnorm(1000, i*5/M+5.2, 1))
 system("rm pow*.png pow.mp4")
 for(i in 1:M){
-  png(paste("pow_", i, ".png", sep=""), width=600, height=1200)
+  png(paste("pow_", i, ".png", sep=""), width=400, height=800)
   par(mfrow=c(2,1), mar=c(4,6,4,2))
   pow <- init.pow(null,tests[[i]])
   plot(pow, show_text=FALSE, cex.lab=3, cex.axis=2,
