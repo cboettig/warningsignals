@@ -1,11 +1,8 @@
 # analysis_plots.R
-
 rm(list=ls())
-
 require(warningsignals)
 
 ce <- 1.2
-
 roc_fig3 <- function(input, ...){
   n <- length(input) # 1..i..n datafiles
     par(mfrow=c(1,n))
@@ -68,11 +65,12 @@ roc_effort_plot <- function(input, freq, ...){
   mtext("False Positive", outer=TRUE, SOUTH<-1, cex=1.1*ce, line=3)
 }
 
-#freq=25,50,100,200,500
+
+
+### Loads saved data to create the plots, rather then re-running the parametric bootstrap for days
 sets <- c(1,2,4)
 
 load("~/flickr/5909491217.Rdat")
-
 deut3_resample <- lapply(sets, function(i) c(sampling[i], indicator_sampling[[i]]))
 deut3 <- c(list(mc), taus) 
 load("~/flickr/5909610015.Rdat")
@@ -88,16 +86,18 @@ load("~/flickr/5906482315.Rdat")
 ibm_resample <-  lapply(sets, function(i) c(sampling[i], indicator_sampling[[i]]))
 ibm <- c(list(mc), taus)
 
+# Group the data into lists
 appendix <- list("(a) Greenhouse Earth"=caco3, "(b) Glaciation I"=deut1)
 appendix_resample <- list("(a) Greenhouse Earth"=caco3_resample, "(b) Glaciation I"=deut1_resample)
-
 roc_data <- list("(a) Simulation"=ibm, "(b) Daphnia"=drake, "(c) Glaciation III"=deut3)
 resample <- list("(a) Simulation"=ibm_resample, "(b) Daphnia"=drake_resample, "(c) Glaciation III"=deut3_resample)
 
+
+# some plotting functions
 source("analysis.R")
 
 
-
+## Figures 3 & 4 from the main text
 cairo_pdf("Fig3.pdf", width=8, height=3)
 roc_fig3(roc_data)
 dev.off()
@@ -108,39 +108,22 @@ roc_effort_plot(resample, freq=ylab)
 dev.off()
 
 
-## Appendix plots
-png("appendix3.png", width=8, units="in", height=3*3/2, res=400)
+## Figures in the appendix 
+png("a3.png", width=8, units="in", height=3*3/2, res=400)
 roc_fig3(appendix)
 dev.off()
-png("appendix4.png", width=8, units="in", height=8*2/3, res=400)
+png("a4.png", width=8, units="in", height=8*2/3, res=400)
 ylab <- c("25 pts", "50 pts", "200 pts")
 roc_effort_plot(appendix_resample, freq=ylab)
 dev.off()
 
-png("dists_fig4.png", width=6, units="in", height=6, res=400)
+png("3dists.png", width=6, units="in", height=6, res=400)
 dists_fig3(roc_data)
 dev.off()
 
-png("dists_a4.png", width=6, units="in", height=6, res=400)
+png("a3dists.png", width=6, units="in", height=6, res=400)
 dists_fig3(appendix)
 dev.off()
-
-
-
-###########################
-require(socialR)
-script <- "analysis_plots.R"
-gitaddr <- gitcommit(script)
-tags="warningsignals, stochpop"
-###########################
-
-#upload("boettiger_fig3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
-#upload("boettiger_fig4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
-#upload("appendix3.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
-#upload("appendix4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
-
-#upload("dists_fig4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
-#upload("dists_a4.png", script=script, gitaddr=gitaddr, tags=tags, public=0)
 
 
 

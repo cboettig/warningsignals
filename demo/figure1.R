@@ -23,8 +23,8 @@ lwd<-3
 M <- 4 # frames
 t <- seq(5,8,length=M) # sequence of thresholds
 roc_pts <- matrix(NA, nrow=2, ncol=M)
-png(paste("Fig1", ".png", sep=""), units="in", 
-                    width=8, height=8*2/M, res=300)
+cairo_pdf(paste("Fig1", ".pdf", sep=""), 
+                    width=8, height=8*2/M)
 mat <-  cbind(c(1,2),c(3,4),c(5,6),c(7,8))
 layout(mat, height = c(1, 1)) # height of each row
           par(oma=c(5,5,5,0))
