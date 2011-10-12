@@ -13,8 +13,7 @@ source("analysis.R")
 
 data(drake)
 
-m <- fit_models(drake_deterior$I9, "LTC")
-
+m <- fit_models(drake_deterior[[1]], "LTC")
 
 cpu <- 16
 nboot <- 500
@@ -31,14 +30,14 @@ reformat_tau_dists(
   bootstrap_tau(m$X, m$const, m$timedep, 
                 cpu=cpu, nboot=nboot))
 
-mc <- 
-remove_unconverged(
-  montecarlotest(m$const, m$timedep, 
-                 cpu=cpu, nboot=nboot)) 
-
-indicator_sampling <- 
-indicator_sampling_freq(m, cpu, nboot,
-                        sample_effort=freq) 
-
-save(list=ls(), file="drake_ltc2_I9.Rdat")
+#mc <- 
+#remove_unconverged(
+#  montecarlotest(m$const, m$timedep, 
+#                 cpu=cpu, nboot=nboot)) 
+#
+#indicator_sampling <- 
+#indicator_sampling_freq(m, cpu, nboot,
+#                        sample_effort=freq) 
+#
+save(list=ls(), file="drake_ltc_G10.Rdat")
 
