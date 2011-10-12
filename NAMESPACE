@@ -25,8 +25,8 @@ export( window_mean, window_var, window_skew, window_kurtosi,
 ## tau_dist_montecarlo.R
 export(tau_dist_montecarlo, plot.tau_dist_montecarlo, plot_kendalls, plot_sample)
 
-## montecarlotest.R  
-export(montecarlotest, loglik, getParameters, plot.pow, KL_divergence) 
+## montecarlotest.R   -- now in mcmcTools package
+# export(montecarlotest, loglik, getParameters, plot.pow, KL_divergence) 
 
 ## roc.R
 export(roc_curve, remove_unconverged, reformat_tau_dists, find_threshold)
