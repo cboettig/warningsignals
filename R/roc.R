@@ -17,7 +17,41 @@ reformat_tau_dists <- function(taus){
       pow})
 }
 
+find_threshold <- function(rate, pow,given=c("false.positive",
+                                             "true.positive")){
+# Returns the threshold value corresponding to a given false postive
+#   or true positive rate.  
+
+    given <- match.arg(given)
+    threshold <- NULL
+    n_null <- length(pow$null_dist)
+    n_test <- length(pow$test_dist)
+    null_dist <- sort(pow$null_dist) 
+    test_dist <- sort(pow$test_dist) 
+  
+    if(given == "false.positive"){
+      # achieve no more than that rate of false positives
+      threshold.index <- ceiling((1-rate)*n_null)
+      threshold <- null_dist[threshold.index]
+    } else {
+      # achieve at least that rate of true.positives
+      threshold.index <- floor((1-rate)*n_test)
+      threshold <- test_dist[threshold.index] 
+
+    }
+
+
+    f <- function(thresh){
+                  c(sum(pow$null_dist > thresh)/n_null,
+	                sum(pow$test_dist > thresh)/n_test)
+         }
+
+  c(threshold = threshold, false.positive=f(threshold)[1],
+    true.positive=f(threshold)[2])
+}
+
 roc_curve <- function(pow, add=FALSE, pts=50, ...){
+  # Creates the ROC curve from the output of the bootstrap function
   n_null <- length(pow$null_dist)
   n_test <- length(pow$test_dist)
 
@@ -25,7 +59,7 @@ roc_curve <- function(pow, add=FALSE, pts=50, ...){
   upper <- max(pow$null_dist, pow$test_dist)
   threshold <- seq(lower, upper, length=pts)
 
-
+  # Calculate the ROC curve
   roc <- sapply(threshold, 
                 function(thresh){
                   c(sum(pow$null_dist > thresh)/n_null,
@@ -33,6 +67,7 @@ roc_curve <- function(pow, add=FALSE, pts=50, ...){
                 })
   roc <- t(roc)
 
+  # Caculate the AUC
   f<-approx(roc[,1], roc[,2], n=200) 
   delta <- f$x[2] - f$x[1]
   area  <- sum(f$y*delta)
