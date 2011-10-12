@@ -23,7 +23,7 @@ export(tau_dist_montecarlo, plot.tau_dist_montecarlo, plot_kendalls, plot_sample
 export(montecarlotest, loglik, getParameters, plot.pow, KL_divergence) 
 
 ## roc.R
-export(roc_curve, remove_unconverged, reformat_tau_dists)
+export(roc_curve, remove_unconverged, reformat_tau_dists, find_threshold)
 
 ## bootstrap_indicators.R
 export(fit_models, bootstrap_tau, plot.bootstrap_tau) 
