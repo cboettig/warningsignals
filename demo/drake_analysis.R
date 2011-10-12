@@ -13,11 +13,11 @@ source("analysis.R")
 
 data(drake)
 
-m <- fit_models(drake_deterior[[1]], "LTC")
+m <- fit_models(drake_deterior[[6]], "LTC")
 
 cpu <- 16
 nboot <- 500
-freq <- c(25, 50, 100, 200, 500)
+freq <- c(25, 50, 200)
 
 
 ## Run the Analyses
@@ -39,5 +39,5 @@ reformat_tau_dists(
 #indicator_sampling_freq(m, cpu, nboot,
 #                        sample_effort=freq) 
 #
-save(list=ls(), file="drake_ltc_G10.Rdat")
+save(list=ls(), file="drake_ltc_G6.Rdat")
 
