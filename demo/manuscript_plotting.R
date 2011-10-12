@@ -94,7 +94,7 @@ roc_effort_plot <- function(input, freq, ...){
      if(i==n && j == m) 
        legend=TRUE ## legend in last plot
      plot_roc_curves(input[[i]][[j]], cex.axis=ce, cex.lab=ce, cex.legend=ce,
-                     lwd=2, xaxt="n", yaxt="n", hide_auc=T, legend=legend, ...)
+                     xaxt="n", yaxt="n", hide_auc=T, legend=legend, ...)
      if(j==m) 
        axis(1,cex.axis=ce) 
      if(j==1) 

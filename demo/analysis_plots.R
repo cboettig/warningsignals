@@ -3,7 +3,7 @@ rm(list=ls())
 require(warningsignals)
 
 ## some plotting functions
-load("manuscript_plotting.R")
+source("manuscript_plotting.R")
 
 
 ## Loads saved data to create the plots, rather then re-running the parametric bootstrap for days
@@ -32,7 +32,6 @@ roc_data <- list("(a) Simulation"=ibm, "(b) Daphnia"=drake, "(c) Glaciation III"
 resample <- list("(a) Simulation"=ibm_resample, "(b) Daphnia"=drake_resample, "(c) Glaciation III"=deut3_resample)
 
 ##
-roc
 
 ## Figures 3 & 4 from the main text
 cairo_pdf("Fig3.pdf", width=8, height=3)
