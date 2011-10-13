@@ -21,7 +21,7 @@ i <- 2 ## Which deut?
 dat <- deuterium[[i]]
 X <- ts(dat@.Data, start=0, deltat=1)
 
-m <- fit_models(X, "LSN")
+m <- fit_models(X, "LTC")
 
 sampling <- sampling_freq(m$const, m$timedep, cpu=cpu, nboot=nboot,
                           sample_effort=freq)
