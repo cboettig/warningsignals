@@ -18,7 +18,7 @@ freq <- c(25, 50, 200)
 source("analysis.R")
 data(deuterium)
 i <- 2 ## Which deut?
-dat <- deuerium[[i]]
+dat <- deuterium[[i]]
 X <- ts(dat@.Data, start=0, deltat=1)
 
 m <- fit_models(X, "LSN")
