@@ -13,14 +13,15 @@ tags="warningsignals, stochpop"
 
 cpu <- 16
 nboot <- 500
-freq <- c(25, 50, 100)
-
-
+freq <- c(25, 50, 200)
 
 source("analysis.R")
 data(deuterium)
 i <- 2 ## Which deut?
-m <- fit_models(deuterium[[i]], "LSN")
+dat <- deuerium[[i]]
+X <- ts(dat@.Data, start=0, deltat=1)
+
+m <- fit_models(X, "LSN")
 
 sampling <- sampling_freq(m$const, m$timedep, cpu=cpu, nboot=nboot,
                           sample_effort=freq)
