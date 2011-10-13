@@ -64,11 +64,11 @@ dists_fig3 <- function(input, ...){
     for(j in 1:m){
       for(i in 1:n){
         if(j>1)
-          plot(input[[i]][[j]], xlab=stats[j], ylab="", xaxt="n", ylim=c(-.1,1.5),
-          yaxt="n", ...)
+          plot(input[[i]][[j]], xlab=stats[j], ylab="", xaxt="n",
+               ylim=c(-.1,1.5), main="", yaxt="n", ...)
         else{
-          plot(input[[i]][[j]], xlab=stats[j], ylab="", xaxt="n", ylim=c(-.1,0.5),
-          yaxt="n", ...)
+          plot(input[[i]][[j]], xlab=stats[j], ylab="", xaxt="n",
+               ylim=c(-.1,0.5), main="", yaxt="n", ...)
           mtext(names(input)[i], NORTH<-3, cex=ce)
         }
         if(i==1){
