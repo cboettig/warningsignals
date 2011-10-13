@@ -52,7 +52,7 @@ roc_fig3 <- function(input, ...){
     par(mfrow=c(1,n))
     for(i in 1:n){ #work across, col pos
      plot_roc_curves(input[[i]], cex.axis=ce, cex.lab=ce, cex.legend=.8,
-                     lwd=2, cex.main=ce, legend=TRUE, main=names(input)[i], ...)
+                     cex.main=ce, legend=TRUE, main=names(input)[i], ...)
     }
 }
 

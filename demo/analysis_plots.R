@@ -31,8 +31,14 @@ appendix_resample <- list("(a) Greenhouse Earth"=caco3_resample, "(b) Glaciation
 roc_data <- list("(a) Simulation"=ibm, "(b) Daphnia"=drake, "(c) Glaciation III"=deut3)
 resample <- list("(a) Simulation"=ibm_resample, "(b) Daphnia"=drake_resample, "(c) Glaciation III"=deut3_resample)
 
-##
-
+## Table of observed thresholds
+observed <- matrix(NA, ncol=5, nrow=3)
+for(i in 1:3){ # loop over the three datasets
+  observed[i,1] <- -2*(roc_data[[i]][[1]]$null$loglik - roc_data[[i]][[1]]$test$loglik)
+  for(j in 2:5){ # loop over the tau values
+   observed[i,j] <- roc_data[[i]][[j]]$observed[1]
+  }
+}
 ## Figures 3 & 4 from the main text
 cairo_pdf("Fig3.pdf", width=8, height=3)
 roc_fig3(roc_data)

@@ -18,7 +18,7 @@ reformat_tau_dists <- function(taus){
 }
 
 find_threshold <- function(rate, pow,given=c("false.positive",
-                                             "true.positive")){
+                           "true.positive", "threshold")){
 # Returns the threshold value corresponding to a given false postive
 #   or true positive rate.  
 
@@ -28,23 +28,22 @@ find_threshold <- function(rate, pow,given=c("false.positive",
     n_test <- length(pow$test_dist)
     null_dist <- sort(pow$null_dist) 
     test_dist <- sort(pow$test_dist) 
-  
+    f <- function(thresh){
+                c(sum(pow$null_dist > thresh)/n_null,
+                sum(pow$test_dist > thresh)/n_test)
+    }
+ 
     if(given == "false.positive"){
       # achieve no more than that rate of false positives
       threshold.index <- ceiling((1-rate)*n_null)
       threshold <- null_dist[threshold.index]
-    } else {
+    } else if(given == "true.positive") {
       # achieve at least that rate of true.positives
       threshold.index <- floor((1-rate)*n_test)
       threshold <- test_dist[threshold.index] 
-
+    } else if(given == "threshold"){ 
+      threshold <- rate
     }
-
-
-    f <- function(thresh){
-                  c(sum(pow$null_dist > thresh)/n_null,
-	                sum(pow$test_dist > thresh)/n_test)
-         }
 
   c(threshold = threshold, false.positive=f(threshold)[1],
     true.positive=f(threshold)[2])
