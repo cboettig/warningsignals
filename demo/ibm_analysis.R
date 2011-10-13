@@ -15,7 +15,8 @@ freq <- c(25, 50, 100)
 source("analysis.R")
 
 ## The analyses -- slow!
-data(ibms)
+load("ibms_short.rda")
+
 m <- fit_models(ibm_critical, "LSN")
 sampling <- sampling_freq(m$const, m$timedep, cpu=cpu, nboot=nboot,
                           sample_effort=freq)
@@ -28,24 +29,24 @@ indicator_sampling <- indicator_sampling_freq(m, cpu, nboot,
 
 ### Plot methods
 ## Original plot
-png("ibm_crit_roc.png"); plot_roc_curves(c(list(mc), taus)); dev.off()
-upload("ibm_crit_roc.png", script=script, gitaddr=gitaddr, tags=tags)
+#png("ibm_crit_roc.png"); plot_roc_curves(c(list(mc), taus)); dev.off()
+#upload("ibm_crit_roc.png", script=script, gitaddr=gitaddr, tags=tags)
 
-
-for(i in 1:length(freq)){
-  input <- c(sampling[i], indicator_sampling[[i]])
-  file <- paste("ibm_crit_", freq[i], ".png", sep="")
-  png(file); 
-  plot_roc_curves(input, cex.axis=2, cex.lab=2); 
-  dev.off()
-  upload(file, script=script, gitaddr=gitaddr, tags=tags)
-
-  file <- paste("dist_ibm_crit_", freq[i], ".png", sep="")
-  png(file, width=480*length(input))
-  plot_dists(input, cex.axis=3, cex.lab=3.5); 
-  dev.off()
-  upload(file, script=script, gitaddr=gitaddr, tags=tags)
-}
+#
+#for(i in 1:length(freq)){
+#  input <- c(sampling[i], indicator_sampling[[i]])
+#  file <- paste("ibm_crit_", freq[i], ".png", sep="")
+#  png(file); 
+#  plot_roc_curves(input, cex.axis=2, cex.lab=2); 
+#  dev.off()
+#  upload(file, script=script, gitaddr=gitaddr, tags=tags)
+#
+#  file <- paste("dist_ibm_crit_", freq[i], ".png", sep="")
+#  png(file, width=480*length(input))
+#  plot_dists(input, cex.axis=3, cex.lab=3.5); 
+#  dev.off()
+#  upload(file, script=script, gitaddr=gitaddr, tags=tags)
+#}
 
 
 
