@@ -1,4 +1,6 @@
-# analysis_plots.R
+# manuscript_figures.R
+# the png edition
+
 rm(list=ls())
 require(warningsignals)
 ## some plotting functions
@@ -21,30 +23,30 @@ for(i in 1:length(resample))
 
 
 ## Figures 3 & 4 from the main text
-cairo_pdf("Fig3.pdf", width=8, height=3)
+png("Fig3.png", width=8, height=3, units="in", res=400)
 roc_fig3(roc_data)
 dev.off()
 
-cairo_pdf("Fig4.pdf", width=8, height=8*2/3)
+png("Fig4.png", width=8, height=8*2/3, units="in", res=400)
 ylab <- c("25 pts", "50 pts", "200 pts")
 roc_effort_plot(resample, freq=ylab)
 dev.off()
 
 
 # distributions
-cairo_pdf("FigS1.pdf", width=7, height=7)
+png("FigS1.png", width=7, height=7, units="in", res=400)
 dists_fig3(roc_data, main="")
 dev.off()
 
 # resampling distributions
 for(i in 1:length(resample)){
-  file=paste("FigS", i+1, ".pdf", sep="")
-  cairo_pdf(file, width=7, height=7)
+  file=paste("FigS", i+1, ".png", sep="")
+  png(file, width=7, height=7, units="in", res=400)
   dists_fig3(resample[[i]], main="")
   dev.off()
 }
 
-png("a3dists.png", width=6, units="in", height=6, res=400)
+png("a3dists.png", width=6, height=6, units="in", res=400)
 dists_fig3(appendix)
 dev.off()
 
@@ -57,5 +59,8 @@ png("a4.png", width=8, units="in", height=8*2/3, res=400)
 ylab <- c("25 pts", "50 pts", "200 pts")
 roc_effort_plot(appendix_resample, freq=ylab)
 dev.off()
+
+require(socialR)
+upload("*.png", script="manuscript_figures", public=0, tags="warningsignals")
 
 
