@@ -47,7 +47,7 @@ for(i in 1:length(resample)){
 }
 
 png("a3dists.png", width=6, height=6, units="in", res=400)
-dists_fig3(appendix)
+dists_fig3(appendix, main="")
 dev.off()
 
 
