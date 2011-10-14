@@ -1,5 +1,5 @@
 # Simulate a dataset from the full individual, nonlinear model
-T<- 1000
+T<- 500
 n_pts <- 40
 require(warningsignals)
 
@@ -21,4 +21,4 @@ sn <- saddle_node_ibm(pars, times=seq(0,T, length=n_pts))
 ibm_stable  <- ts(sn$x1,start=sn$time[1], deltat=sn$time[2]-sn$time[1])
 
 # Resulting data
-save(list=c("ibm_critical", "ibm_stable"), file="ibms.rda")
+save(list=c("ibm_critical", "ibm_stable"), file="ibms_short.rda")
