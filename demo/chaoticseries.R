@@ -17,4 +17,10 @@ require(socialR)
 upload("chaos.png", script="chaoticseries.R", tags="stochpop")
 chaos <- ts(N,start=0, deltat=1)
 
-save(list="chaos", file="chaos2.rda")
+save(list="chaos", file="chaos3.rda")
+
+
+m <- fit_models(chaos, "LSN")
+
+save(list=ls(), file="chaos3.rda")
+
