@@ -2,22 +2,35 @@
 rm(list=ls())
 require(warningsignals)
 ## some plotting functions
+
+#freq=25,50,100,200,500
+sets <- c(1,2,4)
+
+load("ibm_stable3.Rdat")
+stable <- c(list(mc), taus)
+stable_resample <- lapply(sets, function(i) c(sampling[i], indicator_sampling[[i]]))
+
+load("drake_ltc_G10.Rdat") # doesn't have mc resample, "sampling", and uses only 25, 50, 200
+G10 <- c(list(mc), taus)
+G10_resample <-  indicator_sampling
 source("manuscript_plotting.R")
 data(manuscriptData)
 
 
-## (re)-Group the data into lists
-appendix <- list("(a) Greenhouse Earth"=caco3, "(b) Glaciation I"=deut1)
-appendix_resample <- list("(a) Greenhouse Earth"=caco3_resample, "(b) Glaciation I"=deut1_resample)
+save(list=c("stable", "ibm", "drake", "deut3", "deut1", "caco3", "G10",
+ "stable_resample", "ibm_resample", "drake_resample", "deut3_resample", "deut1_resample", "caco3_resample", "G10_resample"),
+  file="manuscriptData.rda")
 
-roc_data <- list("(a) Simulation"=ibm, "(b) Daphnia"=drake, "(c) Glaciation I"=deut1, "(d) Glaciation III"=deut3)
-resample <- list("(a) Simulation"=ibm_resample, "(b) Daphnia"=drake_resample, "(c) Glaciation I"=deut1_resample, "(d) Glaciation III"=deut3_resample)
+## (re)-Group the data into lists
+#appendix <- list("(a) Daphnia G10"=G10, "(b) Glaciation I"=deut1)
+#appendix_resample <- list("(a) Greenhouse Earth"=caco3_resample, "(b) Glaciation I"=deut1_resample)
+
+roc_data <- list("(a) Stable"=stable, "(b) Deteriorating"=ibm, "(c) Daphnia"=drake, "(d) Glaciation III"=deut3)
+resample <- list("(a) Stable" = stable_resample, "(b) Deteriorating"=ibm_resample, "(c) Daphnia"=drake_resample,"(d) Glaciation III"=deut3_resample)
 
 ##  Add some more labels to the resample data
 for(i in 1:length(resample))
   names(resample[[i]]) <- c("25 pts", "50 pts", "200 pts")
-
-
 
 
 ## Figures 3 & 4 from the main text
