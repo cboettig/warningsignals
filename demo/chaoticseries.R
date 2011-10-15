@@ -19,7 +19,7 @@ chaos <- ts(N,start=0, deltat=1)
 
 save(list="chaos", file="chaos3.rda")
 
-
+require(warningsignals)
 m <- fit_models(chaos, "LSN")
 
 save(list=ls(), file="chaos3.rda")
