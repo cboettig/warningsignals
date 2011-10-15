@@ -14,7 +14,7 @@ source("analysis.R")
 
 data(drake)
 
-m <- fit_models(drake_deterior[["G6"]], "LTC")
+m <- fit_models(drake_deterior[["K9"]], "LTC")
 
 cpu <- 16
 nboot <- 500
@@ -40,5 +40,5 @@ indicator_sampling <-
 indicator_sampling_freq(m, cpu, nboot,
                         sample_effort=freq) 
 
-save(list=ls(), file="drake_ltc_G6.Rdat")
+save(list=ls(), file="drake_ltc_K9.Rdat")
 
