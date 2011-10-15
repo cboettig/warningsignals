@@ -1,7 +1,7 @@
 N <- numeric(100)
 N[1] <- 99
 
-r <- 3.5
+r <- 3.9
 K <- 100
 
 f <- function(N) r*N*(1-N/K)
@@ -17,4 +17,4 @@ require(socialR)
 upload("chaos.png", script="chaoticseries.R", tags="stochpop")
 chaos <- ts(N,start=0, deltat=1)
 
-save(list="chaos", file="chaos.rda")
+save(list="chaos", file="chaos2.rda")
