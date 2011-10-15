@@ -13,9 +13,9 @@ freq <- c(25, 50, 100)
 source("analysis.R")
 
 ## The analyses -- slow!
-load("ibms_short.rda")
+load("chaos2.rda")
 
-m <- fit_models(ibm_critical, "LSN")
+m <- fit_models(chaos, "LSN")
 sampling <- sampling_freq(m$const, m$timedep, cpu=cpu, nboot=nboot,
                           sample_effort=freq)
 taus <- reformat_tau_dists(bootstrap_tau(m$X, m$const, m$timedep, 
@@ -25,7 +25,7 @@ mc <- remove_unconverged(montecarlotest(m$const, m$timedep,
 indicator_sampling <- indicator_sampling_freq(m, cpu, nboot,
                                               sample_effort=freq) 
 
-save(list=ls(), file="short_ibms.Rdat")
+save(list=ls(), file="chaos_analysis.Rdat")
 
 
 ### Plot methods
