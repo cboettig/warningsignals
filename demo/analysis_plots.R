@@ -13,8 +13,9 @@ stable_resample <- lapply(sets, function(i) c(sampling[i], indicator_sampling[[i
 load("drake_ltc_G10.Rdat") # doesn't have mc resample, "sampling", and uses only 25, 50, 200
 G10 <- c(list(mc), taus)
 G10_resample <-  indicator_sampling
-source("manuscript_plotting.R")
+
 data(manuscriptData)
+source("manuscript_plotting.R")
 
 
 save(list=c("stable", "ibm", "drake", "deut3", "deut1", "caco3", "G10",
