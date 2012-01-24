@@ -85,6 +85,8 @@ roc_curve <- function(pow, add=FALSE, pts=50, ...){
 }
 
 
+
+## don't use this function! breaks the distributions
 remove_unconverged <- function(pow, nested=FALSE){
 ## Removes results in which montecarlotest fails to converge
 ## Indicate failed convergence using both algorithm reporting
@@ -105,6 +107,12 @@ remove_unconverged <- function(pow, nested=FALSE){
   pow$test_dist <- pow$test_dist[ c(test_converged, test_pos) ]
   pow$test_par_dist <- pow$test_par_dist[ c(test_converged, test_pos) ]
 
+
+  ## reformat and put labels back on
+  pow$null_par_dist <- matrix(pow$null_par_dist, ncol=length(getParameters(pow$null)), byrow=T) 
+  colnames(pow$null_par_dist) <- names(getParameters(pow$null)) 
+  pow$test_par_dist <- matrix(pow$test_par_dist, ncol=length(getParameters(pow$test)), byrow=T) 
+  colnames(pow$test_par_dist) <- names(getParameters(pow$test)) 
   pow
 }
 
