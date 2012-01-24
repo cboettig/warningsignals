@@ -35,11 +35,15 @@ print(p_scotia)
 cod <- subset(dat_scotia, Year < 1992 & variable == "Atlantic.cod")
 cod.ts <- ts(cod[["value"]], start=1950, end=1991, deltat=1)
 
+
+
 m <- fit_models(cod.ts, "LSN")
 
 # decreasing stability? 
 m$timedep$pars$m < 0 
 
+
+## analysis of summary statistics
 #taus <- reformat_tau_dists(bootstrap_tau(m$X, m$const, m$timedep, cpu=4, nboot=20))
 mc <- remove_unconverged(montecarlotest(m$const, m$timedep, cpu=4, nboot=20))
 plot(mc, main="Warning signals in cod?")

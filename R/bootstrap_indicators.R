@@ -2,7 +2,7 @@
 
 ## A few wrapper functions to make it easy to bootstrap a secified set of indicator statistics
 
-fit_models <- function(X, model=c("LTC", "LSN"), integrateOU=FALSE,  
+fit_models <- function(X, model=c("LSN", "LTC"), integrateOU=FALSE,  
 					   optim_method = c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B", "SANN"),
 					   ...){
 # This function wraps around the updateGauss function which fits the stable and # deteriorating model. It proivdes a mechanism to make intelligent guesses 
