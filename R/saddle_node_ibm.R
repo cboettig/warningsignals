@@ -6,6 +6,9 @@
 #   Pars = {n, e, a, K, h, i, Da,Dt} 
 # inits[8] = {572, .5, 160, 1000, 200, 0, 1, 100};
 
+#pars = c(Xo = 730, e = 0.5, a = 100, K = 1000, h = 200,
+#    i = 0, Da = .09, Dt = 0, p = 2)
+
 saddle_node_ibm <- function(
     # Xo is initial population size
     # e is the natural per-capita death-rate
