@@ -162,7 +162,7 @@ compute_tau <- function(X, indicator, windowsize=NULL,
 ## PLOTTING FUNCTION
 all_indicators <- function(X, indicators = c("Variance", "Autocorrelation", 
                            "Skew", "CV"), method=c("kendall", "pearson",
-                           "spearman"), pval=TRUE, cor=TRUE, ...)
+                           "spearman"), pval=FALSE, cor=TRUE, ...)
 ## Calc and plot all the leading indicators in a single frame plot
 ##		using a simple loop over the plot_indicator fn
 ## Args 
