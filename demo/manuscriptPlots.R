@@ -62,8 +62,8 @@ roc_data <- lapply(plotme,
 #beanplot(value ~ simulation, dat, what=c(0,1,0,0))
 
   ## Save plots
-  cairo_pdf(paste(pow$label, "_warningsignal.png", sep=""), height=10, width=7)
-#  png(paste(pow$label, "_warningsignal.png", sep=""), height=480*10/7, width=480)
+#  cairo_pdf(paste(pow$label, "_warningsignal.pdf", sep=""), height=10, width=7)
+  png(paste(pow$label, "_warningsignal.png", sep=""), height=480*10/7, width=480)
   pushViewport(viewport(layout = grid.layout(3,1)))
   vplayout <- function(x, y) viewport(layout.pos.row = x,
   layout.pos.col = y)
