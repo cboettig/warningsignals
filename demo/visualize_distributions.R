@@ -7,7 +7,7 @@ require(reshape2)
 require(grid)
 
 
-pow <- drake[[1]] 
+pow <- ibm[[1]] 
 
 
   ## PLOT the distributions
@@ -47,4 +47,4 @@ pow <- drake[[1]]
 
 
 require(socialR)
-upload("beanplot.png violin.png", script="visualize_distributions.R", tag="warningsignals stochpop")
+upload("beanplot.png violin.png", script="visualize_distributions.R", tag="warningsignals stochpop", comment="simulation data")
