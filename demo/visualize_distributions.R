@@ -7,7 +7,7 @@ require(reshape2)
 require(grid)
 
 
-pow <- ibm[[1]] 
+pow <- deut3[[1]] 
 
 
   ## PLOT the distributions
@@ -47,4 +47,4 @@ pow <- ibm[[1]]
 
 
 require(socialR)
-upload("beanplot.png violin.png", script="visualize_distributions.R", tag="warningsignals stochpop", comment="simulation data")
+upload("beanplot.png violin.png", script="visualize_distributions.R", tag="warningsignals stochpop", comment="glaciation data")
