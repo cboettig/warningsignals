@@ -122,7 +122,6 @@ rocdat <- rbind(cbind(roc_data[[1]], data="Simulation"),
                 cbind(roc_data[[2]], data="Chemostat"), 
                 cbind(roc_data[[3]], data="Glaciation"))
 p <- ggplot(rocdat) + geom_line(aes(FalsePos, TruePos, color=data), lwd=1) #+ 
-#  coord_cartesian(xlim=c(0,1.1), ylim=c(0,1.1)) 
 p + scale_x_continuous("False Positive") + scale_y_continuous("True Positive")
 ggsave("rocplot.pdf")
 
@@ -154,57 +153,6 @@ dev.off()
 ##########################################################################
 require(warningsignals)
 load("../data/manuscriptData.rda")
-roc_data <- list("(a) Simulation"=ibm[1:3], "(b) Daphnia"=drake[1:3], "(b) Glaciation III"=deut3[1:3])
-#png("Fig3.png", width=8, height=3, units="in", res=400)
-ce <- 1.2
-
-
-plot_roc_curves <- function(objects, legend=TRUE, cex.legend=1, hide_auc=FALSE, ...){
-  # objects a list in which entry contains a fit object with null and
-  # test dists for all the indicators.
-  stats <- which_statistic(objects)
-
-  auc <- numeric(length(objects)) # store area under curve
-  legend_txt <- character(length(objects)) # AUC will go in legend
-
-  auc[1] <- roc_curve(objects[[1]], lty=1, col=1, ...)
-  legend_txt[1] <- paste(stats[1], ", ", round(auc[1],2), sep="")
-    if(hide_auc)
-      legend_txt[1] <- paste(stats[1])
-  for(i in 2:length(objects)){
-    auc[i] <- roc_curve(objects[[i]], col=i, lty=i, add=TRUE, ...)
-    legend_txt[i] <- paste(stats[i], ", ", round(auc[i],2),sep="")
-    if(hide_auc)
-      legend_txt[i] <- paste(stats[i])
-  }
-  if(legend)
-    legend("bottomright",legend_txt, col=c(1:length(objects)),
-           lty=c(1:length(objects)), lwd=3, cex=cex.legend, bty="n")
-}
-which_statistic <- function(objects){
-  sapply(objects, function(x){
-    if(is(x, "pow"))
-      "Likelihood"
-    else if(is(x, "tau_dist_montecarlo"))
-        gsub("^(.{8}).*", "\\1",x$signal) ## TRUNCATE name to 7 chars
-  })
-}
-
-roc_fig3 <- function(input, ...){
-  n <- length(input) # 1..i..n datafiles
-    par(mfrow=c(1,n))
-    for(i in 1:n){ #work across, col pos
-     plot_roc_curves(input[[i]], cex.axis=ce, cex.lab=ce, cex.legend=.8,
-                     cex.main=ce, legend=TRUE, main=names(input)[i], ...)
-    }
-}
-cairo_pdf("roc_summary_stats.pdf", width=8, height=3)
-roc_fig3(roc_data, lwd=2)
-dev.off()
-
-
-
-
 
 names(ibm) <- c("likelihood", "variance", "autocorrelation")
 names(drake) <- c("likelihood", "variance", "autocorrelation")
@@ -224,15 +172,15 @@ p_dist <- ggplot(subset(m, "simulation" != "observed")) +
 
 ggsave("summary_dists.pdf")
 
-summary_rocdat <- lapply(list(ibm=ibm[2:3], chemostat=drake[2:3], glaciation=deut3[2:3]), function(x){ 
+summary_rocdat <- lapply(list(Simulation=ibm[2:3], Chemostat=drake[2:3], Glaciation=deut3[2:3]), function(x){ 
   lapply(x, function(pow) roc_data(pow$null_dist, pow$test_dist))
 })
 
 m <- melt(summary_rocdat, id.vars=c("TruePos", "FalsePos", "Threshold"))
-names(m) <- c("True_Postive", "False_Positive", "Threshold", "Statistic", "data")
-p <- ggplot(m) + geom_line(aes(variable=="FalsePos", variable=="TruePos", color=L1), lwd=1)  + facet_wrap(~L2)
+names(m) <- c("True_Positive", "False_Positive", "Threshold", "Statistic", "Data")
 
+
+p <- ggplot(m) + geom_line(aes(False_Positive, True_Positive, color=Statistic), lwd=1)  + facet_wrap(~Data)
+p
 
  
-p + scale_x_continuous("False Positive") + scale_y_continuous("True Positive")
-
