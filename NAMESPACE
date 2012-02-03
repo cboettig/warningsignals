@@ -44,5 +44,5 @@ export(saddle_node_ibm)
 ## errorrates.R
 export(roc_fig)
 
-import(snowfall, odesolve, psych)
+import(snowfall, odesolve, psych, reshape2)
 useDynLib(warningsignals)
