@@ -31,11 +31,13 @@ pow <- drake[[1]]
   require(beanplot)
   png("beanplot.png")
   beanplot(value ~ simulation, dat, what=c(0,1,0,0))
+  abline(h=observed, lty=2)
   dev.off()
 
   require(vioplot)
   png("violin.png")
   vioplot(pow$null_dist, pow$test_dist)
+  abline(h=observed, lty=2)
   dev.off()
 
   rocdat <- roc_data(pow$null_dist, pow$test_dist)
@@ -45,4 +47,4 @@ pow <- drake[[1]]
 
 
 require(socialR)
-upload("violin.png", script="visualize_distributions.R", tag="warningsignals stochpop")
+upload("beanplot.png violin.png", script="visualize_distributions.R", tag="warningsignals stochpop")
