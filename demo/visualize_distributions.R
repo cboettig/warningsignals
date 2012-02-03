@@ -6,6 +6,7 @@ require(ggplot2)
 require(reshape2)
 require(grid)
 
+system("rm -f *.png")
 
 pow <- deut3[[1]] 
 
@@ -47,4 +48,4 @@ pow <- deut3[[1]]
 
 
 require(socialR)
-upload("beanplot.png violin.png", script="visualize_distributions.R", tag="warningsignals stochpop", comment="glaciation data")
+upload("*.png", script="visualize_distributions.R", tag="warningsignals stochpop", comment="glaciation data")
