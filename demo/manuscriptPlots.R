@@ -176,6 +176,7 @@ summary_rocdat <- lapply(list(Simulation=ibm[2:3], Chemostat=drake[2:3], Glaciat
   lapply(x, function(pow) roc_data(pow$null_dist, pow$test_dist))
 })
 
+
 m <- melt(summary_rocdat, id.vars=c("TruePos", "FalsePos", "Threshold"))
 names(m) <- c("True_Positive", "False_Positive", "Threshold", "Statistic", "Data")
 
