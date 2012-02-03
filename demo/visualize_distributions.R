@@ -8,7 +8,7 @@ require(grid)
 
 system("rm -f *.png")
 
-pow <- deut3[[1]] 
+pow <- ibm[[1]] 
 
 
   ## PLOT the distributions
@@ -48,4 +48,4 @@ pow <- deut3[[1]]
 
 
 require(socialR)
-upload("*.png", script="visualize_distributions.R", tag="warningsignals stochpop", comment="glaciation data")
+upload("*.png", script="visualize_distributions.R", tag="warningsignals stochpop", comment="simulation data")
