@@ -151,28 +151,36 @@ dev.off()
 ## Plot the ROC curves for each data set comparing summary              ##
 ##   statistics and model-based method                                  ##
 ##########################################################################
+rm(list=ls())
 require(warningsignals)
 load("../data/manuscriptData.rda")
 
-names(ibm) <- c("likelihood", "variance", "autocorrelation")
-names(drake) <- c("likelihood", "variance", "autocorrelation")
-names(deut3) <- c("likelihood", "variance", "autocorrelation")
 
-dat <- lapply(list(ibm=ibm[2:3], chemostat=drake[2:3], Glaciation=deut3[2:3]), function(x){ 
-  lapply(x, function(pow) list(Null=pow$null_dist, Test=pow$test_dist, observed = pow$observed))
+stat_names <- c("Lik", "Var", "Acorr")
+
+names(ibm) <- stat_names 
+names(drake) <- stat_names
+names(deut3) <- stat_names 
+
+dat <- lapply(list(Simulation=ibm[2:3], Chemostat=drake[2:3], Glaciation=deut3[2:3]), function(x){ 
+  lapply(x, function(pow) list(Null=pow$null_dist, Test=pow$test_dist))
 })
 m <- melt(dat)
-names(m) <- c("tau", "simulation", "statistic", "data")
-p_dist <- ggplot(subset(m, "simulation" != "observed")) + 
-  geom_density(aes(tau, fill=simulation), alpha=.5) + 
-  # geom_vline(xintercept=observed, lty=2) +
-  facet_grid(statistic ~ data) + 
+names(m) <- c("tau", "Model", "Statistic", "Data")
+p_dist <- ggplot(m) + 
+  geom_density(aes(tau, fill=Model), alpha=.8) + 
+  facet_grid(Statistic ~ Data) + 
   opts(title="Distributions of tau by summary statistic") +
   scale_y_continuous("Probability density")
+ggsave("summary_dists.png", p_dist, width=7, height=5)
 
-ggsave("summary_dists.pdf")
+p_box <- ggplot(m) + 
+  geom_boxplot(aes(Statistic, tau, fill=Model)) + 
+  facet_wrap(~ Data) 
+ggsave("summary_box.png", p_box, width=6, height=3)
 
-summary_rocdat <- lapply(list(Simulation=ibm[2:3], Chemostat=drake[2:3], Glaciation=deut3[2:3]), function(x){ 
+
+summary_rocdat <- lapply(list(Simulation=ibm[1:3], Chemostat=drake[1:3], Glaciation=deut3[1:3]), function(x){ 
   lapply(x, function(pow) roc_data(pow$null_dist, pow$test_dist))
 })
 
@@ -180,8 +188,8 @@ summary_rocdat <- lapply(list(Simulation=ibm[2:3], Chemostat=drake[2:3], Glaciat
 m <- melt(summary_rocdat, id.vars=c("TruePos", "FalsePos", "Threshold"))
 names(m) <- c("True_Positive", "False_Positive", "Threshold", "Statistic", "Data")
 
+p_roc <- ggplot(m) + geom_line(aes(False_Positive, True_Positive, color=Statistic), lwd=1)  + facet_wrap(~Data)
+ggsave("summary_roc.png", p_roc, height=7/3, width=7)
 
-p <- ggplot(m) + geom_line(aes(False_Positive, True_Positive, color=Statistic), lwd=1)  + facet_wrap(~Data)
-p
-
- 
+require(socialR)
+upload("*.png", script="manuscriptPlots.R", tag="warningsignals stochpop") 
