@@ -45,4 +45,4 @@ pow <- drake[[1]]
 
 
 require(socialR)
-upload("*.png", script="visualize_distributions.R")
+upload("*.png", script="visualize_distributions.R", tag="warningsignals stochpop")
