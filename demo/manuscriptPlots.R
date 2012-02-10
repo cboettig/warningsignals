@@ -172,12 +172,12 @@ p_dist <- ggplot(m) +
   facet_grid(Statistic ~ Data) + 
   opts(title="Distributions of tau by summary statistic") +
   scale_y_continuous("Probability density")
-ggsave("summary_dists.png", p_dist, width=7, height=5)
+ggsave("summary_dists.pdf", p_dist, width=7, height=5)
 
 p_box <- ggplot(m) + 
   geom_boxplot(aes(Statistic, tau, fill=Model)) + 
   facet_wrap(~ Data) 
-ggsave("summary_box.png", p_box, width=6, height=3)
+ggsave("summary_box.pdf", p_box, width=6, height=3)
 
 
 summary_rocdat <- lapply(list(Simulation=ibm[1:3], Chemostat=drake[1:3], Glaciation=deut3[1:3]), function(x){ 
@@ -189,7 +189,7 @@ m <- melt(summary_rocdat, id.vars=c("TruePos", "FalsePos", "Threshold"))
 names(m) <- c("True_Positive", "False_Positive", "Threshold", "Statistic", "Data")
 
 p_roc <- ggplot(m) + geom_line(aes(False_Positive, True_Positive, color=Statistic), lwd=1)  + facet_wrap(~Data)
-ggsave("summary_roc.png", p_roc, height=7/3, width=7)
+ggsave("summary_roc.pdf", p_roc, height=7/3, width=7)
 
-require(socialR)
-upload("*.png", script="manuscriptPlots.R", tag="warningsignals stochpop") 
+#require(socialR)
+#upload("*.png", script="manuscriptPlots.R", tag="warningsignals stochpop") 
