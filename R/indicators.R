@@ -6,7 +6,6 @@
 ## used to require Kendall package, has been replaced with cor.test from the base package, 
 ## which resolves ties for more accurate p value, but doesn't matter since we focus on tau 
 ## and because cor.test is used by others i.e. Dakos 2008
-
 #require(psych)
 
 window_var <- function(X, windowsize=length(X)/2){
@@ -59,10 +58,18 @@ window_ar.ols <- function(X, windowsize=length(X)/2, demean=FALSE){
 }
 
 
-compute_indicator <- function(X, indicator=c("Autocorrelation", "Variance", "Skew", "CV"), windowsize=round(length(X)/2))
-## Description Wrapper function to choose warning signal
-## Assumes X is a ts object
+compute_indicator <- function(X, indicator=c("Autocorrelation", "Variance", "Skew", "CV"), windowsize=NULL)
+## Assumes X is a ts object, or otherwise ignores 
 {
+  ## Handle various data formats of X
+  if(is.ts(X))
+    X <-  X@.Data
+  if(!is.null(dim(X))) # ignore time & extract the values  
+    X <- X[,2]
+  npts <- length(X)
+  if(is.null(windowsize))
+    windowsize=npts/2
+  ## select the indicator (should be a switch statement)
 	indicator = match.arg(indicator)
 	if(indicator == "Autocorrelation"){
 		out <- window_autocorr(X, windowsize)
@@ -80,7 +87,27 @@ compute_indicator <- function(X, indicator=c("Autocorrelation", "Variance", "Ske
 }
 
 
+compute_tau <- function(X, indicator, windowsize=NULL,
+                        method=c("kendall", "pearson", "spearman"))
+{
+  if(is.ts(X))
+    X <- data.frame(as.numeric(time(X)), X@.Data)
+  else if(is.null(dim(X)))
+    X <- data.frame(1:length(X), X)
+  npts <- length(X[,1])
+  method=match.arg(method)
+  if(is.null(windowsize))
+    windowsize=npts/2
+	Y <- compute_indicator(X, indicator, windowsize)
+	out <- cor.test(X[windowsize:npts,1], Y, method=method)
+	output <- c(out$estimate, out$p.value)
+  names(output) <- c(paste(method, "_coef", sep=""), "p.value")
+  output
+}
 
+
+
+## PLOTTING FUNCTIONS ################
 ## Compute and plot the given indicator
 plot_indicator <- function(X, indicator=c("Autocorrelation", "Variance",
                            "Skew", "CV"), windowsize=length(X)/2, xpos=0,
@@ -142,27 +169,9 @@ plot_indicator <- function(X, indicator=c("Autocorrelation", "Variance",
     }
   }
 }
-	
-compute_tau <- function(X, indicator, windowsize=NULL,
-                        method=c("kendall", "pearson", "spearman"))
-## assumes X is ts object -- should add to a check(?)
-{
-
-  method=match.arg(method)
-  if(is.null(windowsize))
-    windowsize=length(X)/2
-
-	Y <- compute_indicator(X, indicator, windowsize)
-	out <- cor.test(time(X)[windowsize:length(X)], Y, method=method)
-	c(out$estimate, out$p.value)
-}
-
-
-
-## PLOTTING FUNCTION
-all_indicators <- function(X, indicators = c("Variance", "Autocorrelation", 
+	all_indicators <- function(X, indicators = c("Variance", "Autocorrelation", 
                            "Skew", "CV"), method=c("kendall", "pearson",
-                           "spearman"), pval=TRUE, cor=TRUE, ...)
+                           "spearman"), pval=FALSE, cor=TRUE, ...)
 ## Calc and plot all the leading indicators in a single frame plot
 ##		using a simple loop over the plot_indicator fn
 ## Args 
