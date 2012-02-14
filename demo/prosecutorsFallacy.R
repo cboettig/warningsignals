@@ -9,6 +9,7 @@ pars = c(Xo = 500, e = 0.5, a = 180, K = 1000, h = 200,
 ## Run the individual based simulation
 #sn <- saddle_node_ibm(pars, times=seq(0,T, length=n_pts), reps=1000)
 
+# Takes some time, just load the cached simulation data instead
 load("prosecutor.rda")
 
 ## Find out which ones crashed
@@ -25,23 +26,20 @@ dat <- cbind(dat, crashed=dat$rep %in% crashed)
 dat <- subset(dat, population!=0)
 dat <- arrange(dat, crashed)
 
-## Let's plot that data
 #require(ggplot2)
 #ggplot(dat) + geom_line(aes(time, population, group=rep, color=crashed), alpha=.05)
 
-#dat <- subset(dat, rep %in% 1:3 & time < 100)
-
-
 ## Need heavy parallelization to handle these estimates over the replicates
 ## see prosecutorsFallacy_modelfits.R
+load("prosecutor_mpi_full.rda")
 
-require(earlywarning)
-models <- dlply(dat, "rep", function(X){
-  Y <- data.frame(X$time, X$population)
-  stability_model(Y, "LSN")
-})
 
-save("models", file="lsn_models.rda")
+#require(earlywarning)
+#models <- dlply(dat, "rep", function(X){
+#  Y <- data.frame(X$time, X$population)
+#  stability_model(Y, "LSN")
+#})
+#save("models", file="lsn_models.rda")
 
 indicators <- ddply(dat, "rep", function(X){ 
   Y <- data.frame(X$time, X$population)
@@ -53,8 +51,17 @@ indicators <- ddply(dat, "rep", function(X){
   c(tau, m, crashed=X$crashed[1])
 })
 
+require(beanplot)
+par(mfrow=c(1,2))
+beanplot(m ~ crashed, indicators, what=c(0,1,0,0))
+beanplot(kendall_coef ~ crashed, indicators, what=c(0,1,0,0))
 
-## WOW, check this out:
+
+
+ggplot(indicators) + geom_density(aes(kendall_coef, fill=crashed))
+ggplot(indicators) + geom_density(aes(m, fill=crashed))
+
+## The elegant, fast, data-table way 
 require(data.table)
 DT <- data.table(dat)
 myf <- function(x,y) compute_tau(data.frame(x,y), "Var")[1]
@@ -64,20 +71,5 @@ DT[, myf(time, population), by="rep"]
 
 
 
-ggplot(tau_var) + geom_density(aes(kendall_coef, fill=crashed))
-
-require(earlywarning)
-fits <- lapply(crash_data, function(X){
- stability_model(X, "LSN")
-})
-m_crash <- sapply(fits, function(x) x$pars["m"])
 
 
-
-fits <- lapply(nocrash_data, function(X){
-  stability_model(X, "LSN")
-})
-m_nocrash <- sapply(fits, function(x) x$pars["m"])
-
-
-# estimate 
