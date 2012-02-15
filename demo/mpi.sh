@@ -1,4 +1,6 @@
 #!/bin/bash
+## Instructions for farm-style cluster
+
 ## Use the current working directory
 #$ -cwd
 ## use bash commands

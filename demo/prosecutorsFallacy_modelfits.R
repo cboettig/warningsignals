@@ -27,7 +27,7 @@ dat <- subset(dat, population!=0)
 
 library(snow)
 ## snow method
-cluster <- makeCluster(100, type="MPI")
+cluster <- makeCluster(80, type="MPI")
 clusterEvalQ(cluster, library(earlywarning)) # load a library
 clusterExport(cluster, ls()) # export everything in workspace
 models <- parLapply(cluster, 1:1000, function(i)
