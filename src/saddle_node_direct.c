@@ -37,12 +37,13 @@ void sn_fixed_interval(const double t, void * mypars, void * myrecord, int rep)
 //		printf("%g %g %g\n", t, s[0], s[2]);
 		s[5] += 1; //increment sample counter
 
-	/* increment the bifurcation parameter each sampletime after a certain wait */
+	/* increment the bifurcation parameter "a" each sample-time after a certain wait */
+
 	if(t > s[7]){ s[2] += s[6]*my_record->t_step; }
 	}
 }
 
-/*		   0 1 2 3 4 5  6   7 8 
+/*         0 1 2 3 4 5  6   7 8 
  * Pars = {n,e,a,K,h,i, Da, Dt, p} */
 double sn_death(void * ss)
 {

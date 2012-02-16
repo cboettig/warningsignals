@@ -68,7 +68,7 @@ fit_models <- function(X, model=c("LSN", "LTC"), integrateOU=FALSE,
     guess_sigma<- as.numeric(const$pars['sigma']/sqrt(2*const$pars['Ro']+
                                  const$pars['theta']))
     pars <- c(Ro=guess_Ro, m=0, theta=guess_theta, sigma=guess_sigma)
-
+print(pars)
 		timedep <- updateGauss(timedep_LSN, pars, X, method=optim_method, 
 							   control=list(maxit=2000), upper=upper, lower=lower, ...)
   }
