@@ -34,14 +34,12 @@ models <- lapply(1:2, function(i)
 
 library(snow)
 ## snow method
-cluster <- makeCluster(60, type="MPI")
+cluster <- makeCluster(80, type="MPI")
 clusterEvalQ(cluster, library(earlywarning)) # load a library
 clusterExport(cluster, ls()) # export everything in workspace
-out <- parLapply(cluster, 1:1000, function(i)
-  stability_model(dat[dat$rep==i, c("time", "population")], "LSN")[1] 
+models <- parLapply(cluster, 1:1000, function(i)
+  stability_model(dat[dat$rep==i, c("time", "population")], "LSN")
 )
-print(out)
 stopCluster(cluster)
-
-save(list=ls(), file="prosecutor_mpi_full.rda")
+save("models", file="prosecutor_mpi_full.rda")
 
