@@ -21,13 +21,25 @@ crashed <- which(sn$x1[d[1],]==0)
 require(reshape2)
 require(plyr)
 dat <- melt(sn$x1)
-names(dat) = c("time", "rep", "population")
+names(dat) = c("time", "reps", "value")
 dat <- cbind(dat, crashed=dat$rep %in% crashed)
-dat <- subset(dat, population!=0)
+dat <- subset(dat, value!=0)
 dat <- arrange(dat, crashed)
 
-#require(ggplot2)
-#ggplot(dat) + geom_line(aes(time, population, group=rep, color=crashed), alpha=.05)
+require(ggplot2)
+
+
+#ggplot(dat) + geom_line(aes(time, value, group=reps), alpha=.05) + facet_wrap(~crashed)
+
+## What do the variance trends look like for the crashed data?
+crashed_dat <- subset(dat, crashed==TRUE)[c("time", "reps", "value")]
+#acorr <- summary_statistic(dat, window_autocorr)
+var <- dlply(crashed_dat, "reps", function(X) window_var(X$value))
+tmp <- melt(var)
+ggplot(tmp) + geom_line(aes(1:length(value), value)) + facet_wrap(~ L1) +
+  opts(title="Variance in replicates conditioned on the crash")
+
+
 
 ## Need heavy parallelization to handle these estimates over the replicates
 ## see prosecutorsFallacy_modelfits.R
@@ -41,8 +53,8 @@ load("prosecutor_mpi_full.rda")
 #})
 #save("models", file="lsn_models.rda")
 
-indicators <- ddply(dat, "rep", function(X){ 
-  Y <- data.frame(X$time, X$population)
+indicators <- ddply(dat, "reps", function(X){ 
+  Y <- data.frame(X$time, X$value)
   tau <- compute_tau(Y, "Var")[1]
   i <- X$rep[1]
   m <- models[[i]]$pars["m"]
@@ -52,14 +64,15 @@ indicators <- ddply(dat, "rep", function(X){
 })
 
 require(beanplot)
+png("beanplot.png", width=480*2)
 par(mfrow=c(1,2))
 beanplot(m ~ crashed, indicators, what=c(0,1,0,0))
-beanplot(kendall_coef ~ crashed, indicators, what=c(0,1,0,0))
+beanplot(kendall_coef ~ crashed, subset(indicators, abs(m) <1), what=c(0,1,0,0))
+dev.off()
 
 
-
-ggplot(indicators) + geom_density(aes(kendall_coef, fill=crashed))
-ggplot(indicators) + geom_density(aes(m, fill=crashed))
+ggplot(indicators) + geom_density(aes(kendall_coef, fill=crashed), alpha=.7)
+ggplot(indicators) + geom_density(aes(m, fill=crashed), alpha=.7)
 
 ## The elegant, fast, data-table way 
 require(data.table)
