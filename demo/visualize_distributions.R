@@ -43,7 +43,8 @@ pow <- ibm[[1]]
 
   rocdat <- roc_data(pow$null_dist, pow$test_dist)
   p <- ggplot(rocdat) + geom_line(aes(FalsePos, TruePos), lwd=1) + 
-    scale_x_continuous("False Positive") + scale_y_continuous("True Positive")
+  labs(x= "False Positive", y = "True Positive")
+#    scale_x_continuous("False Positive") + scale_y_continuous("True Positive")
   ggsave("rocplot.png")
 
 
