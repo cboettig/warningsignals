@@ -1,4 +1,4 @@
-<!--roptions dev="png", fig.width=7, fig.height=5, fig.path='ex-out-', tidy=TRUE-->
+<!--roptions dev="png", fig.width=7, fig.height=5, fig.path='ex-out-', tidy=TRUE, warning=FALSE-->
 
 #  Warning Signals in Fish Collapse
 
