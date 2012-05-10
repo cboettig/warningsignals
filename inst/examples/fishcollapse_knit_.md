@@ -1,18 +1,28 @@
 <!--roptions dev="png", fig.width=7, fig.height=5, fig.path='ex-out-', tidy=TRUE, warning=FALSE-->
 
-#  Warning Signals in Fish Collapse
+#  Warning Signals in Fish Collapse 
 
  * Author Carl Boettiger <cboettig@gmail.com>
  * Date: 10 Nov 2011
  * Description: an example trying to detect early warning signals
   in data from fisheries collapses
 
-Set up markdown format, image uploads, and 
+Set up markdown format and image uploads.  
 <!--begin.rcode
-render_gfm()
+render_wordpress()
 opts_knit$set(upload = TRUE)
 opts_knit$set(imgur.key = getOption("imgur"))
+end.rcode-->
 
+
+<!--begin.rcode setup
+end.rcode-->
+
+
+
+
+Load required libraries
+<!--begin.rcode
 require(warningsignals)
 require(ggplot2)
 require(reshape2)
